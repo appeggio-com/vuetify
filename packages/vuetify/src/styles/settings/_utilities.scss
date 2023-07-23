@@ -469,11 +469,9 @@ $utilities: () !default;
       "typography": (
         responsive: true,
         property: (
-          font-size,
           font-weight,
           line-height,
           letter-spacing,
-          font-family,
           text-transform
         ),
         class: text,
