@@ -2,12 +2,14 @@
 import './VGrid.sass'
 
 // Composables
+import { useBackgroundColor, useColor } from '../../composables/color'
+import { makeDimensionProps, useDimension } from '../../composables/dimensions'
 import { makeComponentProps } from '@/composables/component'
 import { breakpoints } from '@/composables/display'
 import { makeTagProps } from '@/composables/tag'
 
 // Utilities
-import { capitalize, computed, h } from 'vue'
+import { capitalize, computed, h, toRef } from 'vue'
 import { genericComponent, propsFactory } from '@/util'
 
 // Types
@@ -107,8 +109,16 @@ export const makeVRowProps = propsFactory({
     default: null,
     validator: alignContentValidator,
   },
-
   ...alignContentProps,
+  bgColor: {
+    type: String,
+    default: null,
+  },
+  color: {
+    type: String,
+    default: null,
+  },
+  ...makeDimensionProps(),
   ...makeComponentProps(),
   ...makeTagProps(),
 }, 'VRow')
@@ -119,6 +129,9 @@ export const VRow = genericComponent()({
   props: makeVRowProps(),
 
   setup (props, { slots }) {
+    const { dimensionStyles } = useDimension(props)
+    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'bgColor'))
+    const { colorClasses, colorStyles } = useColor(computed(() => ({ text: props.color })))
     const classes = computed(() => {
       const classList: any[] = []
 
@@ -147,9 +160,16 @@ export const VRow = genericComponent()({
       class: [
         'v-row',
         classes.value,
+        backgroundColorClasses.value,
+        colorClasses.value,
         props.class,
       ],
-      style: props.style,
+      style: [
+        dimensionStyles.value,
+        backgroundColorStyles.value,
+        colorStyles.value,
+        props.style,
+      ],
     }, slots.default?.())
   },
 })
