@@ -22,6 +22,8 @@ export type Variant = typeof allowedVariants[number]
 
 export interface VariantProps {
   color?: string
+  bgColor?: string
+  fgColor?: string
   variant: Variant
 }
 
@@ -37,6 +39,8 @@ export function genOverlays (isClickable: boolean, name: string) {
 
 export const makeVariantProps = propsFactory({
   color: String,
+  bgColor: String,
+  fgColor: String,
   variant: {
     type: String as PropType<Variant>,
     default: 'elevated',
@@ -58,6 +62,30 @@ export function useVariant (
     return {
       [['elevated', 'flat'].includes(variant) ? 'background' : 'text']: color,
     }
+  }))
+
+  return { colorClasses, colorStyles, variantClasses }
+}
+
+export function useVariant2 (
+  props: MaybeRef<VariantProps>,
+  name = getCurrentInstanceName(),
+) {
+  const variantClasses = computed(() => {
+    const { variant } = unref(props)
+    return `${name}--variant-${variant}`
+  })
+
+  const { colorClasses, colorStyles } = useColor(computed(() => {
+    const { bgColor, fgColor } = unref(props)
+    const obj: { background?: string, text?: string } = {}
+    if (bgColor) {
+      obj.background = bgColor
+    }
+    if (fgColor) {
+      obj.text = fgColor
+    }
+    return obj
   }))
 
   return { colorClasses, colorStyles, variantClasses }
