@@ -82,12 +82,10 @@ export function useVariant2 (
     if (variant === 'text' || variant === 'plain') {
       if (fgColor) {
         obj.text = fgColor
-      }
-      else if (bgColor) {
+      } else if (bgColor) {
         obj.text = bgColor
       }
-    }
-    else {
+    } else {
       if (bgColor) {
         obj.background = bgColor
       }
