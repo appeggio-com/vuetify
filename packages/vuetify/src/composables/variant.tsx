@@ -77,13 +77,23 @@ export function useVariant2 (
   })
 
   const { colorClasses, colorStyles } = useColor(computed(() => {
-    const { bgColor, fgColor } = unref(props)
+    const { bgColor, fgColor, variant } = unref(props)
     const obj: { background?: string, text?: string } = {}
-    if (bgColor) {
-      obj.background = bgColor
+    if (variant === 'text' || variant === 'plain') {
+      if (fgColor) {
+        obj.text = fgColor
+      }
+      else if (bgColor) {
+        obj.text = bgColor
+      }
     }
-    if (fgColor) {
-      obj.text = fgColor
+    else {
+      if (bgColor) {
+        obj.background = bgColor
+      }
+      if (fgColor) {
+        obj.text = fgColor
+      }
     }
     return obj
   }))
