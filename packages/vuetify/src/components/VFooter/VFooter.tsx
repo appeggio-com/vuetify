@@ -3,7 +3,6 @@ import './VFooter.sass'
 
 // Composables
 import { makeBorderProps, useBorder } from '@/composables/border'
-import { useBackgroundColor } from '@/composables/color'
 import { makeComponentProps } from '@/composables/component'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
 import { makeLayoutItemProps, useLayoutItem } from '@/composables/layout'
@@ -11,6 +10,7 @@ import { useResizeObserver } from '@/composables/resizeObserver'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, shallowRef, toRef } from 'vue'
@@ -18,12 +18,12 @@ import { convertToUnit, genericComponent, propsFactory, useRender } from '@/util
 
 export const makeVFooterProps = propsFactory({
   app: Boolean,
-  color: String,
   height: {
     type: [Number, String],
     default: 'auto',
   },
 
+  ...makeColorsProps(),
   ...makeBorderProps(),
   ...makeComponentProps(),
   ...makeElevationProps(),
@@ -40,7 +40,7 @@ export const VFooter = genericComponent()({
 
   setup (props, { slots }) {
     const { themeClasses } = provideTheme(props)
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
+    const { colorClasses, colorStyles } = useColors(props)
     const { borderClasses } = useBorder(props)
     const { elevationClasses } = useElevation(props)
     const { roundedClasses } = useRounded(props)
@@ -67,14 +67,14 @@ export const VFooter = genericComponent()({
         class={[
           'v-footer',
           themeClasses.value,
-          backgroundColorClasses.value,
+          colorClasses.value,
           borderClasses.value,
           elevationClasses.value,
           roundedClasses.value,
           props.class,
         ]}
         style={[
-          backgroundColorStyles.value,
+          colorStyles.value,
           props.app ? layoutItemStyles.value : {
             height: convertToUnit(props.height),
           },

@@ -7,7 +7,6 @@ import { VListChildren } from './VListChildren'
 // Composables
 import { createList } from './list'
 import { makeBorderProps, useBorder } from '@/composables/border'
-import { useBackgroundColor } from '@/composables/color'
 import { makeComponentProps } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeDensityProps, useDensity } from '@/composables/density'
@@ -18,7 +17,7 @@ import { makeNestedProps, useNested } from '@/composables/nested/nested'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
-import { makeVariantProps } from '@/composables/variant'
+import { makeVariantProps, useVariant } from '@/composables/variant'
 
 // Utilities
 import { computed, ref, shallowRef, toRef } from 'vue'
@@ -82,7 +81,6 @@ export const makeVListProps = propsFactory({
   /* @deprecated */
   activeColor: String,
   activeClass: String,
-  bgColor: String,
   disabled: Boolean,
   lines: {
     type: [Boolean, String] as PropType<'one' | 'two' | 'three' | false>,
@@ -130,7 +128,7 @@ export const VList = genericComponent<new <T>(
   setup (props, { slots }) {
     const { items } = useListItems(props)
     const { themeClasses } = provideTheme(props)
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'bgColor'))
+    const { colorClasses, colorStyles } = useVariant(props)
     const { borderClasses } = useBorder(props)
     const { densityClasses } = useDensity(props)
     const { dimensionStyles } = useDimension(props)
@@ -215,7 +213,7 @@ export const VList = genericComponent<new <T>(
               'v-list--nav': props.nav,
             },
             themeClasses.value,
-            backgroundColorClasses.value,
+            colorClasses.value,
             borderClasses.value,
             densityClasses.value,
             elevationClasses.value,
@@ -224,7 +222,7 @@ export const VList = genericComponent<new <T>(
             props.class,
           ]}
           style={[
-            backgroundColorStyles.value,
+            colorStyles.value,
             dimensionStyles.value,
             props.style,
           ]}

@@ -32,11 +32,11 @@ describe('variant', () => {
   })
 
   it.each([
-    [{ color: 'primary' }, 'text-primary'],
-    [{ variant: 'default', color: 'primary' }, 'text-primary'],
-    [{ variant: 'elevated', color: 'primary' }, 'bg-primary'],
-    [{ variant: 'outlined', color: 'primary' }, 'text-primary'],
-    [{ variant: 'text', color: 'primary' }, 'text-primary'],
+    [{ fgColor: 'primary' }, 'text-primary'],
+    [{ variant: 'default', fgColor: 'primary' }, 'text-primary'],
+    [{ variant: 'elevated', bgColor: 'primary' }, 'bg-primary'],
+    [{ variant: 'outlined', fgColor: 'primary' }, 'text-primary'],
+    [{ variant: 'text', fgColor: 'primary' }, 'text-primary'],
   ] as const)('should return correct classes for %s props', (...args) => {
     const [props, expected] = args
     // @ts-expect-error invalid variant

@@ -5,7 +5,6 @@ import './VBadge.sass'
 import { VIcon } from '@/components/VIcon'
 
 // Composables
-import { useBackgroundColor, useTextColor } from '@/composables/color'
 import { makeComponentProps } from '@/composables/component'
 import { IconValue } from '@/composables/icons'
 import { useLocale } from '@/composables/locale'
@@ -14,9 +13,9 @@ import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, useTheme } from '@/composables/theme'
 import { makeTransitionProps, MaybeTransition } from '@/composables/transition'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
-import { toRef } from 'vue'
 import { genericComponent, pick, propsFactory, useRender } from '@/util'
 
 export type VBadgeSlots = {
@@ -26,7 +25,6 @@ export type VBadgeSlots = {
 
 export const makeVBadgeProps = propsFactory({
   bordered: Boolean,
-  color: String,
   content: [Number, String],
   dot: Boolean,
   floating: Boolean,
@@ -43,8 +41,8 @@ export const makeVBadgeProps = propsFactory({
   },
   offsetX: [Number, String],
   offsetY: [Number, String],
-  textColor: String,
 
+  ...makeColorsProps(),
   ...makeComponentProps(),
   ...makeLocationProps({ location: 'top end' } as const),
   ...makeRoundedProps(),
@@ -61,10 +59,9 @@ export const VBadge = genericComponent<VBadgeSlots>()({
   props: makeVBadgeProps(),
 
   setup (props, ctx) {
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
+    const { colorClasses, colorStyles } = useColors(props)
     const { roundedClasses } = useRounded(props)
     const { t } = useLocale()
-    const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'textColor'))
     const { themeClasses } = useTheme()
 
     const { locationStyles } = useLocation(props, true, side => {
@@ -117,13 +114,11 @@ export const VBadge = genericComponent<VBadgeSlots>()({
                 class={[
                   'v-badge__badge',
                   themeClasses.value,
-                  backgroundColorClasses.value,
+                  colorClasses.value,
                   roundedClasses.value,
-                  textColorClasses.value,
                 ]}
                 style={[
-                  backgroundColorStyles.value,
-                  textColorStyles.value,
+                  colorStyles.value,
                   props.inline ? {} : locationStyles.value,
                 ]}
                 aria-atomic="true"

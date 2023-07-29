@@ -8,13 +8,13 @@ import { VDefaultsProvider } from '@/components/VDefaultsProvider'
 import { VIcon } from '@/components/VIcon'
 
 // Composables
-import { useBackgroundColor } from '@/composables/color'
 import { makeComponentProps } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { IconValue } from '@/composables/icons'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeTagProps } from '@/composables/tag'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, toRef } from 'vue'
@@ -33,8 +33,6 @@ export type BreadcrumbItem = string | (Partial<LinkProps> & {
 export const makeVBreadcrumbsProps = propsFactory({
   activeClass: String,
   activeColor: String,
-  bgColor: String,
-  color: String,
   disabled: Boolean,
   divider: {
     type: String,
@@ -47,6 +45,7 @@ export const makeVBreadcrumbsProps = propsFactory({
   },
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeDensityProps(),
   ...makeRoundedProps(),
   ...makeTagProps({ tag: 'ul' }),
@@ -68,7 +67,7 @@ export const VBreadcrumbs = genericComponent<new <T extends BreadcrumbItem>(
   props: makeVBreadcrumbsProps(),
 
   setup (props, { slots }) {
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'bgColor'))
+    const { colorClasses, colorStyles } = useColors(props)
     const { densityClasses } = useDensity(props)
     const { roundedClasses } = useRounded(props)
 
@@ -95,13 +94,13 @@ export const VBreadcrumbs = genericComponent<new <T extends BreadcrumbItem>(
         <props.tag
           class={[
             'v-breadcrumbs',
-            backgroundColorClasses.value,
+            colorClasses.value,
             densityClasses.value,
             roundedClasses.value,
             props.class,
           ]}
           style={[
-            backgroundColorStyles.value,
+            colorStyles.value,
             props.style,
           ]}
         >

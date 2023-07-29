@@ -2,23 +2,23 @@
 import './VIcon.sass'
 
 // Composables
-import { useTextColor } from '@/composables/color'
 import { makeComponentProps } from '@/composables/component'
 import { IconValue, useIcon } from '@/composables/icons'
 import { makeSizeProps, useSize } from '@/composables/size'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
-import { computed, ref, Text, toRef } from 'vue'
+import { computed, ref, Text } from 'vue'
 import { convertToUnit, flattenFragments, genericComponent, propsFactory, useRender } from '@/util'
 
 export const makeVIconProps = propsFactory({
-  color: String,
   start: Boolean,
   end: Boolean,
   icon: IconValue,
 
+  ...makeColorsProps(),
   ...makeComponentProps(),
   ...makeSizeProps(),
   ...makeTagProps({ tag: 'i' }),
@@ -36,7 +36,7 @@ export const VIcon = genericComponent()({
     const { themeClasses } = provideTheme(props)
     const { iconData } = useIcon(computed(() => slotIcon.value || props.icon))
     const { sizeClasses } = useSize(props)
-    const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'color'))
+    const { colorClasses, colorStyles } = useColors(props)
 
     useRender(() => {
       const slotValue = slots.default?.()
@@ -55,7 +55,7 @@ export const VIcon = genericComponent()({
             'notranslate',
             themeClasses.value,
             sizeClasses.value,
-            textColorClasses.value,
+            colorClasses.value,
             {
               'v-icon--clickable': !!attrs.onClick,
               'v-icon--start': props.start,
@@ -69,7 +69,7 @@ export const VIcon = genericComponent()({
               height: convertToUnit(props.size),
               width: convertToUnit(props.size),
             }) : undefined,
-            textColorStyles.value,
+            colorStyles.value,
             props.style,
           ]}
           role={ attrs.onClick ? 'button' : undefined }

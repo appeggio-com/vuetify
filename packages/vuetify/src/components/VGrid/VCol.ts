@@ -2,14 +2,14 @@
 import './VGrid.sass'
 
 // Composables
-import { useBackgroundColor, useColor } from '@/composables/color'
 import { makeComponentProps } from '@/composables/component'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { breakpoints } from '@/composables/display'
 import { makeTagProps } from '@/composables/tag'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
-import { capitalize, computed, h, toRef } from 'vue'
+import { capitalize, computed, h } from 'vue'
 import { genericComponent, propsFactory } from '@/util'
 
 // Types
@@ -104,14 +104,7 @@ export const makeVColProps = propsFactory({
     default: null,
     validator: (str: any) => ALIGN_SELF_VALUES.includes(str),
   },
-  bgColor: {
-    type: String,
-    default: null,
-  },
-  color: {
-    type: String,
-    default: null,
-  },
+  ...makeColorsProps(),
   ...makeDimensionProps(),
   ...makeComponentProps(),
   ...makeTagProps(),
@@ -124,8 +117,7 @@ export const VCol = genericComponent()({
 
   setup (props, { slots }) {
     const { dimensionStyles } = useDimension(props)
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'bgColor'))
-    const { colorClasses, colorStyles } = useColor(computed(() => ({ text: props.color })))
+    const { colorClasses, colorStyles } = useColors(props)
     const classes = computed(() => {
       const classList: any[] = []
 
@@ -156,13 +148,11 @@ export const VCol = genericComponent()({
     return () => h(props.tag, {
       class: [
         classes.value,
-        backgroundColorClasses.value,
         colorClasses.value,
         props.class,
       ],
       style: [
         dimensionStyles.value,
-        backgroundColorStyles.value,
         colorStyles.value,
         props.style,
       ],

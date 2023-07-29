@@ -6,7 +6,6 @@ import { VBtnToggleSymbol } from '@/components/VBtnToggle/VBtnToggle'
 
 // Composables
 import { makeBorderProps, useBorder } from '@/composables/border'
-import { useBackgroundColor } from '@/composables/color'
 import { makeComponentProps } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeDensityProps, useDensity } from '@/composables/density'
@@ -17,14 +16,13 @@ import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { useSsrBoot } from '@/composables/ssrBoot'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, useTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, toRef } from 'vue'
 import { convertToUnit, genericComponent, propsFactory, useRender } from '@/util'
 
 export const makeVBottomNavigationProps = propsFactory({
-  bgColor: String,
-  color: String,
   grow: Boolean,
   mode: {
     type: String,
@@ -42,6 +40,7 @@ export const makeVBottomNavigationProps = propsFactory({
   ...makeBorderProps(),
   ...makeComponentProps(),
   ...makeDensityProps(),
+  ...makeColorsProps(),
   ...makeElevationProps(),
   ...makeRoundedProps(),
   ...makeLayoutItemProps({ name: 'bottom-navigation' }),
@@ -65,7 +64,7 @@ export const VBottomNavigation = genericComponent()({
   setup (props, { slots }) {
     const { themeClasses } = useTheme()
     const { borderClasses } = useBorder(props)
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'bgColor'))
+    const { colorClasses, colorStyles } = useColors(props)
     const { densityClasses } = useDensity(props)
     const { elevationClasses } = useElevation(props)
     const { roundedClasses } = useRounded(props)
@@ -90,7 +89,9 @@ export const VBottomNavigation = genericComponent()({
 
     provideDefaults({
       VBtn: {
+        bgColor: toRef(props, 'bgColor'),
         color: toRef(props, 'color'),
+        fgColor: toRef(props, 'fgColor'),
         density: toRef(props, 'density'),
         stacked: computed(() => props.mode !== 'horizontal'),
         variant: 'text',
@@ -108,7 +109,7 @@ export const VBottomNavigation = genericComponent()({
               'v-bottom-navigation--shift': props.mode === 'shift',
             },
             themeClasses.value,
-            backgroundColorClasses.value,
+            colorClasses.value,
             borderClasses.value,
             densityClasses.value,
             elevationClasses.value,
@@ -116,7 +117,7 @@ export const VBottomNavigation = genericComponent()({
             props.class,
           ]}
           style={[
-            backgroundColorStyles.value,
+            colorStyles.value,
             layoutItemStyles.value,
             {
               height: convertToUnit(height.value),

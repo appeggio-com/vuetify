@@ -21,8 +21,8 @@ export const allowedVariants = [
 export type Variant = typeof allowedVariants[number]
 
 export interface VariantProps {
-  color?: string
   bgColor?: string
+  color?: string
   fgColor?: string
   variant: Variant
 }
@@ -38,8 +38,8 @@ export function genOverlays (isClickable: boolean, name: string) {
 }
 
 export const makeVariantProps = propsFactory({
-  color: String,
   bgColor: String,
+  color: String,
   fgColor: String,
   variant: {
     type: String as PropType<Variant>,
@@ -48,26 +48,19 @@ export const makeVariantProps = propsFactory({
   },
 }, 'variant')
 
-export function useVariant (
-  props: MaybeRef<VariantProps>,
-  name = getCurrentInstanceName(),
-) {
-  const variantClasses = computed(() => {
-    const { variant } = unref(props)
-    return `${name}--variant-${variant}`
-  })
-
-  const { colorClasses, colorStyles } = useColor(computed(() => {
-    const { variant, color } = unref(props)
-    return {
-      [['elevated', 'flat'].includes(variant) ? 'background' : 'text']: color,
-    }
-  }))
-
-  return { colorClasses, colorStyles, variantClasses }
+export interface ColorsProps {
+  bgColor?: string
+  color?: string
+  fgColor?: string
 }
 
-export function useVariant2 (
+export const makeColorsProps = propsFactory({
+  bgColor: String,
+  color: String,
+  fgColor: String,
+}, 'colors')
+
+export function useVariant (
   props: MaybeRef<VariantProps>,
   name = getCurrentInstanceName(),
 ) {
@@ -97,4 +90,23 @@ export function useVariant2 (
   }))
 
   return { colorClasses, colorStyles, variantClasses }
+}
+
+export function useColors (
+  props: MaybeRef<ColorsProps>,
+  name = getCurrentInstanceName(),
+) {
+  const { colorClasses, colorStyles } = useColor(computed(() => {
+    const { bgColor, fgColor } = unref(props)
+    const obj: { background?: string, text?: string } = {}
+    if (bgColor) {
+      obj.background = bgColor
+    }
+    if (fgColor) {
+      obj.text = fgColor
+    }
+    return obj
+  }))
+
+  return { colorClasses, colorStyles }
 }
