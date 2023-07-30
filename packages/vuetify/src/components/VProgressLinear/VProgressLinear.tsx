@@ -34,6 +34,7 @@ export const makeVProgressLinearProps = propsFactory({
   },
   clickable: Boolean,
   color: String,
+  fgColor: String,
   height: {
     type: [Number, String],
     default: 4,
@@ -73,9 +74,11 @@ export const VProgressLinear = genericComponent<VProgressLinearSlots>()({
     const { isRtl, rtlClasses } = useRtl()
     const { themeClasses } = provideTheme(props)
     const { locationStyles } = useLocation(props)
-    const { textColorClasses, textColorStyles } = useTextColor(props, 'color')
+    const { textColorClasses, textColorStyles } = useTextColor(computed(() => props.fgColor || props.color))
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(computed(() => props.bgColor || props.color))
-    const { backgroundColorClasses: barColorClasses, backgroundColorStyles: barColorStyles } = useBackgroundColor(props, 'color')
+    const { backgroundColorClasses: barColorClasses, backgroundColorStyles: barColorStyles } = useBackgroundColor(
+      computed(() => props.bgColor || props.color)
+    )
     const { roundedClasses } = useRounded(props)
     const { intersectionRef, isIntersecting } = useIntersectionObserver()
 

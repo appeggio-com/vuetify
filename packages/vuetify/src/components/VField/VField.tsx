@@ -15,6 +15,7 @@ import { LoaderSlot, makeLoaderProps, useLoader } from '@/composables/loader'
 import { useRtl } from '@/composables/locale'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps } from '@/composables/variant'
 
 // Utilities
 import { computed, ref, toRef, watch } from 'vue'
@@ -54,7 +55,6 @@ export interface VFieldSlot extends DefaultInputSlot {
 
 export const makeVFieldProps = propsFactory({
   appendInnerIcon: IconValue,
-  bgColor: String,
   clearable: Boolean,
   clearIcon: {
     type: IconValue,
@@ -65,7 +65,6 @@ export const makeVFieldProps = propsFactory({
     type: Boolean,
     default: undefined,
   },
-  color: String,
   baseColor: String,
   dirty: Boolean,
   disabled: {
@@ -90,6 +89,7 @@ export const makeVFieldProps = propsFactory({
   'onClick:prependInner': EventProp<[MouseEvent]>(),
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeLoaderProps(),
   ...makeRoundedProps(),
   ...makeThemeProps(),
@@ -150,8 +150,8 @@ export const VField = genericComponent<new <T>(
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'bgColor'))
     const { textColorClasses, textColorStyles } = useTextColor(computed(() => {
       return props.error || props.disabled ? undefined
-        : isActive.value && isFocused.value ? props.color
-        : props.baseColor
+        : isActive.value && isFocused.value ? props.fgColor
+        : props.fgColor || props.baseColor
     }))
 
     watch(isActive, val => {

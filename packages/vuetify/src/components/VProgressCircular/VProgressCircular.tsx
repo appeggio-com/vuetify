@@ -20,6 +20,7 @@ import type { PropType } from 'vue'
 export const makeVProgressCircularProps = propsFactory({
   bgColor: String,
   color: String,
+  fgColor: String,
   indeterminate: [Boolean, String] as PropType<boolean | 'disable-shrink'>,
   modelValue: {
     type: [Number, String],
@@ -57,7 +58,7 @@ export const VProgressCircular = genericComponent<VProgressCircularSlots>()({
 
     const { themeClasses } = provideTheme(props)
     const { sizeClasses, sizeStyles } = useSize(props)
-    const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'color'))
+    const { textColorClasses, textColorStyles } = useTextColor(computed(() => props.fgColor || props.color))
     const { textColorClasses: underlayColorClasses, textColorStyles: underlayColorStyles } = useTextColor(toRef(props, 'bgColor'))
     const { intersectionRef, isIntersecting } = useIntersectionObserver()
     const { resizeRef, contentRect } = useResizeObserver()

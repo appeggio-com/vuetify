@@ -6,11 +6,11 @@ import { VTab } from './VTab'
 import { makeVSlideGroupProps, VSlideGroup } from '@/components/VSlideGroup/VSlideGroup'
 
 // Composables
-import { useBackgroundColor } from '@/composables/color'
 import { provideDefaults } from '@/composables/defaults'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { useProxiedModel } from '@/composables/proxiedModel'
 import { makeTagProps } from '@/composables/tag'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, toRef } from 'vue'
@@ -37,14 +37,12 @@ export const makeVTabsProps = propsFactory({
     type: String as PropType<'start' | 'title' | 'center' | 'end'>,
     default: 'start',
   },
-  color: String,
   fixedTabs: Boolean,
   items: {
     type: Array as PropType<readonly TabItem[]>,
     default: () => ([]),
   },
   stacked: Boolean,
-  bgColor: String,
   grow: Boolean,
   height: {
     type: [Number, String],
@@ -53,6 +51,7 @@ export const makeVTabsProps = propsFactory({
   hideSlider: Boolean,
   sliderColor: String,
 
+  ...makeColorsProps(),
   ...makeVSlideGroupProps({ mandatory: 'force' as const }),
   ...makeDensityProps(),
   ...makeTagProps(),
@@ -71,11 +70,13 @@ export const VTabs = genericComponent()({
     const model = useProxiedModel(props, 'modelValue')
     const parsedItems = computed(() => parseItems(props.items))
     const { densityClasses } = useDensity(props)
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'bgColor'))
+    const { colorClasses, colorStyles } = useColors(props)
 
     provideDefaults({
       VTab: {
+        bgColor: toRef(props, 'bgColor'),
         color: toRef(props, 'color'),
+        fgColor: toRef(props, 'fgColor'),
         direction: toRef(props, 'direction'),
         stacked: toRef(props, 'stacked'),
         fixed: toRef(props, 'fixedTabs'),
@@ -101,12 +102,12 @@ export const VTabs = genericComponent()({
               'v-tabs--stacked': props.stacked,
             },
             densityClasses.value,
-            backgroundColorClasses.value,
+            colorClasses.value,
             props.class,
           ]}
           style={[
             { '--v-tabs-height': convertToUnit(props.height) },
-            backgroundColorStyles.value,
+            colorStyles.value,
             props.style,
           ]}
           role="tablist"

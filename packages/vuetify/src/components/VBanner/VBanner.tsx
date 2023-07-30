@@ -21,6 +21,7 @@ import { makePositionProps, usePosition } from '@/composables/position'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps } from '@/composables/variant'
 
 // Utilities
 import { toRef } from 'vue'
@@ -38,13 +39,13 @@ export type VBannerSlots = {
 
 export const makeVBannerProps = propsFactory({
   avatar: String,
-  color: String,
   icon: IconValue,
   lines: String as PropType<'one' | 'two' | 'three'>,
   stacked: Boolean,
   sticky: Boolean,
   text: String,
 
+  ...makeColorsProps(),
   ...makeBorderProps(),
   ...makeComponentProps(),
   ...makeDensityProps(),
@@ -74,10 +75,12 @@ export const VBanner = genericComponent<VBannerSlots>()({
 
     const { themeClasses } = provideTheme(props)
 
+    const bgColor = toRef(props, 'bgColor')
     const color = toRef(props, 'color')
+    const fgColor = toRef(props, 'fgColor')
     const density = toRef(props, 'density')
 
-    provideDefaults({ VBannerActions: { color, density } })
+    provideDefaults({ VBannerActions: { bgColor, color, fgColor, density } })
 
     useRender(() => {
       const hasText = !!(props.text || slots.text)
@@ -124,7 +127,9 @@ export const VBanner = genericComponent<VBannerSlots>()({
                   disabled={ !hasPrependMedia }
                   defaults={{
                     VAvatar: {
+                      bgColor: bgColor.value,
                       color: color.value,
+                      fgColor: fgColor.value,
                       density: density.value,
                       icon: props.icon,
                       image: props.avatar,

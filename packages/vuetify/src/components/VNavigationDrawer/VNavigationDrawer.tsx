@@ -19,6 +19,7 @@ import { useScopeId } from '@/composables/scopeId'
 import { useSsrBoot } from '@/composables/ssrBoot'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, nextTick, onBeforeMount, ref, shallowRef, toRef, Transition, watch } from 'vue'
@@ -41,7 +42,6 @@ export type VNavigationDrawerSlots = {
 const locations = ['start', 'end', 'left', 'right', 'top', 'bottom'] as const
 
 export const makeVNavigationDrawerProps = propsFactory({
-  color: String,
   disableResizeWatcher: Boolean,
   disableRouteWatcher: Boolean,
   expandOnHover: Boolean,
@@ -77,6 +77,7 @@ export const makeVNavigationDrawerProps = propsFactory({
   },
   sticky: Boolean,
 
+  ...makeColorsProps(),
   ...makeBorderProps(),
   ...makeComponentProps(),
   ...makeElevationProps(),
@@ -100,7 +101,7 @@ export const VNavigationDrawer = genericComponent<VNavigationDrawerSlots>()({
     const { isRtl } = useRtl()
     const { themeClasses } = provideTheme(props)
     const { borderClasses } = useBorder(props)
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
+    const { colorClasses, colorStyles } = useColors(props)
     const { elevationClasses } = useElevation(props)
     const { mobile } = useDisplay()
     const { roundedClasses } = useRounded(props)
@@ -227,14 +228,14 @@ export const VNavigationDrawer = genericComponent<VNavigationDrawerSlots>()({
                 'v-navigation-drawer--sticky': isSticky.value,
               },
               themeClasses.value,
-              backgroundColorClasses.value,
+              colorClasses.value,
               borderClasses.value,
               elevationClasses.value,
               roundedClasses.value,
               props.class,
             ]}
             style={[
-              backgroundColorStyles.value,
+              colorStyles.value,
               layoutItemStyles.value,
               dragStyles.value,
               ssrBootStyles.value,

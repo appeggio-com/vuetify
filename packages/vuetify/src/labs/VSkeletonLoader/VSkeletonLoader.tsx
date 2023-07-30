@@ -2,14 +2,14 @@
 import './VSkeletonLoader.sass'
 
 // Composables
-import { useBackgroundColor } from '@/composables/color'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
 import { useLocale } from '@/composables/locale'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
-import { computed, toRef } from 'vue'
+import { computed } from 'vue'
 import { genericComponent, propsFactory, useRender, wrapInArray } from '@/util'
 
 // Types
@@ -107,7 +107,6 @@ function mapBones (bones: string) {
 
 export const makeVSkeletonLoaderProps = propsFactory({
   boilerplate: Boolean,
-  color: String,
   loading: Boolean,
   loadingText: {
     type: String,
@@ -118,6 +117,7 @@ export const makeVSkeletonLoaderProps = propsFactory({
     default: 'image',
   },
 
+  ...makeColorsProps(),
   ...makeDimensionProps(),
   ...makeElevationProps(),
   ...makeThemeProps(),
@@ -129,7 +129,7 @@ export const VSkeletonLoader = genericComponent()({
   props: makeVSkeletonLoaderProps(),
 
   setup (props, { slots }) {
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
+    const { colorClasses, colorStyles } = useColors(props)
     const { dimensionStyles } = useDimension(props)
     const { elevationClasses } = useElevation(props)
     const { themeClasses } = provideTheme(props)
@@ -148,11 +148,11 @@ export const VSkeletonLoader = genericComponent()({
               'v-skeleton-loader--boilerplate': props.boilerplate,
             },
             themeClasses.value,
-            backgroundColorClasses.value,
+            colorClasses.value,
             elevationClasses.value,
           ]}
           style={[
-            backgroundColorStyles.value,
+            colorStyles.value,
             isLoading ? dimensionStyles.value : {},
           ]}
           aria-busy={ !props.boilerplate ? isLoading : undefined }

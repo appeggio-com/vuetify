@@ -10,6 +10,7 @@ import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { useIntersectionObserver } from '@/composables/intersectionObserver'
 import { useLocale } from '@/composables/locale'
 import { makeTagProps } from '@/composables/tag'
+import { makeColorsProps } from '@/composables/variant'
 
 // Utilities
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
@@ -35,7 +36,6 @@ type VInfiniteScrollSlots = {
 }
 
 export const makeVInfiniteScrollProps = propsFactory({
-  color: String,
   direction: {
     type: String as PropType<'vertical' | 'horizontal'>,
     default: 'vertical',
@@ -61,6 +61,7 @@ export const makeVInfiniteScrollProps = propsFactory({
     default: '$vuetify.infiniteScroll.empty',
   },
 
+  ...makeColorsProps(),
   ...makeDimensionProps(),
   ...makeTagProps(),
 }, 'VInfiniteScroll')
@@ -215,7 +216,7 @@ export const VInfiniteScroll = genericComponent<VInfiniteScrollSlots>()({
       if (props.side !== side && props.side !== 'both') return
 
       const onClick = () => intersecting(side)
-      const slotProps = { side, props: { onClick, color: props.color } }
+      const slotProps = { side, props: { onClick, bgColor: props.bgColor, color: props.color, fgColor: props.fgColor } }
 
       if (status === 'error') return slots.error?.(slotProps)
 

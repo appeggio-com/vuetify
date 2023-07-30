@@ -4,13 +4,13 @@ import { VExpansionPanelText } from './VExpansionPanelText'
 import { makeVExpansionPanelTitleProps, VExpansionPanelTitle } from './VExpansionPanelTitle'
 
 // Composables
-import { useBackgroundColor } from '@/composables/color'
 import { makeComponentProps } from '@/composables/component'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
 import { makeGroupItemProps, useGroupItem } from '@/composables/group'
 import { makeLazyProps } from '@/composables/lazy'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeTagProps } from '@/composables/tag'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, provide } from 'vue'
@@ -19,9 +19,9 @@ import { genericComponent, propsFactory, useRender } from '@/util'
 export const makeVExpansionPanelProps = propsFactory({
   title: String,
   text: String,
-  bgColor: String,
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeElevationProps(),
   ...makeGroupItemProps(),
   ...makeLazyProps(),
@@ -47,7 +47,7 @@ export const VExpansionPanel = genericComponent<VExpansionPanelSlots>()({
 
   setup (props, { slots }) {
     const groupItem = useGroupItem(props, VExpansionPanelSymbol)
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(props, 'bgColor')
+    const { colorClasses, colorStyles } = useColors(props)
     const { elevationClasses } = useElevation(props)
     const { roundedClasses } = useRounded(props)
     const isDisabled = computed(() => groupItem?.disabled.value || props.disabled)
@@ -86,11 +86,11 @@ export const VExpansionPanel = genericComponent<VExpansionPanelSlots>()({
               'v-expansion-panel--disabled': isDisabled.value,
             },
             roundedClasses.value,
-            backgroundColorClasses.value,
+            colorClasses.value,
             props.class,
           ]}
           style={[
-            backgroundColorStyles.value,
+            colorStyles.value,
             props.style,
           ]}
         >

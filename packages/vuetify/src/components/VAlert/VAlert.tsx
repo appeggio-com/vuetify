@@ -112,7 +112,9 @@ export const VAlert = genericComponent<VAlertSlots>()({
       return props.icon ?? `$${props.type}`
     })
     const variantProps = computed(() => ({
+      bgColor: props.bgColor,
       color: props.color ?? props.type,
+      fgColor: props.fgColor,
       variant: props.variant,
     }))
 
