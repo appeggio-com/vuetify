@@ -469,6 +469,7 @@ $utilities: () !default;
       "typography": (
         responsive: true,
         property: (
+          font-size,
           font-weight,
           line-height,
           letter-spacing,
@@ -476,6 +477,7 @@ $utilities: () !default;
         ),
         class: text,
         unimportant: (
+          font-size,
           font-weight,
           line-height
         ),
