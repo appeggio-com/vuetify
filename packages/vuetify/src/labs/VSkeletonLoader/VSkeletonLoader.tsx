@@ -9,7 +9,7 @@ import { makeThemeProps, provideTheme } from '@/composables/theme'
 import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
-import { computed, toRef } from 'vue'
+import { computed } from 'vue'
 import { genericComponent, propsFactory, useRender, wrapInArray } from '@/util'
 
 // Types
