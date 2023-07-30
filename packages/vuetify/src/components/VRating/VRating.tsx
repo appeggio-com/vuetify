@@ -13,6 +13,7 @@ import { useProxiedModel } from '@/composables/proxiedModel'
 import { makeSizeProps } from '@/composables/size'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, shallowRef } from 'vue'
@@ -51,7 +52,6 @@ export const makeVRatingProps = propsFactory({
     default: '$vuetify.rating.ariaLabel.item',
   },
   activeColor: String,
-  color: String,
   clearable: Boolean,
   disabled: Boolean,
   emptyIcon: {
@@ -82,6 +82,7 @@ export const makeVRatingProps = propsFactory({
   ripple: Boolean,
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeDensityProps(),
   ...makeSizeProps(),
   ...makeTagProps(),
@@ -102,6 +103,7 @@ export const VRating = genericComponent<VRatingSlots>()({
     const { themeClasses } = provideTheme(props)
     const rating = useProxiedModel(props, 'modelValue')
     const normalizedValue = computed(() => clamp(parseFloat(rating.value), 0, +props.length))
+    const { colorClasses, colorStyles } = useColors(props)
 
     const range = computed(() => createRange(Number(props.length), 1))
     const increments = computed(() => range.value.flatMap(v => props.halfIncrements ? [v - 0.5, v] : [v]))
@@ -113,8 +115,8 @@ export const VRating = genericComponent<VRatingSlots>()({
       const isHovered = hoverIndex.value >= value
       const isFullIcon = isHovering ? isHovered : isFilled
       const icon = isFullIcon ? props.fullIcon : props.emptyIcon
-      const activeColor = props.activeColor ?? props.color
-      const color = (isFilled || isHovered) ? activeColor : props.color
+      const activeColor = props.activeColor ?? props.fgColor ?? props.color
+      const color = (isFilled || isHovered) ? activeColor : props.fgColor || props.color
 
       return { isFilled, isHovered, icon, color }
     }))
@@ -147,6 +149,8 @@ export const VRating = genericComponent<VRatingSlots>()({
       const id = `${name.value}-${String(value).replace('.', '-')}`
       const btnProps = {
         color: itemState.value[index]?.color,
+        fgColor: itemState.value[index]?.color ?? props.fgColor,
+        bgColor: props.bgColor,
         density: props.density,
         disabled: props.disabled,
         icon: itemState.value[index]?.icon,
@@ -218,9 +222,13 @@ export const VRating = genericComponent<VRatingSlots>()({
               'v-rating--readonly': props.readonly,
             },
             themeClasses.value,
+            colorClasses.value,
             props.class,
           ]}
-          style={ props.style }
+          style={[
+            colorStyles.value,
+            props.style,
+          ]}
         >
           <VRatingItem value={ 0 } index={ -1 } showStar={ false } />
 

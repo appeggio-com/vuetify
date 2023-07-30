@@ -30,7 +30,7 @@ import { genOverlays, makeVariantProps, useVariant } from '@/composables/variant
 import { Ripple } from '@/directives/ripple'
 
 // Utilities
-import { computed } from 'vue'
+import { computed, getCurrentInstance, onBeforeUnmount, onMounted } from 'vue'
 import { genericComponent, propsFactory, useRender } from '@/util'
 
 // Types
@@ -67,6 +67,8 @@ export const makeVBtnProps = propsFactory({
   },
 
   text: String,
+
+  hook: Function,
 
   ...makeBorderProps(),
   ...makeComponentProps(),
@@ -110,6 +112,18 @@ export const VBtn = genericComponent<VBtnSlots>()({
     const { sizeClasses, sizeStyles } = useSize(props)
     const group = useGroupItem(props, props.symbol, false)
     const link = useLink(props, attrs)
+
+    onMounted(() => {
+      if (props.hook) {
+        props.hook('mounted', getCurrentInstance())
+      }
+    })
+
+    onBeforeUnmount(() => {
+      if (props.hook) {
+        props.hook('unmount', getCurrentInstance())
+      }
+    })
 
     const isActive = computed(() => {
       if (props.active !== undefined) {
