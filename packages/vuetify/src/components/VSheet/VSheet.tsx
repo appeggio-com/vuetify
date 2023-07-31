@@ -3,7 +3,6 @@ import './VSheet.sass'
 
 // Composables
 import { makeBorderProps, useBorder } from '@/composables/border'
-import { useBackgroundColor } from '@/composables/color'
 import { makeComponentProps } from '@/composables/component'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
@@ -12,14 +11,14 @@ import { makePositionProps, usePosition } from '@/composables/position'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
-import { toRef } from 'vue'
 import { genericComponent, propsFactory, useRender } from '@/util'
 
 export const makeVSheetProps = propsFactory({
-  color: String,
 
+  ...makeColorsProps(),
   ...makeBorderProps(),
   ...makeComponentProps(),
   ...makeDimensionProps(),
@@ -38,7 +37,7 @@ export const VSheet = genericComponent()({
 
   setup (props, { slots }) {
     const { themeClasses } = provideTheme(props)
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
+    const { colorClasses, colorStyles } = useColors(props)
     const { borderClasses } = useBorder(props)
     const { dimensionStyles } = useDimension(props)
     const { elevationClasses } = useElevation(props)
@@ -51,7 +50,7 @@ export const VSheet = genericComponent()({
         class={[
           'v-sheet',
           themeClasses.value,
-          backgroundColorClasses.value,
+          colorClasses.value,
           borderClasses.value,
           elevationClasses.value,
           positionClasses.value,
@@ -59,7 +58,7 @@ export const VSheet = genericComponent()({
           props.class,
         ]}
         style={[
-          backgroundColorStyles.value,
+          colorStyles.value,
           dimensionStyles.value,
           locationStyles.value,
           props.style,
