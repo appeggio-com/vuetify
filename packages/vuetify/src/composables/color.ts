@@ -33,8 +33,8 @@ export function useColor (colors: Ref<{ background?: ColorValue, text?: ColorVal
 
     if (colors.value.text) {
       if (isCssColor(colors.value.text)) {
-        styles.color = colors.value.text
-        styles.caretColor = colors.value.text
+        styles.color = colors.value.text + ' !important'
+        styles.caretColor = colors.value.text + ' !important'
       } else {
         classes.push(`text-${colors.value.text}`)
       }
