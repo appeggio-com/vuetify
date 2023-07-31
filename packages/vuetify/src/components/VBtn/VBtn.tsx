@@ -68,7 +68,7 @@ export const makeVBtnProps = propsFactory({
 
   text: String,
 
-  hook: Function,
+  hook: [Function, Boolean],
 
   ...makeBorderProps(),
   ...makeComponentProps(),
@@ -114,13 +114,13 @@ export const VBtn = genericComponent<VBtnSlots>()({
     const link = useLink(props, attrs)
 
     onMounted(() => {
-      if (props.hook) {
+      if (typeof props.hook === 'function') {
         props.hook('mounted', getCurrentInstance())
       }
     })
 
     onBeforeUnmount(() => {
-      if (props.hook) {
+      if (typeof props.hook === 'function') {
         props.hook('unmount', getCurrentInstance())
       }
     })
