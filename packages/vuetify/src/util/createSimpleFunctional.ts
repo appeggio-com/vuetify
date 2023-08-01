@@ -1,5 +1,6 @@
 // Composables
 import { makeComponentProps, useComponentBase } from '@/composables/component'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { camelize, capitalize, h } from 'vue'
@@ -20,14 +21,16 @@ export function createSimpleFunctional (
       },
 
       ...makeComponentProps(),
+      ...makeColorsProps(),
     },
 
     setup (props, { slots }) {
       useComponentBase(props)
+      const { colorClasses, colorStyles } = useColors(props)
       return () => {
         return h(props.tag, {
-          class: [klass, props.class],
-          style: props.style,
+          class: [klass, colorClasses.value, props.class],
+          style: [colorStyles.value, props.style],
         }, slots.default?.())
       }
     },

@@ -13,6 +13,7 @@ import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeFocusProps, useFocus } from '@/composables/focus'
 import { useRtl } from '@/composables/locale'
 import { useProxiedModel } from '@/composables/proxiedModel'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, ref } from 'vue'
@@ -24,6 +25,7 @@ import type { VSliderSlots } from '../VSlider/VSlider'
 
 export const makeVRangeSliderProps = propsFactory({
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeFocusProps(),
   ...makeVInputProps(),
   ...makeSliderProps(),
@@ -49,6 +51,7 @@ export const VRangeSlider = genericComponent<VSliderSlots>()({
 
   setup (props, { slots, emit }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     const startThumbRef = ref<VSliderThumb>()
     const stopThumbRef = ref<VSliderThumb>()
     const inputRef = ref<VInput>()
@@ -143,9 +146,13 @@ export const VRangeSlider = genericComponent<VSliderSlots>()({
               'v-slider--disabled': props.disabled,
             },
             rtlClasses.value,
+            colorClasses.value,
             props.class,
           ]}
-          style={ props.style }
+          style={[
+            colorStyles.value,
+            props.style,
+          ]}
           ref={ inputRef }
           { ...inputProps }
           focused={ isFocused.value }

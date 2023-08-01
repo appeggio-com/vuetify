@@ -11,6 +11,7 @@ import { makeSelectionControlGroupProps, VSelectionControlGroup } from '@/compon
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { IconValue } from '@/composables/icons'
 import { useProxiedModel } from '@/composables/proxiedModel'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed } from 'vue'
@@ -29,6 +30,7 @@ export const makeVRadioGroupProps = propsFactory({
   },
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeVInputProps(),
   ...omit(makeSelectionControlGroupProps(), ['multiple']),
 
@@ -62,6 +64,7 @@ export const VRadioGroup = genericComponent<VRadioGroupSlots>()({
     const uid = getUid()
     const id = computed(() => props.id || `radio-group-${uid}`)
     const model = useProxiedModel(props, 'modelValue')
+    const { colorClasses, colorStyles } = useColors(props)
 
     useRender(() => {
       const [inputAttrs, controlAttrs] = filterInputAttrs(attrs)
@@ -78,9 +81,13 @@ export const VRadioGroup = genericComponent<VRadioGroupSlots>()({
         <VInput
           class={[
             'v-radio-group',
+            colorClasses.value,
             props.class,
           ]}
-          style={ props.style }
+          style={[
+            colorStyles.value,
+            props.style,
+          ]}
           { ...inputAttrs }
           { ...inputProps }
           v-model={ model.value }

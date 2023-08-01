@@ -10,6 +10,7 @@ import { useGroup } from '@/composables/group'
 import { useLocale, useRtl } from '@/composables/locale'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Directives
 import { Touch } from '@/directives/touch'
@@ -85,6 +86,7 @@ export const makeVWindowProps = propsFactory({
   },
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeTagProps(),
   ...makeThemeProps(),
 }, 'VWindow')
@@ -104,6 +106,7 @@ export const VWindow = genericComponent<VWindowSlots>()({
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     const { themeClasses } = provideTheme(props)
     const { isRtl } = useRtl()
     const { t } = useLocale()
@@ -225,9 +228,13 @@ export const VWindow = genericComponent<VWindowSlots>()({
             'v-window--show-arrows-on-hover': props.showArrows === 'hover',
           },
           themeClasses.value,
+          colorClasses.value,
           props.class,
         ]}
-        style={ props.style }
+        style={[
+          colorStyles.value,
+          props.style,
+        ]}
         v-touch={ touchOptions.value }
       >
         <div

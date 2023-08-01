@@ -21,7 +21,7 @@ import { makePositionProps, usePosition } from '@/composables/position'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
-import { makeColorsProps } from '@/composables/variant'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { toRef } from 'vue'
@@ -73,6 +73,7 @@ export const VBanner = genericComponent<VBannerSlots>()({
     const { locationStyles } = useLocation(props)
     const { positionClasses } = usePosition(props)
     const { roundedClasses } = useRounded(props)
+    const { colorClasses, colorStyles } = useColors(props)
 
     const { themeClasses } = provideTheme(props)
 
@@ -103,11 +104,13 @@ export const VBanner = genericComponent<VBannerSlots>()({
             positionClasses.value,
             roundedClasses.value,
             themeClasses.value,
+            colorClasses.value,
             props.class,
           ]}
           style={[
             dimensionStyles.value,
             locationStyles.value,
+            colorStyles.value,
             props.style,
           ]}
           role="banner"

@@ -1,7 +1,7 @@
 // Composables
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
-import { makeVariantProps } from '@/composables/variant'
+import { makeVariantProps, useVariant } from '@/composables/variant'
 
 // Utilities
 import { toRef } from 'vue'
@@ -19,9 +19,12 @@ export const VToolbarItems = genericComponent()({
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useVariant(props)
     provideDefaults({
       VBtn: {
+        bgColor: toRef(props, 'bgColor'),
         color: toRef(props, 'color'),
+        fgColor: toRef(props, 'fgColor'),
         height: 'inherit',
         variant: toRef(props, 'variant'),
       },
@@ -31,9 +34,13 @@ export const VToolbarItems = genericComponent()({
       <div
         class={[
           'v-toolbar-items',
+          colorClasses.value,
           props.class,
         ]}
-        style={ props.style }
+        style={[
+          colorStyles.value,
+          props.style,
+        ]}
       >
         { slots.default?.() }
       </div>

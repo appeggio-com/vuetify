@@ -2,7 +2,6 @@
 import './VSystemBar.sass'
 
 // Composables
-import { useBackgroundColor } from '@/composables/color'
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
 import { makeLayoutItemProps, useLayoutItem } from '@/composables/layout'
@@ -10,17 +9,18 @@ import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { useSsrBoot } from '@/composables/ssrBoot'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, shallowRef, toRef } from 'vue'
 import { genericComponent, propsFactory, useRender } from '@/util'
 
 export const makeVSystemBarProps = propsFactory({
-  color: String,
   height: [Number, String],
   window: Boolean,
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeElevationProps(),
   ...makeLayoutItemProps(),
   ...makeRoundedProps(),
@@ -36,7 +36,7 @@ export const VSystemBar = genericComponent()({
   setup (props, { slots }) {
     useComponentBase(props)
     const { themeClasses } = provideTheme(props)
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
+    const { colorClasses, colorStyles } = useColors(props)
     const { elevationClasses } = useElevation(props)
     const { roundedClasses } = useRounded(props)
     const { ssrBootStyles } = useSsrBoot()
@@ -57,13 +57,13 @@ export const VSystemBar = genericComponent()({
           'v-system-bar',
           { 'v-system-bar--window': props.window },
           themeClasses.value,
-          backgroundColorClasses.value,
+          colorClasses.value,
           elevationClasses.value,
           roundedClasses.value,
           props.class,
         ]}
         style={[
-          backgroundColorStyles.value,
+          colorStyles.value,
           layoutItemStyles.value,
           ssrBootStyles.value,
           props.style,

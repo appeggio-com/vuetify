@@ -10,6 +10,7 @@ import { useNestedGroupActivator, useNestedItem } from '@/composables/nested/nes
 import { useSsrBoot } from '@/composables/ssrBoot'
 import { makeTagProps } from '@/composables/tag'
 import { MaybeTransition } from '@/composables/transition'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, toRef } from 'vue'
@@ -34,7 +35,6 @@ export const makeVListGroupProps = propsFactory({
   /* @deprecated */
   activeColor: String,
   baseColor: String,
-  color: String,
   collapseIcon: {
     type: IconValue,
     default: '$collapse',
@@ -51,6 +51,7 @@ export const makeVListGroupProps = propsFactory({
   value: null,
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeTagProps(),
 }, 'VListGroup')
 
@@ -61,6 +62,7 @@ export const VListGroup = genericComponent<VListGroupSlots>()({
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     const { isOpen, open, id: _id } = useNestedItem(toRef(props, 'value'), true)
     const id = computed(() => `v-list-group--id-${String(_id.value)}`)
     const list = useList()
@@ -82,7 +84,9 @@ export const VListGroup = genericComponent<VListGroupSlots>()({
         active: isOpen.value,
         activeColor: props.activeColor,
         baseColor: props.baseColor,
+        bgColor: props.bgColor,
         color: props.color,
+        fgColor: props.fgColor,
         prependIcon: props.prependIcon || (props.subgroup && toggleIcon.value),
         appendIcon: props.appendIcon || (!props.subgroup && toggleIcon.value),
         title: props.title,
@@ -100,9 +104,13 @@ export const VListGroup = genericComponent<VListGroupSlots>()({
             'v-list-group--subgroup': props.subgroup,
             'v-list-group--open': isOpen.value,
           },
+          colorClasses.value,
           props.class,
         ]}
-        style={ props.style }
+        style={[
+          colorStyles.value,
+          props.style,
+        ]}
       >
         { slots.activator && (
           <VDefaultsProvider defaults={ activatorDefaults.value }>

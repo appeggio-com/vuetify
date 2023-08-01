@@ -11,6 +11,7 @@ import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useFocus } from '@/composables/focus'
 import { LoaderSlot, useLoader } from '@/composables/loader'
 import { useProxiedModel } from '@/composables/proxiedModel'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, ref } from 'vue'
@@ -35,6 +36,7 @@ export const makeVSwitchProps = propsFactory({
     default: false,
   },
 
+  ...makeColorsProps(),
   ...makeComponentProps(),
   ...makeVInputProps(),
   ...makeVSelectionControlProps(),
@@ -59,6 +61,7 @@ export const VSwitch = genericComponent<VSwitchSlots>()({
     const model = useProxiedModel(props, 'modelValue')
     const { loaderClasses } = useLoader(props)
     const { isFocused, focus, blur } = useFocus(props)
+    const { colorClasses, colorStyles } = useColors(props)
 
     const loaderColor = computed(() => {
       return typeof props.loading === 'string' && props.loading !== ''
@@ -94,9 +97,13 @@ export const VSwitch = genericComponent<VSwitchSlots>()({
             { 'v-switch--inset': props.inset },
             { 'v-switch--indeterminate': indeterminate.value },
             loaderClasses.value,
+            colorClasses.value,
             props.class,
           ]}
-          style={ props.style }
+          style={[
+            colorStyles.value,
+            props.style,
+          ]}
           { ...inputAttrs }
           { ...inputProps }
           id={ id.value }

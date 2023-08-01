@@ -5,6 +5,7 @@ import { makeVSelectionControlProps, VSelectionControl } from '@/components/VSel
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { IconValue } from '@/composables/icons'
 import { useProxiedModel } from '@/composables/proxiedModel'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed } from 'vue'
@@ -21,6 +22,7 @@ export const makeVCheckboxBtnProps = propsFactory({
   },
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeVSelectionControlProps({
     falseIcon: '$checkboxOff',
     trueIcon: '$checkboxOn',
@@ -41,6 +43,7 @@ export const VCheckboxBtn = genericComponent<VSelectionControlSlots>()({
     useComponentBase(props)
     const indeterminate = useProxiedModel(props, 'indeterminate')
     const model = useProxiedModel(props, 'modelValue')
+    const { colorClasses, colorStyles } = useColors(props)
 
     function onChange (v: any) {
       if (indeterminate.value) {
@@ -66,9 +69,13 @@ export const VCheckboxBtn = genericComponent<VSelectionControlSlots>()({
         v-model={ model.value }
         class={[
           'v-checkbox-btn',
+          colorClasses.value,
           props.class,
         ]}
-        style={ props.style }
+        style={[
+          colorStyles.value,
+          props.style,
+        ]}
         type="checkbox"
         onUpdate:modelValue={ onChange }
         falseIcon={ falseIcon.value }

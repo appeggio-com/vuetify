@@ -1,6 +1,7 @@
 // Composables
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeTagProps } from '@/composables/tag'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { genericComponent, propsFactory, useRender } from '@/util'
@@ -9,6 +10,7 @@ export const makeVToolbarTitleProps = propsFactory({
   text: String,
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeTagProps(),
 }, 'VToolbarTitle')
 
@@ -24,6 +26,7 @@ export const VToolbarTitle = genericComponent<VToolbarTitleSlots>()({
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     useRender(() => {
       const hasText = !!(slots.default || slots.text || props.text)
 
@@ -31,9 +34,13 @@ export const VToolbarTitle = genericComponent<VToolbarTitleSlots>()({
         <props.tag
           class={[
             'v-toolbar-title',
+            colorClasses.value,
             props.class,
           ]}
-          style={ props.style }
+          style={[
+            colorStyles.value,
+            props.style,
+          ]}
         >
           { hasText && (
             <div class="v-toolbar-title__placeholder">

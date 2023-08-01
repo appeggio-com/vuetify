@@ -10,7 +10,7 @@ import { makeElevationProps, useElevation } from '@/composables/elevation'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
-import { makeVariantProps } from '@/composables/variant'
+import { makeVariantProps, useVariant } from '@/composables/variant'
 
 // Utilities
 import { toRef } from 'vue'
@@ -41,11 +41,14 @@ export const VBtnGroup = genericComponent()({
     const { borderClasses } = useBorder(props)
     const { elevationClasses } = useElevation(props)
     const { roundedClasses } = useRounded(props)
+    const { colorClasses, colorStyles } = useVariant(props)
 
     provideDefaults({
       VBtn: {
         height: 'auto',
+        bgColor: toRef(props, 'bgColor'),
         color: toRef(props, 'color'),
+        fgColor: toRef(props, 'fgColor'),
         density: toRef(props, 'density'),
         flat: true,
         variant: toRef(props, 'variant'),
@@ -65,9 +68,13 @@ export const VBtnGroup = genericComponent()({
             densityClasses.value,
             elevationClasses.value,
             roundedClasses.value,
+            colorClasses.value,
             props.class,
           ]}
-          style={ props.style }
+          style={[
+            colorStyles.value,
+            props.style,
+          ]}
           v-slots={ slots }
         />
       )

@@ -12,6 +12,7 @@ import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { IconValue } from '@/composables/icons'
 import { useLocale } from '@/composables/locale'
 import { useProxiedModel } from '@/composables/proxiedModel'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { onMounted, ref, watch } from 'vue'
@@ -23,7 +24,6 @@ import type { VWindowSlots } from '@/components/VWindow/VWindow'
 import type { GroupProvide } from '@/composables/group'
 
 export const makeVCarouselProps = propsFactory({
-  color: String,
   cycle: Boolean,
   delimiterIcon: {
     type: IconValue,
@@ -44,6 +44,7 @@ export const makeVCarouselProps = propsFactory({
   verticalDelimiters: [Boolean, String] as PropType<boolean | 'left' | 'right'>,
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeVWindowProps({
     continuous: true,
     mandatory: 'force' as const,
@@ -75,6 +76,7 @@ export const VCarousel = genericComponent<VCarouselSlots>()({
     useComponentBase(props)
     const model = useProxiedModel(props, 'modelValue')
     const { t } = useLocale()
+    const { colorClasses, colorStyles } = useColors(props)
     const windowRef = ref<typeof VWindow>()
 
     let slideTimeout = -1
@@ -112,10 +114,12 @@ export const VCarousel = genericComponent<VCarouselSlots>()({
               'v-carousel--hide-delimiter-background': props.hideDelimiterBackground,
               'v-carousel--vertical-delimiters': props.verticalDelimiters,
             },
+            colorClasses.value,
             props.class,
           ]}
           style={[
             { height: convertToUnit(props.height) },
+            colorStyles.value,
             props.style,
           ]}
         >

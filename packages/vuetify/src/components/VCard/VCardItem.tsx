@@ -8,6 +8,7 @@ import { VDefaultsProvider } from '@/components/VDefaultsProvider'
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDensityProps } from '@/composables/density'
 import { IconValue } from '@/composables/icons'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { genericComponent, propsFactory, useRender } from '@/util'
@@ -29,6 +30,7 @@ export const makeCardItemProps = propsFactory({
   title: String,
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeDensityProps(),
 }, 'VCardItem')
 
@@ -39,6 +41,7 @@ export const VCardItem = genericComponent<VCardItemSlots>()({
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     useRender(() => {
       const hasPrependMedia = !!(props.prependAvatar || props.prependIcon)
       const hasPrepend = !!(hasPrependMedia || slots.prepend)
@@ -51,9 +54,13 @@ export const VCardItem = genericComponent<VCardItemSlots>()({
         <div
           class={[
             'v-card-item',
+            colorClasses.value,
             props.class,
           ]}
-          style={ props.style }
+          style={[
+            colorStyles.value,
+            props.style,
+          ]}
         >
           { hasPrepend && (
             <div key="prepend" class="v-card-item__prepend">

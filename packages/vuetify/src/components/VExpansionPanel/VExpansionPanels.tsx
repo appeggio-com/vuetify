@@ -7,6 +7,7 @@ import { provideDefaults } from '@/composables/defaults'
 import { makeGroupProps, useGroup } from '@/composables/group'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, toRef } from 'vue'
@@ -23,7 +24,6 @@ const allowedVariants = ['default', 'accordion', 'inset', 'popout'] as const
 type Variant = typeof allowedVariants[number]
 
 export const makeVExpansionPanelsProps = propsFactory({
-  color: String,
   variant: {
     type: String as PropType<Variant>,
     default: 'default',
@@ -32,6 +32,7 @@ export const makeVExpansionPanelsProps = propsFactory({
   readonly: Boolean,
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeGroupProps(),
   ...makeTagProps(),
   ...makeThemeProps(),
@@ -49,6 +50,7 @@ export const VExpansionPanels = genericComponent()({
   setup (props, { slots }) {
     useComponentBase(props)
     useGroup(props, VExpansionPanelSymbol)
+    const { colorClasses, colorStyles } = useColors(props)
 
     const { themeClasses } = provideTheme(props)
 
@@ -56,7 +58,9 @@ export const VExpansionPanels = genericComponent()({
 
     provideDefaults({
       VExpansionPanel: {
+        bgColor: toRef(props, 'bgColor'),
         color: toRef(props, 'color'),
+        fgColor: toRef(props, 'fgColor'),
       },
       VExpansionPanelTitle: {
         readonly: toRef(props, 'readonly'),
@@ -69,9 +73,13 @@ export const VExpansionPanels = genericComponent()({
           'v-expansion-panels',
           themeClasses.value,
           variantClass.value,
+          colorClasses.value,
           props.class,
         ]}
-        style={ props.style }
+        style={[
+          colorStyles.value,
+          props.style,
+        ]}
         v-slots={ slots }
       />
     ))

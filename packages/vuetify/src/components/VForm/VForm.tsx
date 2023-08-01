@@ -2,6 +2,7 @@
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { createForm, makeFormProps } from '@/composables/form'
 import { forwardRefs } from '@/composables/forwardRefs'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { ref } from 'vue'
@@ -12,6 +13,7 @@ import type { SubmitEventPromise } from '@/composables/form'
 
 export const makeVFormProps = propsFactory({
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeFormProps(),
 }, 'VForm')
 
@@ -33,6 +35,7 @@ export const VForm = genericComponent<VFormSlots>()({
     useComponentBase(props)
     const form = createForm(props)
     const formRef = ref<HTMLFormElement>()
+    const { colorClasses, colorStyles } = useColors(props)
 
     function onReset (e: Event) {
       e.preventDefault()
@@ -65,9 +68,13 @@ export const VForm = genericComponent<VFormSlots>()({
         ref={ formRef }
         class={[
           'v-form',
+          colorClasses.value,
           props.class,
         ]}
-        style={ props.style }
+        style={[
+          colorStyles.value,
+          props.style,
+        ]}
         novalidate
         onReset={ onReset }
         onSubmit={ onSubmit }

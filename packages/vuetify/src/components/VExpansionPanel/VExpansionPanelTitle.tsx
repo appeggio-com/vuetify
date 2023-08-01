@@ -3,9 +3,9 @@ import { VExpansionPanelSymbol } from './VExpansionPanels'
 import { VIcon } from '@/components/VIcon'
 
 // Composables
-import { useBackgroundColor } from '@/composables/color'
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { IconValue } from '@/composables/icons'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Directives
 import { Ripple } from '@/directives/ripple'
@@ -32,7 +32,6 @@ export type VExpansionPanelTitleSlots = {
 }
 
 export const makeVExpansionPanelTitleProps = propsFactory({
-  color: String,
   expandIcon: {
     type: IconValue,
     default: '$expand',
@@ -49,6 +48,7 @@ export const makeVExpansionPanelTitleProps = propsFactory({
   readonly: Boolean,
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
 }, 'VExpansionPanelTitle')
 
 export const VExpansionPanelTitle = genericComponent<VExpansionPanelTitleSlots>()({
@@ -60,11 +60,10 @@ export const VExpansionPanelTitle = genericComponent<VExpansionPanelTitleSlots>(
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     const expansionPanel = inject(VExpansionPanelSymbol)
 
     if (!expansionPanel) throw new Error('[Vuetify] v-expansion-panel-title needs to be placed inside v-expansion-panel')
-
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(props, 'color')
 
     const slotProps = computed(() => ({
       collapseIcon: props.collapseIcon,
@@ -81,11 +80,11 @@ export const VExpansionPanelTitle = genericComponent<VExpansionPanelTitleSlots>(
           {
             'v-expansion-panel-title--active': expansionPanel.isSelected.value,
           },
-          backgroundColorClasses.value,
+          colorClasses.value,
           props.class,
         ]}
         style={[
-          backgroundColorStyles.value,
+          colorStyles.value,
           props.style,
         ]}
         type="button"

@@ -20,7 +20,7 @@ import { makeRoundedProps } from '@/composables/rounded'
 import { makeSizeProps } from '@/composables/size'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
-import { makeVariantProps } from '@/composables/variant'
+import { makeVariantProps, useVariant } from '@/composables/variant'
 
 // Utilities
 import { computed, nextTick, shallowRef, toRef } from 'vue'
@@ -145,6 +145,7 @@ export const VPagination = genericComponent<VPaginationSlots>()({
 
   setup (props, { slots, emit }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useVariant(props)
     const page = useProxiedModel(props, 'modelValue')
     const { t, n } = useLocale()
     const { isRtl } = useRtl()
@@ -226,7 +227,9 @@ export const VPagination = genericComponent<VPaginationSlots>()({
 
     provideDefaults({
       VPaginationBtn: {
+        bgColor: toRef(props, 'bgColor'),
         color: toRef(props, 'color'),
+        fgColor: toRef(props, 'fgColor'),
         border: toRef(props, 'border'),
         density: toRef(props, 'density'),
         size: toRef(props, 'size'),
@@ -330,9 +333,13 @@ export const VPagination = genericComponent<VPaginationSlots>()({
         class={[
           'v-pagination',
           themeClasses.value,
+          colorClasses.value,
           props.class,
         ]}
-        style={ props.style }
+        style={[
+          colorStyles.value,
+          props.style,
+        ]}
         role="navigation"
         aria-label={ t(props.ariaLabel) }
         onKeydown={ onKeydown }

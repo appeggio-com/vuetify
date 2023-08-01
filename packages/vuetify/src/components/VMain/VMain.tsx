@@ -6,6 +6,7 @@ import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useLayout } from '@/composables/layout'
 import { useSsrBoot } from '@/composables/ssrBoot'
 import { makeTagProps } from '@/composables/tag'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { genericComponent, propsFactory, useRender } from '@/util'
@@ -14,6 +15,7 @@ export const makeVMainProps = propsFactory({
   scrollable: Boolean,
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeTagProps({ tag: 'main' }),
 }, 'VMain')
 
@@ -24,6 +26,7 @@ export const VMain = genericComponent()({
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     const { mainStyles } = useLayout()
     const { ssrBootStyles } = useSsrBoot()
 
@@ -32,11 +35,13 @@ export const VMain = genericComponent()({
         class={[
           'v-main',
           { 'v-main--scrollable': props.scrollable },
+          colorClasses.value,
           props.class,
         ]}
         style={[
           mainStyles.value,
           ssrBootStyles.value,
+          colorStyles.value,
           props.style,
         ]}
       >

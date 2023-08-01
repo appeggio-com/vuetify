@@ -9,7 +9,6 @@ import { VImg } from '@/components/VImg'
 
 // Composables
 import { makeBorderProps, useBorder } from '@/composables/border'
-import { useBackgroundColor } from '@/composables/color'
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
@@ -17,9 +16,10 @@ import { useRtl } from '@/composables/locale'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
-import { computed, shallowRef, toRef } from 'vue'
+import { computed, shallowRef } from 'vue'
 import { convertToUnit, genericComponent, propsFactory, useRender } from '@/util'
 
 // Types
@@ -32,7 +32,6 @@ export type Density = null | 'prominent' | 'default' | 'comfortable' | 'compact'
 export const makeVToolbarProps = propsFactory({
   absolute: Boolean,
   collapse: Boolean,
-  color: String,
   density: {
     type: String as PropType<Density>,
     default: 'default',
@@ -54,6 +53,7 @@ export const makeVToolbarProps = propsFactory({
 
   ...makeBorderProps(),
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeElevationProps(),
   ...makeRoundedProps(),
   ...makeTagProps({ tag: 'header' }),
@@ -76,7 +76,7 @@ export const VToolbar = genericComponent<VToolbarSlots>()({
 
   setup (props, { slots }) {
     useComponentBase(props)
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
+    const { colorClasses, colorStyles } = useColors(props)
     const { borderClasses } = useBorder(props)
     const { elevationClasses } = useElevation(props)
     const { roundedClasses } = useRounded(props)
@@ -124,7 +124,7 @@ export const VToolbar = genericComponent<VToolbarSlots>()({
               'v-toolbar--floating': props.floating,
               [`v-toolbar--density-${props.density}`]: true,
             },
-            backgroundColorClasses.value,
+            colorClasses.value,
             borderClasses.value,
             elevationClasses.value,
             roundedClasses.value,
@@ -133,7 +133,7 @@ export const VToolbar = genericComponent<VToolbarSlots>()({
             props.class,
           ]}
           style={[
-            backgroundColorStyles.value,
+            colorStyles.value,
             props.style,
           ]}
         >

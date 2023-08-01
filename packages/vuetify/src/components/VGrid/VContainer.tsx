@@ -5,6 +5,7 @@ import './VGrid.sass'
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useRtl } from '@/composables/locale'
 import { makeTagProps } from '@/composables/tag'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { genericComponent, propsFactory, useRender } from '@/util'
@@ -16,6 +17,7 @@ export const makeVContainerProps = propsFactory({
   },
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeTagProps(),
 }, 'VContainer')
 
@@ -27,6 +29,7 @@ export const VContainer = genericComponent()({
   setup (props, { slots }) {
     useComponentBase(props)
     const { rtlClasses } = useRtl()
+    const { colorClasses, colorStyles } = useColors(props)
 
     useRender(() => (
       <props.tag
@@ -34,9 +37,13 @@ export const VContainer = genericComponent()({
           'v-container',
           { 'v-container--fluid': props.fluid },
           rtlClasses.value,
+          colorClasses.value,
           props.class,
         ]}
-        style={ props.style }
+        style={[
+          colorStyles.value,
+          props.style,
+        ]}
         v-slots={ slots }
       />
     ))

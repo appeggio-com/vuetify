@@ -7,6 +7,7 @@ import { VSlideYTransition } from '@/components/transitions'
 // Composables
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeTransitionProps, MaybeTransition } from '@/composables/transition'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed } from 'vue'
@@ -24,6 +25,7 @@ export const makeVCounterProps = propsFactory({
   },
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeTransitionProps({
     transition: { component: VSlideYTransition as Component },
   }),
@@ -48,6 +50,7 @@ export const VCounter = genericComponent<VCounterSlots>()({
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     const counter = computed(() => {
       return props.max ? `${props.value} / ${props.max}` : String(props.value)
     })
@@ -58,9 +61,13 @@ export const VCounter = genericComponent<VCounterSlots>()({
           v-show={ props.active }
           class={[
             'v-counter',
+            colorClasses.value,
             props.class,
           ]}
-          style={ props.style }
+          style={[
+            colorStyles.value,
+            props.style,
+          ]}
         >
           { slots.default
             ? slots.default({

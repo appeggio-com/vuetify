@@ -3,6 +3,7 @@ import { makeVToolbarTitleProps, VToolbarTitle } from '@/components/VToolbar/VTo
 
 // Composables
 import { makeComponentProps, useComponentBase } from '@/composables/component'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { genericComponent, useRender } from '@/util'
@@ -15,15 +16,21 @@ export const VAppBarTitle = genericComponent<VToolbarTitleSlots>()({
 
   props: {
     ...makeComponentProps(),
+    ...makeColorsProps(),
     ...makeVToolbarTitleProps(),
   },
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     useRender(() => (
       <VToolbarTitle
         { ...props }
-        class="v-app-bar-title"
+        class={[
+          'v-app-bar-title',
+          colorClasses.value,
+        ]}
+        style={ colorStyles.value }
         v-slots={ slots }
       />
     ))

@@ -9,6 +9,7 @@ import { makeVInputProps, VInput } from '@/components/VInput/VInput'
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useFocus } from '@/composables/focus'
 import { useProxiedModel } from '@/composables/proxiedModel'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed } from 'vue'
@@ -22,6 +23,7 @@ export type VCheckboxSlots = VInputSlots & VSelectionControlSlots
 
 export const makeVCheckboxProps = propsFactory({
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeVInputProps(),
   ...omit(makeVCheckboxBtnProps(), ['inline']),
 }, 'VCheckbox')
@@ -42,6 +44,7 @@ export const VCheckbox = genericComponent<VCheckboxSlots>()({
     useComponentBase(props)
     const model = useProxiedModel(props, 'modelValue')
     const { isFocused, focus, blur } = useFocus(props)
+    const { colorClasses, colorStyles } = useColors(props)
 
     const uid = getUid()
     const id = computed(() => props.id || `checkbox-${uid}`)
@@ -55,6 +58,7 @@ export const VCheckbox = genericComponent<VCheckboxSlots>()({
         <VInput
           class={[
             'v-checkbox',
+            colorClasses.value,
             props.class,
           ]}
           { ...inputAttrs }
@@ -62,7 +66,10 @@ export const VCheckbox = genericComponent<VCheckboxSlots>()({
           v-model={ model.value }
           id={ id.value }
           focused={ isFocused.value }
-          style={ props.style }
+          style={[
+            props.style,
+            colorStyles.value,
+          ]}
         >
           {{
             ...slots,

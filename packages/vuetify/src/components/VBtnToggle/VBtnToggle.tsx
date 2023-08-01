@@ -7,6 +7,7 @@ import { makeVBtnGroupProps, VBtnGroup } from '@/components/VBtnGroup/VBtnGroup'
 // Composables
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeGroupProps, useGroup } from '@/composables/group'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { genericComponent, propsFactory, useRender } from '@/util'
@@ -26,6 +27,7 @@ type VBtnToggleSlots = {
 
 export const makeVBtnToggleProps = propsFactory({
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeVBtnGroupProps(),
   ...makeGroupProps(),
 }, 'VBtnToggle')
@@ -42,6 +44,7 @@ export const VBtnToggle = genericComponent<VBtnToggleSlots>()({
   setup (props, { slots }) {
     useComponentBase(props)
     const { isSelected, next, prev, select, selected } = useGroup(props, VBtnToggleSymbol)
+    const { colorClasses, colorStyles } = useColors(props)
 
     useRender(() => {
       const [btnGroupProps] = VBtnGroup.filterProps(props)
@@ -50,10 +53,14 @@ export const VBtnToggle = genericComponent<VBtnToggleSlots>()({
         <VBtnGroup
           class={[
             'v-btn-toggle',
+            colorClasses.value,
             props.class,
           ]}
           { ...btnGroupProps }
-          style={ props.style }
+          style={[
+            colorStyles.value,
+            props.style,
+          ]}
         >
           { slots.default?.({
             isSelected,

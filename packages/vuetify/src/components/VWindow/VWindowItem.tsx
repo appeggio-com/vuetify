@@ -4,6 +4,7 @@ import { makeGroupItemProps, useGroupItem } from '@/composables/group'
 import { makeLazyProps, useLazy } from '@/composables/lazy'
 import { useSsrBoot } from '@/composables/ssrBoot'
 import { MaybeTransition } from '@/composables/transition'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Directives
 import Touch from '@/directives/touch'
@@ -26,6 +27,7 @@ export const makeVWindowItemProps = propsFactory({
   },
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeGroupItemProps(),
   ...makeLazyProps(),
 }, 'VWindowItem')
@@ -45,6 +47,7 @@ export const VWindowItem = genericComponent()({
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     const window = inject(VWindowSymbol)
     const groupItem = useGroupItem(props, VWindowGroupSymbol)
     const { isBooted } = useSsrBoot()
@@ -136,9 +139,13 @@ export const VWindowItem = genericComponent()({
           class={[
             'v-window-item',
             groupItem.selectedClass.value,
+            colorClasses.value,
             props.class,
           ]}
-          style={ props.style }
+          style={[
+            colorStyles.value,
+            props.style,
+          ]}
           v-show={ groupItem.isSelected.value }
         >
           { hasContent.value && slots.default?.() }

@@ -6,6 +6,7 @@ import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { convertToUnit, genericComponent, propsFactory, useRender } from '@/util'
@@ -24,6 +25,7 @@ export const makeVTableProps = propsFactory({
   hover: Boolean,
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeDensityProps(),
   ...makeTagProps(),
   ...makeThemeProps(),
@@ -36,6 +38,7 @@ export const VTable = genericComponent<VTableSlots>()({
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     const { themeClasses } = provideTheme(props)
     const { densityClasses } = useDensity(props)
 
@@ -53,9 +56,13 @@ export const VTable = genericComponent<VTableSlots>()({
           },
           themeClasses.value,
           densityClasses.value,
+          colorClasses.value,
           props.class,
         ]}
-        style={ props.style }
+        style={[
+          colorStyles.value,
+          props.style,
+        ]}
       >
         { slots.top?.() }
 

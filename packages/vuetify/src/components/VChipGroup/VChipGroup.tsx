@@ -7,7 +7,7 @@ import { provideDefaults } from '@/composables/defaults'
 import { makeGroupProps, useGroup } from '@/composables/group'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
-import { makeVariantProps } from '@/composables/variant'
+import { makeVariantProps, useVariant } from '@/composables/variant'
 
 // Utilities
 import { toRef } from 'vue'
@@ -54,12 +54,15 @@ export const VChipGroup = genericComponent<VChipGroupSlots>()({
 
   setup (props, { slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useVariant(props)
     const { themeClasses } = provideTheme(props)
     const { isSelected, select, next, prev, selected } = useGroup(props, VChipGroupSymbol)
 
     provideDefaults({
       VChip: {
+        bgColor: toRef(props, 'bgColor'),
         color: toRef(props, 'color'),
+        fgColor: toRef(props, 'fgColor'),
         disabled: toRef(props, 'disabled'),
         filter: toRef(props, 'filter'),
         variant: toRef(props, 'variant'),
@@ -74,9 +77,13 @@ export const VChipGroup = genericComponent<VChipGroupSlots>()({
             'v-chip-group--column': props.column,
           },
           themeClasses.value,
+          colorClasses.value,
           props.class,
         ]}
-        style={ props.style }
+        style={[
+          colorStyles.value,
+          props.style,
+        ]}
       >
         { slots.default?.({
           isSelected,

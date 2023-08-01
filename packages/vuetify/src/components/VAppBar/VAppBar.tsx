@@ -11,6 +11,7 @@ import { useProxiedModel } from '@/composables/proxiedModel'
 import { makeScrollProps, useScroll } from '@/composables/scroll'
 import { useSsrBoot } from '@/composables/ssrBoot'
 import { useToggleScope } from '@/composables/toggleScope'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed, ref, shallowRef, toRef, watchEffect } from 'vue'
@@ -33,6 +34,7 @@ export const makeVAppBarProps = propsFactory({
   },
 
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeVToolbarProps(),
   ...makeLayoutItemProps(),
   ...makeScrollProps(),
@@ -56,6 +58,7 @@ export const VAppBar = genericComponent<VToolbarSlots>()({
     useComponentBase(props)
     const vToolbarRef = ref<VToolbar>()
     const isActive = useProxiedModel(props, 'modelValue')
+    const { colorClasses, colorStyles } = useColors(props)
     const scrollBehavior = computed(() => {
       const behavior = new Set(props.scrollBehavior?.split(' ') ?? [])
       return {
@@ -146,6 +149,7 @@ export const VAppBar = genericComponent<VToolbarSlots>()({
             {
               'v-app-bar--bottom': props.location === 'bottom',
             },
+            colorClasses.value,
             props.class,
           ]}
           style={[
@@ -155,6 +159,7 @@ export const VAppBar = genericComponent<VToolbarSlots>()({
               height: undefined,
               ...ssrBootStyles.value,
             },
+            colorStyles.value,
             props.style,
           ]}
           { ...toolbarProps }
