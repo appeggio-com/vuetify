@@ -2,7 +2,7 @@
 import './VChipGroup.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeGroupProps, useGroup } from '@/composables/group'
 import { makeTagProps } from '@/composables/tag'
@@ -53,6 +53,7 @@ export const VChipGroup = genericComponent<VChipGroupSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { themeClasses } = provideTheme(props)
     const { isSelected, select, next, prev, selected } = useGroup(props, VChipGroupSymbol)
 

@@ -6,6 +6,7 @@ import { VTab } from './VTab'
 import { makeVSlideGroupProps, VSlideGroup } from '@/components/VSlideGroup/VSlideGroup'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { useProxiedModel } from '@/composables/proxiedModel'
@@ -51,6 +52,7 @@ export const makeVTabsProps = propsFactory({
   hideSlider: Boolean,
   sliderColor: String,
 
+  ...makeComponentProps(),
   ...makeColorsProps(),
   ...makeVSlideGroupProps({ mandatory: 'force' as const }),
   ...makeDensityProps(),
@@ -67,6 +69,7 @@ export const VTabs = genericComponent()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const model = useProxiedModel(props, 'modelValue')
     const parsedItems = computed(() => parseItems(props.items))
     const { densityClasses } = useDensity(props)

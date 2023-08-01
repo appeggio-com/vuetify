@@ -3,7 +3,7 @@ import './VProgressLinear.sass'
 
 // Composables
 import { useBackgroundColor, useTextColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useIntersectionObserver } from '@/composables/intersectionObserver'
 import { useRtl } from '@/composables/locale'
 import { makeLocationProps, useLocation } from '@/composables/location'
@@ -70,6 +70,7 @@ export const VProgressLinear = genericComponent<VProgressLinearSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const progress = useProxiedModel(props, 'modelValue')
     const { isRtl, rtlClasses } = useRtl()
     const { themeClasses } = provideTheme(props)

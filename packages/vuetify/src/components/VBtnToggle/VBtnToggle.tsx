@@ -5,6 +5,7 @@ import './VBtnToggle.sass'
 import { makeVBtnGroupProps, VBtnGroup } from '@/components/VBtnGroup/VBtnGroup'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeGroupProps, useGroup } from '@/composables/group'
 
 // Utilities
@@ -24,6 +25,7 @@ type VBtnToggleSlots = {
 }
 
 export const makeVBtnToggleProps = propsFactory({
+  ...makeComponentProps(),
   ...makeVBtnGroupProps(),
   ...makeGroupProps(),
 }, 'VBtnToggle')
@@ -38,6 +40,7 @@ export const VBtnToggle = genericComponent<VBtnToggleSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { isSelected, next, prev, select, selected } = useGroup(props, VBtnToggleSymbol)
 
     useRender(() => {

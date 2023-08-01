@@ -1,5 +1,5 @@
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeTagProps } from '@/composables/tag'
 
 // Utilities
@@ -19,6 +19,7 @@ export const VListItemMedia = genericComponent()({
   props: makeVListItemMediaProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     useRender(() => {
       return (
         <props.tag

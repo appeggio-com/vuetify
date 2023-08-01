@@ -5,6 +5,7 @@ import './VAppBar.sass'
 import { makeVToolbarProps, VToolbar } from '@/components/VToolbar/VToolbar'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeLayoutItemProps, useLayoutItem } from '@/composables/layout'
 import { useProxiedModel } from '@/composables/proxiedModel'
 import { makeScrollProps, useScroll } from '@/composables/scroll'
@@ -31,6 +32,7 @@ export const makeVAppBarProps = propsFactory({
     validator: (value: any) => ['top', 'bottom'].includes(value),
   },
 
+  ...makeComponentProps(),
   ...makeVToolbarProps(),
   ...makeLayoutItemProps(),
   ...makeScrollProps(),
@@ -51,6 +53,7 @@ export const VAppBar = genericComponent<VToolbarSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const vToolbarRef = ref<VToolbar>()
     const isActive = useProxiedModel(props, 'modelValue')
     const scrollBehavior = computed(() => {

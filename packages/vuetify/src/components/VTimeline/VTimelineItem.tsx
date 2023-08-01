@@ -2,7 +2,7 @@
 import { VTimelineDivider } from './VTimelineDivider'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { makeElevationProps } from '@/composables/elevation'
 import { IconValue } from '@/composables/icons'
@@ -51,6 +51,7 @@ export const VTimelineItem = genericComponent<VTimelineItemSlots>()({
   props: makeVTimelineItemProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { dimensionStyles } = useDimension(props)
 
     const dotSize = shallowRef(0)

@@ -3,7 +3,7 @@ import { VExpansionPanelSymbol } from './VExpansionPanels'
 import { VExpandTransition } from '@/components/transitions'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeLazyProps, useLazy } from '@/composables/lazy'
 
 // Utilities
@@ -21,6 +21,7 @@ export const VExpansionPanelText = genericComponent()({
   props: makeVExpansionPanelTextProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const expansionPanel = inject(VExpansionPanelSymbol)
 
     if (!expansionPanel) throw new Error('[Vuetify] v-expansion-panel-text needs to be placed inside v-expansion-panel')

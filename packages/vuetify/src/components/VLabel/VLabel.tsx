@@ -2,7 +2,7 @@
 import './VLabel.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeThemeProps } from '@/composables/theme'
 
 // Utilities
@@ -22,6 +22,7 @@ export const VLabel = genericComponent()({
   props: makeVLabelProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     useRender(() => (
       <label
         class={[

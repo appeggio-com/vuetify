@@ -3,7 +3,7 @@ import './VGrid.sass'
 
 // Composables
 import { makeDimensionProps, useDimension } from '../../composables/dimensions'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { breakpoints } from '@/composables/display'
 import { makeTagProps } from '@/composables/tag'
 import { makeColorsProps, useColors } from '@/composables/variant'
@@ -122,6 +122,7 @@ export const VRow = genericComponent()({
   props: makeVRowProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { dimensionStyles } = useDimension(props)
     const { colorClasses, colorStyles } = useColors(props)
     const classes = computed(() => {

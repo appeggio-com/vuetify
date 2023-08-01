@@ -6,7 +6,7 @@ import { VSlideYTransition } from '@/components/transitions'
 
 // Composables
 import { useTextColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeTransitionProps, MaybeTransition } from '@/composables/transition'
 
 // Utilities
@@ -48,6 +48,7 @@ export const VMessages = genericComponent<VMessagesSlots>()({
   props: makeVMessagesProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const messages = computed(() => wrapInArray(props.messages))
     const { textColorClasses, textColorStyles } = useTextColor(computed(() => props.color))
 

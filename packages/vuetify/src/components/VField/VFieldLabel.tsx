@@ -2,7 +2,7 @@
 import { VLabel } from '@/components/VLabel'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 
 // Utilities
 import { genericComponent, propsFactory, useRender } from '@/util'
@@ -19,6 +19,7 @@ export const VFieldLabel = genericComponent()({
   props: makeVFieldLabelProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     useRender(() => (
       <VLabel
         class={[

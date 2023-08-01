@@ -1,5 +1,5 @@
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { createForm, makeFormProps } from '@/composables/form'
 import { forwardRefs } from '@/composables/forwardRefs'
 
@@ -30,6 +30,7 @@ export const VForm = genericComponent<VFormSlots>()({
   },
 
   setup (props, { slots, emit }) {
+    useComponentBase(props)
     const form = createForm(props)
     const formRef = ref<HTMLFormElement>()
 

@@ -1,5 +1,5 @@
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 
 // Utilities
@@ -18,6 +18,7 @@ export const VBannerActions = genericComponent()({
   props: makeVBannerActionsProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     provideDefaults({
       VBtn: {
         color: props.color,

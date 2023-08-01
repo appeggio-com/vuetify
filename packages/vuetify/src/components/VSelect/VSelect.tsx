@@ -14,6 +14,7 @@ import { VVirtualScroll } from '@/components/VVirtualScroll'
 
 // Composables
 import { useScrolling } from './useScrolling'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useForm } from '@/composables/form'
 import { forwardRefs } from '@/composables/forwardRefs'
 import { IconValue } from '@/composables/icons'
@@ -69,6 +70,7 @@ export const makeSelectProps = propsFactory({
     default: deepEqual,
   },
 
+  ...makeComponentProps(),
   ...makeItemsProps({ itemChildren: false }),
 }, 'Select')
 
@@ -114,6 +116,7 @@ export const VSelect = genericComponent<new <
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { t } = useLocale()
     const vTextFieldRef = ref()
     const vMenuRef = ref<VMenu>()

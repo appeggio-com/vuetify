@@ -7,7 +7,7 @@ import { VBtn } from '../VBtn'
 // Composables
 import { useDisplay } from '@/composables'
 import { makeBorderProps } from '@/composables/border'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeDensityProps } from '@/composables/density'
 import { makeElevationProps } from '@/composables/elevation'
@@ -144,6 +144,7 @@ export const VPagination = genericComponent<VPaginationSlots>()({
   },
 
   setup (props, { slots, emit }) {
+    useComponentBase(props)
     const page = useProxiedModel(props, 'modelValue')
     const { t, n } = useLocale()
     const { isRtl } = useRtl()

@@ -6,7 +6,7 @@ import { VBtnToggleSymbol } from '@/components/VBtnToggle/VBtnToggle'
 
 // Composables
 import { makeBorderProps, useBorder } from '@/composables/border'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
@@ -62,6 +62,7 @@ export const VBottomNavigation = genericComponent()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { themeClasses } = useTheme()
     const { borderClasses } = useBorder(props)
     const { colorClasses, colorStyles } = useColors(props)

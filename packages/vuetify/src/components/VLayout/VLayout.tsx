@@ -2,7 +2,7 @@
 import './VLayout.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { createLayout, makeLayoutProps } from '@/composables/layout'
 
 // Utilities
@@ -19,6 +19,7 @@ export const VLayout = genericComponent()({
   props: makeVLayoutProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { layoutClasses, layoutStyles, getLayoutItem, items, layoutRef } = createLayout(props)
 
     useRender(() => (

@@ -5,7 +5,7 @@ import './VWindow.sass'
 import { VBtn } from '@/components/VBtn'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useGroup } from '@/composables/group'
 import { useLocale, useRtl } from '@/composables/locale'
 import { makeTagProps } from '@/composables/tag'
@@ -103,6 +103,7 @@ export const VWindow = genericComponent<VWindowSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { themeClasses } = provideTheme(props)
     const { isRtl } = useRtl()
     const { t } = useLocale()

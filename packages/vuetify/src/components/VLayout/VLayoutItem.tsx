@@ -2,7 +2,7 @@
 import './VLayoutItem.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeLayoutItemProps, useLayoutItem } from '@/composables/layout'
 
 // Utilities
@@ -33,6 +33,7 @@ export const VLayoutItem = genericComponent()({
   props: makeVLayoutItemProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { layoutItemStyles } = useLayoutItem({
       id: props.name,
       order: computed(() => parseInt(props.order, 10)),

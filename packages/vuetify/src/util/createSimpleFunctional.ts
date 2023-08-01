@@ -1,5 +1,5 @@
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 
 // Utilities
 import { camelize, capitalize, h } from 'vue'
@@ -23,6 +23,7 @@ export function createSimpleFunctional (
     },
 
     setup (props, { slots }) {
+      useComponentBase(props)
       return () => {
         return h(props.tag, {
           class: [klass, props.class],

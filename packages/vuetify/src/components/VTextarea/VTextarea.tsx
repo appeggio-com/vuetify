@@ -9,6 +9,7 @@ import { filterFieldProps, makeVFieldProps } from '@/components/VField/VField'
 import { makeVInputProps, VInput } from '@/components/VInput/VInput'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useFocus } from '@/composables/focus'
 import { forwardRefs } from '@/composables/forwardRefs'
 import { useProxiedModel } from '@/composables/proxiedModel'
@@ -48,6 +49,7 @@ export const makeVTextareaProps = propsFactory({
   suffix: String,
   modelModifiers: Object as PropType<Record<string, boolean>>,
 
+  ...makeComponentProps(),
   ...makeVInputProps(),
   ...makeVFieldProps(),
 }, 'VTextarea')
@@ -73,6 +75,7 @@ export const VTextarea = genericComponent<VTextareaSlots>()({
   },
 
   setup (props, { attrs, emit, slots }) {
+    useComponentBase(props)
     const model = useProxiedModel(props, 'modelValue')
     const { isFocused, focus, blur } = useFocus(props)
     const counterValue = computed(() => {

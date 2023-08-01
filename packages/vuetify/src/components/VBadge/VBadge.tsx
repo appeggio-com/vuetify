@@ -5,7 +5,7 @@ import './VBadge.sass'
 import { VIcon } from '@/components/VIcon'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { IconValue } from '@/composables/icons'
 import { useLocale } from '@/composables/locale'
 import { makeLocationProps, useLocation } from '@/composables/location'
@@ -59,6 +59,7 @@ export const VBadge = genericComponent<VBadgeSlots>()({
   props: makeVBadgeProps(),
 
   setup (props, ctx) {
+    useComponentBase(props)
     const { colorClasses, colorStyles } = useColors(props)
     const { roundedClasses } = useRounded(props)
     const { t } = useLocale()

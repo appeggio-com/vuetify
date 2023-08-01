@@ -2,7 +2,7 @@
 import './VTimeline.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { useRtl } from '@/composables/locale'
@@ -67,6 +67,7 @@ export const VTimeline = genericComponent()({
   props: makeVTimelineProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { themeClasses } = provideTheme(props)
     const { densityClasses } = useDensity(props)
     const { rtlClasses } = useRtl()

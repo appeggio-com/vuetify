@@ -6,7 +6,7 @@ import { VImg } from '@/components/VImg'
 
 // Composables
 import { useDisplay } from '@/composables'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useIntersectionObserver } from '@/composables/intersectionObserver'
 import { useResizeObserver } from '@/composables/resizeObserver'
 
@@ -36,6 +36,7 @@ export const VParallax = genericComponent<VImgSlots>()({
   props: makeVParallaxProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { intersectionRef, isIntersecting } = useIntersectionObserver()
     const { resizeRef, contentRect } = useResizeObserver()
     const { height: displayHeight } = useDisplay()

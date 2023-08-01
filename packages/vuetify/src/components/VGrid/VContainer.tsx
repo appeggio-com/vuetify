@@ -2,7 +2,7 @@
 import './VGrid.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useRtl } from '@/composables/locale'
 import { makeTagProps } from '@/composables/tag'
 
@@ -25,6 +25,7 @@ export const VContainer = genericComponent()({
   props: makeVContainerProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { rtlClasses } = useRtl()
 
     useRender(() => (

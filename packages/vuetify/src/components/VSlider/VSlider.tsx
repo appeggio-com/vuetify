@@ -9,6 +9,7 @@ import { VLabel } from '@/components/VLabel'
 
 // Composables
 import { makeSliderProps, useSlider, useSteps } from './slider'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeFocusProps, useFocus } from '@/composables/focus'
 import { useRtl } from '@/composables/locale'
 import { useProxiedModel } from '@/composables/proxiedModel'
@@ -27,6 +28,7 @@ export type VSliderSlots = VInputSlots & {
 }
 
 export const makeVSliderProps = propsFactory({
+  ...makeComponentProps(),
   ...makeFocusProps(),
   ...makeSliderProps(),
   ...makeVInputProps(),
@@ -50,6 +52,7 @@ export const VSlider = genericComponent<VSliderSlots>()({
   },
 
   setup (props, { slots, emit }) {
+    useComponentBase(props)
     const thumbContainerRef = ref()
     const { rtlClasses } = useRtl()
 

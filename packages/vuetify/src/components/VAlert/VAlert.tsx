@@ -9,7 +9,7 @@ import { VIcon } from '@/components/VIcon'
 
 // Composables
 import { useTextColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
@@ -104,6 +104,7 @@ export const VAlert = genericComponent<VAlertSlots>()({
   },
 
   setup (props, { emit, slots }) {
+    useComponentBase(props)
     const isActive = useProxiedModel(props, 'modelValue')
     const icon = computed(() => {
       if (props.icon === false) return undefined

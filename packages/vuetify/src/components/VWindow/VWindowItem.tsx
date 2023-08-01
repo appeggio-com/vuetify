@@ -1,5 +1,5 @@
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeGroupItemProps, useGroupItem } from '@/composables/group'
 import { makeLazyProps, useLazy } from '@/composables/lazy'
 import { useSsrBoot } from '@/composables/ssrBoot'
@@ -44,6 +44,7 @@ export const VWindowItem = genericComponent()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const window = inject(VWindowSymbol)
     const groupItem = useGroupItem(props, VWindowGroupSymbol)
     const { isBooted } = useSsrBoot()

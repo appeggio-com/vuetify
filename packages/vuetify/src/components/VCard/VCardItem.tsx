@@ -5,7 +5,7 @@ import { VAvatar } from '@/components/VAvatar'
 import { VDefaultsProvider } from '@/components/VDefaultsProvider'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDensityProps } from '@/composables/density'
 import { IconValue } from '@/composables/icons'
 
@@ -38,6 +38,7 @@ export const VCardItem = genericComponent<VCardItemSlots>()({
   props: makeCardItemProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     useRender(() => {
       const hasPrependMedia = !!(props.prependAvatar || props.prependIcon)
       const hasPrepend = !!(hasPrependMedia || slots.prepend)

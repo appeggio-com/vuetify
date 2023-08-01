@@ -4,7 +4,7 @@ import { VIcon } from '@/components/VIcon'
 
 // Composables
 import { useBackgroundColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
 import { IconValue } from '@/composables/icons'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
@@ -34,6 +34,7 @@ export const VTimelineDivider = genericComponent()({
   props: makeVTimelineDividerProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { sizeClasses, sizeStyles } = useSize(props, 'v-timeline-divider__dot')
     const { backgroundColorStyles, backgroundColorClasses } = useBackgroundColor(toRef(props, 'dotColor'))
     const { roundedClasses } = useRounded(props, 'v-timeline-divider__dot')

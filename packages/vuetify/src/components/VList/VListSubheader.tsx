@@ -1,6 +1,6 @@
 // Composables
 import { useTextColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeTagProps } from '@/composables/tag'
 
 // Utilities
@@ -23,6 +23,7 @@ export const VListSubheader = genericComponent()({
   props: makeVListSubheaderProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'color'))
 
     useRender(() => {

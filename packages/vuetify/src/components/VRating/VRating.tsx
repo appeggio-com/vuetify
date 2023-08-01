@@ -5,7 +5,7 @@ import './VRating.sass'
 import { VBtn } from '@/components/VBtn'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDensityProps } from '@/composables/density'
 import { IconValue } from '@/composables/icons'
 import { useLocale } from '@/composables/locale'
@@ -99,6 +99,7 @@ export const VRating = genericComponent<VRatingSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { t } = useLocale()
     const { themeClasses } = provideTheme(props)
     const rating = useProxiedModel(props, 'modelValue')

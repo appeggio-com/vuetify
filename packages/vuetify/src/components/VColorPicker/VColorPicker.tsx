@@ -9,6 +9,7 @@ import { VColorPickerSwatches } from './VColorPickerSwatches'
 import { makeVSheetProps, VSheet } from '@/components/VSheet/VSheet'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { useRtl } from '@/composables/locale'
 import { useProxiedModel } from '@/composables/proxiedModel'
@@ -55,6 +56,7 @@ export const makeVColorPickerProps = propsFactory({
     type: [Object, String] as PropType<Record<string, unknown> | string | undefined | null>,
   },
 
+  ...makeComponentProps(),
   ...omit(makeVSheetProps({ width: 300 }), [
     'height',
     'location',
@@ -76,6 +78,7 @@ export const VColorPicker = defineComponent({
   },
 
   setup (props) {
+    useComponentBase(props)
     const mode = useProxiedModel(props, 'mode')
     const lastPickedColor = ref<HSV | null>(null)
     const currentColor = useProxiedModel(

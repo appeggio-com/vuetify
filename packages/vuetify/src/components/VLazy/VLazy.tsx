@@ -1,5 +1,5 @@
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { useProxiedModel } from '@/composables/proxiedModel'
 import { makeTagProps } from '@/composables/tag'
@@ -45,6 +45,7 @@ export const VLazy = genericComponent()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { dimensionStyles } = useDimension(props)
 
     const isActive = useProxiedModel(props, 'modelValue')

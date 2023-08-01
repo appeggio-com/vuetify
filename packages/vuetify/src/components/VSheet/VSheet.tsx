@@ -3,7 +3,7 @@ import './VSheet.sass'
 
 // Composables
 import { makeBorderProps, useBorder } from '@/composables/border'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
 import { makeLocationProps, useLocation } from '@/composables/location'
@@ -36,6 +36,7 @@ export const VSheet = genericComponent()({
   props: makeVSheetProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { themeClasses } = provideTheme(props)
     const { colorClasses, colorStyles } = useColors(props)
     const { borderClasses } = useBorder(props)

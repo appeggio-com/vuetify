@@ -1,5 +1,5 @@
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeVariantProps } from '@/composables/variant'
 
@@ -18,6 +18,7 @@ export const VToolbarItems = genericComponent()({
   props: makeVToolbarItemsProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     provideDefaults({
       VBtn: {
         color: toRef(props, 'color'),

@@ -6,7 +6,7 @@ import { makeLocationStrategyProps, useLocationStrategies } from './locationStra
 import { makeScrollStrategyProps, useScrollStrategies } from './scrollStrategies'
 import { makeActivatorProps, useActivator } from './useActivator'
 import { useBackgroundColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { useHydration } from '@/composables/hydration'
 import { makeLazyProps, useLazy } from '@/composables/lazy'
@@ -129,6 +129,7 @@ export const VOverlay = genericComponent<OverlaySlots>()({
   },
 
   setup (props, { slots, attrs, emit }) {
+    useComponentBase(props)
     const model = useProxiedModel(props, 'modelValue')
     const isActive = computed({
       get: () => model.value,

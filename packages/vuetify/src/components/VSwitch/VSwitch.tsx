@@ -7,6 +7,7 @@ import { VProgressCircular } from '@/components/VProgressCircular'
 import { makeVSelectionControlProps, VSelectionControl } from '@/components/VSelectionControl/VSelectionControl'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useFocus } from '@/composables/focus'
 import { LoaderSlot, useLoader } from '@/composables/loader'
 import { useProxiedModel } from '@/composables/proxiedModel'
@@ -34,6 +35,7 @@ export const makeVSwitchProps = propsFactory({
     default: false,
   },
 
+  ...makeComponentProps(),
   ...makeVInputProps(),
   ...makeVSelectionControlProps(),
 }, 'VSwitch')
@@ -52,6 +54,7 @@ export const VSwitch = genericComponent<VSwitchSlots>()({
   },
 
   setup (props, { attrs, slots }) {
+    useComponentBase(props)
     const indeterminate = useProxiedModel(props, 'indeterminate')
     const model = useProxiedModel(props, 'modelValue')
     const { loaderClasses } = useLoader(props)

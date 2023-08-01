@@ -7,6 +7,7 @@ import { VOverlay } from '@/components/VOverlay'
 import { makeVOverlayProps } from '@/components/VOverlay/VOverlay'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { forwardRefs } from '@/composables/forwardRefs'
 import { makeLocationProps, useLocation } from '@/composables/location'
 import { makePositionProps, usePosition } from '@/composables/position'
@@ -34,6 +35,7 @@ export const makeVSnackbarProps = propsFactory({
   },
   vertical: Boolean,
 
+  ...makeComponentProps(),
   ...makeLocationProps({ location: 'bottom' } as const),
   ...makePositionProps(),
   ...makeRoundedProps(),
@@ -54,6 +56,7 @@ export const VSnackbar = genericComponent<VSnackbarSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const isActive = useProxiedModel(props, 'modelValue')
     const { locationStyles } = useLocation(props)
     const { positionClasses } = usePosition(props)

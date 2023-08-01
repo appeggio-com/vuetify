@@ -5,7 +5,7 @@ import './VCounter.sass'
 import { VSlideYTransition } from '@/components/transitions'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeTransitionProps, MaybeTransition } from '@/composables/transition'
 
 // Utilities
@@ -47,6 +47,7 @@ export const VCounter = genericComponent<VCounterSlots>()({
   props: makeVCounterProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const counter = computed(() => {
       return props.max ? `${props.value} / ${props.max}` : String(props.value)
     })

@@ -8,6 +8,7 @@ import { VOverlay } from '@/components/VOverlay'
 import { makeVOverlayProps } from '@/components/VOverlay/VOverlay'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { forwardRefs } from '@/composables/forwardRefs'
 import { useProxiedModel } from '@/composables/proxiedModel'
 import { useScopeId } from '@/composables/scopeId'
@@ -28,6 +29,7 @@ export const makeVDialogProps = propsFactory({
   },
   scrollable: Boolean,
 
+  ...makeComponentProps(),
   ...makeVOverlayProps({
     origin: 'center center' as const,
     scrollStrategy: 'block' as const,
@@ -46,6 +48,7 @@ export const VDialog = genericComponent<OverlaySlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const isActive = useProxiedModel(props, 'modelValue')
     const { scopeId } = useScopeId()
 

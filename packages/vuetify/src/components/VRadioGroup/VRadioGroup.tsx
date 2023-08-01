@@ -8,6 +8,7 @@ import { VSelectionControl } from '@/components/VSelectionControl'
 import { makeSelectionControlGroupProps, VSelectionControlGroup } from '@/components/VSelectionControlGroup/VSelectionControlGroup'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { IconValue } from '@/composables/icons'
 import { useProxiedModel } from '@/composables/proxiedModel'
 
@@ -27,6 +28,7 @@ export const makeVRadioGroupProps = propsFactory({
     default: 'auto',
   },
 
+  ...makeComponentProps(),
   ...makeVInputProps(),
   ...omit(makeSelectionControlGroupProps(), ['multiple']),
 
@@ -56,6 +58,7 @@ export const VRadioGroup = genericComponent<VRadioGroupSlots>()({
   },
 
   setup (props, { attrs, slots }) {
+    useComponentBase(props)
     const uid = getUid()
     const id = computed(() => props.id || `radio-group-${uid}`)
     const model = useProxiedModel(props, 'modelValue')

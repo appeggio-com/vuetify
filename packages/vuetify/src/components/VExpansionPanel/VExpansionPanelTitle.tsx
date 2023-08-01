@@ -4,7 +4,7 @@ import { VIcon } from '@/components/VIcon'
 
 // Composables
 import { useBackgroundColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { IconValue } from '@/composables/icons'
 
 // Directives
@@ -59,6 +59,7 @@ export const VExpansionPanelTitle = genericComponent<VExpansionPanelTitleSlots>(
   props: makeVExpansionPanelTitleProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const expansionPanel = inject(VExpansionPanelSymbol)
 
     if (!expansionPanel) throw new Error('[Vuetify] v-expansion-panel-title needs to be placed inside v-expansion-panel')

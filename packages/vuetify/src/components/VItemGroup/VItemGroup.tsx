@@ -2,7 +2,7 @@
 import './VItemGroup.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeGroupProps, useGroup } from '@/composables/group'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
@@ -41,6 +41,7 @@ export const VItemGroup = genericComponent<VItemGroupSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { themeClasses } = provideTheme(props)
     const { isSelected, select, next, prev, selected } = useGroup(props, VItemGroupSymbol)
 

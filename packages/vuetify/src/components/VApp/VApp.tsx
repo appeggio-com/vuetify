@@ -2,7 +2,7 @@
 import './VApp.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { createLayout, makeLayoutProps } from '@/composables/layout'
 import { useRtl } from '@/composables/locale'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
@@ -22,6 +22,7 @@ export const VApp = genericComponent()({
   props: makeVAppProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const theme = provideTheme(props)
     const { layoutClasses, layoutStyles, getLayoutItem, items, layoutRef } = createLayout(props)
     const { rtlClasses } = useRtl()

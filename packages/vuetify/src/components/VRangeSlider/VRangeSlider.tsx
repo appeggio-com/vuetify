@@ -9,6 +9,7 @@ import { VSliderThumb } from '@/components/VSlider/VSliderThumb'
 import { VSliderTrack } from '@/components/VSlider/VSliderTrack'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeFocusProps, useFocus } from '@/composables/focus'
 import { useRtl } from '@/composables/locale'
 import { useProxiedModel } from '@/composables/proxiedModel'
@@ -22,6 +23,7 @@ import type { PropType, WritableComputedRef } from 'vue'
 import type { VSliderSlots } from '../VSlider/VSlider'
 
 export const makeVRangeSliderProps = propsFactory({
+  ...makeComponentProps(),
   ...makeFocusProps(),
   ...makeVInputProps(),
   ...makeSliderProps(),
@@ -46,6 +48,7 @@ export const VRangeSlider = genericComponent<VSliderSlots>()({
   },
 
   setup (props, { slots, emit }) {
+    useComponentBase(props)
     const startThumbRef = ref<VSliderThumb>()
     const stopThumbRef = ref<VSliderThumb>()
     const inputRef = ref<VInput>()

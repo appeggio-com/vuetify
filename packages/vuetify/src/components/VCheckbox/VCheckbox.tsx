@@ -6,6 +6,7 @@ import { makeVCheckboxBtnProps, VCheckboxBtn } from './VCheckboxBtn'
 import { makeVInputProps, VInput } from '@/components/VInput/VInput'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useFocus } from '@/composables/focus'
 import { useProxiedModel } from '@/composables/proxiedModel'
 
@@ -20,6 +21,7 @@ import type { VInputSlots } from '@/components/VInput/VInput'
 export type VCheckboxSlots = VInputSlots & VSelectionControlSlots
 
 export const makeVCheckboxProps = propsFactory({
+  ...makeComponentProps(),
   ...makeVInputProps(),
   ...omit(makeVCheckboxBtnProps(), ['inline']),
 }, 'VCheckbox')
@@ -37,6 +39,7 @@ export const VCheckbox = genericComponent<VCheckboxSlots>()({
   },
 
   setup (props, { attrs, slots }) {
+    useComponentBase(props)
     const model = useProxiedModel(props, 'modelValue')
     const { isFocused, focus, blur } = useFocus(props)
 

@@ -1,5 +1,5 @@
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 
 // Utilities
 import { genericComponent, propsFactory, useRender } from '@/util'
@@ -16,6 +16,7 @@ export const VBreadcrumbsDivider = genericComponent()({
   props: makeVBreadcrumbsDividerProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     useRender(() => (
       <li
         class={[

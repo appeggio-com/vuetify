@@ -6,7 +6,7 @@ import { useInputIcon } from '@/components/VInput/InputIcon'
 import { VMessages } from '@/components/VMessages/VMessages'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { IconValue } from '@/composables/icons'
 import { useRtl } from '@/composables/locale'
@@ -83,6 +83,7 @@ export const VInput = genericComponent<VInputSlots>()({
   },
 
   setup (props, { attrs, slots, emit }) {
+    useComponentBase(props)
     const { densityClasses } = useDensity(props)
     const { rtlClasses } = useRtl()
     const { InputIcon } = useInputIcon(props)

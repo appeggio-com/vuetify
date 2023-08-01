@@ -1,6 +1,6 @@
 // Composables
 import { useTextColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeRouterProps, useLink } from '@/composables/router'
 import { makeTagProps } from '@/composables/tag'
 
@@ -27,6 +27,7 @@ export const VBreadcrumbsItem = genericComponent()({
   props: makeVBreadcrumbsItemProps(),
 
   setup (props, { slots, attrs }) {
+    useComponentBase(props)
     const link = useLink(props, attrs)
     const isActive = computed(() => props.active || link.isActive?.value)
     const color = computed(() => isActive.value ? props.activeColor : props.color)

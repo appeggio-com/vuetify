@@ -16,6 +16,7 @@ import { VVirtualScroll } from '@/components/VVirtualScroll'
 // Composables
 import { useScrolling } from '../VSelect/useScrolling'
 import { useTextColor } from '@/composables/color'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeFilterProps, useFilter } from '@/composables/filter'
 import { useForm } from '@/composables/form'
 import { forwardRefs } from '@/composables/forwardRefs'
@@ -69,6 +70,7 @@ export const makeVComboboxProps = propsFactory({
   },
   delimiters: Array as PropType<readonly string[]>,
 
+  ...makeComponentProps(),
   ...makeFilterProps({ filterKeys: ['title'] }),
   ...makeSelectProps({ hideNoData: true, returnObject: true }),
   ...omit(makeVTextFieldProps({
@@ -112,6 +114,7 @@ export const VCombobox = genericComponent<new <
   },
 
   setup (props, { emit, slots }) {
+    useComponentBase(props)
     const { t } = useLocale()
     const vTextFieldRef = ref()
     const isFocused = shallowRef(false)

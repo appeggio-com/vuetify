@@ -2,7 +2,7 @@
 import './VLocaleProvider.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideLocale } from '@/composables/locale'
 
 // Utilities
@@ -26,6 +26,7 @@ export const VLocaleProvider = genericComponent()({
   props: makeVLocaleProviderProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { rtlClasses } = provideLocale(props)
 
     useRender(() => (

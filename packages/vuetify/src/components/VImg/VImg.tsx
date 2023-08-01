@@ -5,7 +5,7 @@ import './VImg.sass'
 import { makeVResponsiveProps, VResponsive } from '@/components/VResponsive/VResponsive'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeTransitionProps, MaybeTransition } from '@/composables/transition'
 
 // Directives
@@ -90,6 +90,7 @@ export const VImg = genericComponent<VImgSlots>()({
   },
 
   setup (props, { emit, slots }) {
+    useComponentBase(props)
     const currentSrc = shallowRef('') // Set from srcset
     const image = ref<HTMLImageElement>()
     const state = shallowRef<'idle' | 'loading' | 'loaded' | 'error'>(props.eager ? 'loading' : 'idle')

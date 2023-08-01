@@ -2,7 +2,7 @@
 import './VGrid.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { breakpoints } from '@/composables/display'
 import { makeTagProps } from '@/composables/tag'
@@ -116,6 +116,7 @@ export const VCol = genericComponent()({
   props: makeVColProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { dimensionStyles } = useDimension(props)
     const { colorClasses, colorStyles } = useColors(props)
     const classes = computed(() => {

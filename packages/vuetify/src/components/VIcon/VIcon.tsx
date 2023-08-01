@@ -2,7 +2,7 @@
 import './VIcon.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { IconValue, useIcon } from '@/composables/icons'
 import { makeSizeProps, useSize } from '@/composables/size'
 import { makeTagProps } from '@/composables/tag'
@@ -31,6 +31,7 @@ export const VIcon = genericComponent()({
   props: makeVIconProps(),
 
   setup (props, { attrs, slots }) {
+    useComponentBase(props)
     const slotIcon = ref<string>()
 
     const { themeClasses } = provideTheme(props)

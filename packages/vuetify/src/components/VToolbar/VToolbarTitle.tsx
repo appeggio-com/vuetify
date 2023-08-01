@@ -1,5 +1,5 @@
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeTagProps } from '@/composables/tag'
 
 // Utilities
@@ -23,6 +23,7 @@ export const VToolbarTitle = genericComponent<VToolbarTitleSlots>()({
   props: makeVToolbarTitleProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     useRender(() => {
       const hasText = !!(slots.default || slots.text || props.text)
 

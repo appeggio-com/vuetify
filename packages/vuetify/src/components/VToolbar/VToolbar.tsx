@@ -10,7 +10,7 @@ import { VImg } from '@/components/VImg'
 // Composables
 import { makeBorderProps, useBorder } from '@/composables/border'
 import { useBackgroundColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
 import { useRtl } from '@/composables/locale'
@@ -75,6 +75,7 @@ export const VToolbar = genericComponent<VToolbarSlots>()({
   props: makeVToolbarProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
     const { borderClasses } = useBorder(props)
     const { elevationClasses } = useElevation(props)

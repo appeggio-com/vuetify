@@ -8,7 +8,7 @@ import { useInputIcon } from '@/components/VInput/InputIcon'
 
 // Composables
 import { useBackgroundColor, useTextColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeFocusProps, useFocus } from '@/composables/focus'
 import { IconValue } from '@/composables/icons'
 import { LoaderSlot, makeLoaderProps, useLoader } from '@/composables/loader'
@@ -128,6 +128,7 @@ export const VField = genericComponent<new <T>(
   },
 
   setup (props, { attrs, emit, slots }) {
+    useComponentBase(props)
     const { themeClasses } = provideTheme(props)
     const { loaderClasses } = useLoader(props)
     const { focusClasses, isFocused, focus, blur } = useFocus(props)

@@ -4,7 +4,7 @@ import { VExpansionPanelText } from './VExpansionPanelText'
 import { makeVExpansionPanelTitleProps, VExpansionPanelTitle } from './VExpansionPanelTitle'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
 import { makeGroupItemProps, useGroupItem } from '@/composables/group'
 import { makeLazyProps } from '@/composables/lazy'
@@ -46,6 +46,7 @@ export const VExpansionPanel = genericComponent<VExpansionPanelSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const groupItem = useGroupItem(props, VExpansionPanelSymbol)
     const { colorClasses, colorStyles } = useColors(props)
     const { elevationClasses } = useElevation(props)

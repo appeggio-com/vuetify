@@ -1,5 +1,5 @@
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 
 // Utilities
@@ -11,6 +11,7 @@ export const VCardActions = genericComponent()({
   props: makeComponentProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     provideDefaults({
       VBtn: {
         variant: 'text',

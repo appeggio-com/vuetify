@@ -1,6 +1,9 @@
 // Components
 import { makeVBtnProps, VBtn } from '@/components/VBtn/VBtn'
 
+// Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
+
 // Utilities
 import { genericComponent, propsFactory, useRender } from '@/util'
 
@@ -8,6 +11,7 @@ import { genericComponent, propsFactory, useRender } from '@/util'
 import type { VBtnSlots } from '@/components/VBtn/VBtn'
 
 export const makeVAppBarNavIconProps = propsFactory({
+  ...makeComponentProps(),
   ...makeVBtnProps({
     icon: '$menu',
     variant: 'text' as const,
@@ -20,6 +24,7 @@ export const VAppBarNavIcon = genericComponent<VBtnSlots>()({
   props: makeVAppBarNavIconProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     useRender(() => (
       <VBtn
         { ...props }

@@ -3,7 +3,7 @@ import './VProgressCircular.sass'
 
 // Composables
 import { useTextColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useIntersectionObserver } from '@/composables/intersectionObserver'
 import { useResizeObserver } from '@/composables/resizeObserver'
 import { makeSizeProps, useSize } from '@/composables/size'
@@ -51,6 +51,7 @@ export const VProgressCircular = genericComponent<VProgressCircularSlots>()({
   props: makeVProgressCircularProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const MAGIC_RADIUS_CONSTANT = 20
     const CIRCUMFERENCE = 2 * Math.PI * MAGIC_RADIUS_CONSTANT
 

@@ -7,7 +7,7 @@ import { VListChildren } from './VListChildren'
 // Composables
 import { createList } from './list'
 import { makeBorderProps, useBorder } from '@/composables/border'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
@@ -126,6 +126,7 @@ export const VList = genericComponent<new <T>(
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { items } = useListItems(props)
     const { themeClasses } = provideTheme(props)
     const { colorClasses, colorStyles } = useVariant(props)

@@ -11,7 +11,7 @@ import { VIcon } from '@/components/VIcon'
 
 // Composables
 import { makeBorderProps, useBorder } from '@/composables/border'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
 import { makeGroupItemProps, useGroupItem } from '@/composables/group'
@@ -120,6 +120,7 @@ export const VChip = genericComponent<VChipSlots>()({
   },
 
   setup (props, { attrs, emit, slots }) {
+    useComponentBase(props)
     const { t } = useLocale()
     const { borderClasses } = useBorder(props)
     const { colorClasses, colorStyles, variantClasses } = useVariant(props)

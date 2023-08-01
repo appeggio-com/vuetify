@@ -8,7 +8,7 @@ import { VDefaultsProvider } from '@/components/VDefaultsProvider'
 import { VIcon } from '@/components/VIcon'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { IconValue } from '@/composables/icons'
@@ -67,6 +67,7 @@ export const VBreadcrumbs = genericComponent<new <T extends BreadcrumbItem>(
   props: makeVBreadcrumbsProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { colorClasses, colorStyles } = useColors(props)
     const { densityClasses } = useDensity(props)
     const { roundedClasses } = useRounded(props)

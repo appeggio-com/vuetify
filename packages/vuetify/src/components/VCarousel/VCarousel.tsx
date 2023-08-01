@@ -8,6 +8,7 @@ import { VProgressLinear } from '@/components/VProgressLinear'
 import { makeVWindowProps, VWindow } from '@/components/VWindow/VWindow'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { IconValue } from '@/composables/icons'
 import { useLocale } from '@/composables/locale'
 import { useProxiedModel } from '@/composables/proxiedModel'
@@ -42,6 +43,7 @@ export const makeVCarouselProps = propsFactory({
   progress: [Boolean, String],
   verticalDelimiters: [Boolean, String] as PropType<boolean | 'left' | 'right'>,
 
+  ...makeComponentProps(),
   ...makeVWindowProps({
     continuous: true,
     mandatory: 'force' as const,
@@ -70,6 +72,7 @@ export const VCarousel = genericComponent<VCarouselSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const model = useProxiedModel(props, 'modelValue')
     const { t } = useLocale()
     const windowRef = ref<typeof VWindow>()

@@ -3,7 +3,7 @@ import './VDivider.sass'
 
 // Composables
 import { useTextColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
 
 // Utilities
@@ -30,6 +30,7 @@ export const VDivider = genericComponent()({
   props: makeVDividerProps(),
 
   setup (props, { attrs }) {
+    useComponentBase(props)
     const { themeClasses } = provideTheme(props)
     const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'color'))
     const dividerStyles = computed(() => {

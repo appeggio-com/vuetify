@@ -6,7 +6,7 @@ import { VIcon } from '@/components/VIcon'
 import { VImg } from '@/components/VImg'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { IconValue } from '@/composables/icons'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
@@ -39,6 +39,7 @@ export const VAvatar = genericComponent()({
   props: makeVAvatarProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { themeClasses } = provideTheme(props)
     const { colorClasses, colorStyles, variantClasses } = useVariant(props)
     const { densityClasses } = useDensity(props)

@@ -3,7 +3,7 @@ import './VBtnGroup.sass'
 
 // Composables
 import { makeBorderProps, useBorder } from '@/composables/border'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
@@ -35,6 +35,7 @@ export const VBtnGroup = genericComponent()({
   props: makeVBtnGroupProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { themeClasses } = provideTheme(props)
     const { densityClasses } = useDensity(props)
     const { borderClasses } = useBorder(props)

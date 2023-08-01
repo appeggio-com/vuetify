@@ -7,7 +7,7 @@ import { VIcon } from '@/components/VIcon'
 
 // Composables
 import { useDisplay } from '@/composables'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeGroupProps, useGroup } from '@/composables/group'
 import { IconValue } from '@/composables/icons'
 import { useRtl } from '@/composables/locale'
@@ -84,6 +84,7 @@ export const VSlideGroup = genericComponent<VSlideGroupSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { isRtl } = useRtl()
     const { mobile } = useDisplay()
     const group = useGroup(props, props.symbol)

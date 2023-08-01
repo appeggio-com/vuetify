@@ -5,7 +5,7 @@ import './VVirtualScroll.sass'
 import { VVirtualScrollItem } from './VVirtualScrollItem'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { useToggleScope } from '@/composables/toggleScope'
 import { makeVirtualProps, useVirtual } from '@/composables/virtual'
@@ -58,6 +58,7 @@ export const VVirtualScroll = genericComponent<new <T, Renderless extends boolea
   props: makeVVirtualScrollProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const vm = getCurrentInstance('VVirtualScroll')
     const { dimensionStyles } = useDimension(props)
     const {

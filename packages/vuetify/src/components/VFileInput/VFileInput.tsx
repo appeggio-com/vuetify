@@ -9,6 +9,7 @@ import { filterFieldProps, makeVFieldProps } from '@/components/VField/VField'
 import { makeVInputProps, VInput } from '@/components/VInput/VInput'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useFocus } from '@/composables/focus'
 import { forwardRefs } from '@/composables/forwardRefs'
 import { useLocale } from '@/composables/locale'
@@ -63,6 +64,7 @@ export const makeVFileInputProps = propsFactory({
     },
   },
 
+  ...makeComponentProps(),
   ...makeVInputProps({ prependIcon: '$file' }),
 
   modelValue: {
@@ -91,6 +93,7 @@ export const VFileInput = genericComponent<VFileInputSlots>()({
   },
 
   setup (props, { attrs, emit, slots }) {
+    useComponentBase(props)
     const { t } = useLocale()
     const model = useProxiedModel(props, 'modelValue')
     const { isFocused, focus, blur } = useFocus(props)

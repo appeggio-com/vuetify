@@ -11,7 +11,7 @@ import { VIcon } from '@/components/VIcon'
 // Composables
 import { useList } from './list'
 import { makeBorderProps, useBorder } from '@/composables/border'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeDensityProps, useDensity } from '@/composables/density'
 import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
@@ -112,6 +112,7 @@ export const VListItem = genericComponent<VListItemSlots>()({
   },
 
   setup (props, { attrs, slots, emit }) {
+    useComponentBase(props)
     const link = useLink(props, attrs)
     const id = computed(() => props.value === undefined ? link.href.value : props.value)
     const { select, isSelected, isIndeterminate, isGroupActivator, root, parent, openOnSelect } = useNestedItem(id, false)

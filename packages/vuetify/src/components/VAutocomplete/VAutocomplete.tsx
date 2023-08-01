@@ -15,6 +15,7 @@ import { VVirtualScroll } from '@/components/VVirtualScroll'
 // Composables
 import { useScrolling } from '../VSelect/useScrolling'
 import { useTextColor } from '@/composables/color'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeFilterProps, useFilter } from '@/composables/filter'
 import { useForm } from '@/composables/form'
 import { forwardRefs } from '@/composables/forwardRefs'
@@ -68,6 +69,7 @@ export const makeVAutocompleteProps = propsFactory({
   },
   search: String,
 
+  ...makeComponentProps(),
   ...makeFilterProps({ filterKeys: ['title'] }),
   ...makeSelectProps(),
   ...omit(makeVTextFieldProps({
@@ -111,6 +113,7 @@ export const VAutocomplete = genericComponent<new <
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { t } = useLocale()
     const vTextFieldRef = ref()
     const isFocused = shallowRef(false)

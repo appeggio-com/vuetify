@@ -6,6 +6,7 @@ import { makeVBtnProps, VBtn } from '@/components/VBtn/VBtn'
 
 // Composables
 import { useTextColor } from '@/composables/color'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 
 // Utilities
 import { computed, ref, shallowRef } from 'vue'
@@ -26,6 +27,7 @@ export const makeVTabProps = propsFactory({
     default: 'horizontal',
   },
 
+  ...makeComponentProps(),
   ...omit(makeVBtnProps({
     selectedClass: 'v-tab--selected',
     variant: 'text' as const,
@@ -45,6 +47,7 @@ export const VTab = genericComponent()({
   props: makeVTabProps(),
 
   setup (props, { slots, attrs }) {
+    useComponentBase(props)
     const { textColorClasses: sliderColorClasses, textColorStyles: sliderColorStyles } = useTextColor(props, 'sliderColor')
     const isHorizontal = computed(() => props.direction === 'horizontal')
     const isSelected = shallowRef(false)

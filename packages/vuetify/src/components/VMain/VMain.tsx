@@ -2,7 +2,7 @@
 import './VMain.sass'
 
 // Composables
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { useLayout } from '@/composables/layout'
 import { useSsrBoot } from '@/composables/ssrBoot'
 import { makeTagProps } from '@/composables/tag'
@@ -23,6 +23,7 @@ export const VMain = genericComponent()({
   props: makeVMainProps(),
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { mainStyles } = useLayout()
     const { ssrBootStyles } = useSsrBoot()
 

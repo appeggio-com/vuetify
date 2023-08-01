@@ -7,7 +7,7 @@ import { useTouch } from './touch'
 import { useRtl } from '@/composables'
 import { makeBorderProps, useBorder } from '@/composables/border'
 import { useBackgroundColor } from '@/composables/color'
-import { makeComponentProps } from '@/composables/component'
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { useDisplay } from '@/composables/display'
 import { makeElevationProps, useElevation } from '@/composables/elevation'
@@ -98,6 +98,7 @@ export const VNavigationDrawer = genericComponent<VNavigationDrawerSlots>()({
   },
 
   setup (props, { attrs, emit, slots }) {
+    useComponentBase(props)
     const { isRtl } = useRtl()
     const { themeClasses } = provideTheme(props)
     const { borderClasses } = useBorder(props)
