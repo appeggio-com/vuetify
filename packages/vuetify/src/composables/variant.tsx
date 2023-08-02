@@ -3,7 +3,8 @@ import { useColor } from '@/composables/color'
 
 // Utilities
 import { computed, unref } from 'vue'
-import { getCurrentInstanceName, propsFactory } from '@/util'
+import { getCurrentInstanceName } from '@/util/getCurrentInstance'
+import { propsFactory } from '@/util/propsFactory'
 
 // Types
 import type { PropType } from 'vue'
