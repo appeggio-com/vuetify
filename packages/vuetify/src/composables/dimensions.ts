@@ -1,7 +1,8 @@
 // Utilities
 import { computed } from 'vue'
 import { useDisplay } from './display'
-import { convertToUnit, propsFactory } from '@/util'
+import { convertToUnit } from '@/util/helpers'
+import { propsFactory } from '@/util/propsFactory'
 
 // Types
 export interface DimensionProps {
