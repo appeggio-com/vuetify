@@ -1,5 +1,6 @@
 // Composables
 import { makeComponentProps, useComponentBase } from '@/composables/component'
+import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
@@ -22,15 +23,17 @@ export function createSimpleFunctional (
 
       ...makeComponentProps(),
       ...makeColorsProps(),
+      ...makeDimensionProps(),
     },
 
     setup (props, { slots }) {
       useComponentBase(props)
       const { colorClasses, colorStyles } = useColors(props)
+      const { dimensionStyles } = useDimension(props)
       return () => {
         return h(props.tag, {
           class: [klass, colorClasses.value, props.class],
-          style: [colorStyles.value, props.style],
+          style: [colorStyles.value, dimensionStyles.value, props.style],
         }, slots.default?.())
       }
     },
