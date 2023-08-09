@@ -139,7 +139,9 @@ export const VList = genericComponent<new <T>(
     const lineClasses = computed(() => props.lines ? `v-list--${props.lines}-line` : undefined)
     const activeColor = toRef(props, 'activeColor')
     const baseColor = toRef(props, 'baseColor')
+    const bgColor = toRef(props, 'bgColor')
     const color = toRef(props, 'color')
+    const fgColor = toRef(props, 'fgColor')
 
     createList()
 
@@ -147,13 +149,17 @@ export const VList = genericComponent<new <T>(
       VListGroup: {
         activeColor,
         baseColor,
+        bgColor,
         color,
+        fgColor,
       },
       VListItem: {
         activeClass: toRef(props, 'activeClass'),
         activeColor,
         baseColor,
+        bgColor,
         color,
+        fgColor,
         density: toRef(props, 'density'),
         disabled: toRef(props, 'disabled'),
         lines: toRef(props, 'lines'),

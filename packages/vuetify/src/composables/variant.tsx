@@ -76,6 +76,9 @@ export function useVariant (
     if (variant === 'text' || variant === 'plain') {
       if (fgColor) {
         obj.text = fgColor
+        if (bgColor) {
+          obj.background = bgColor
+        }
       } else if (bgColor) {
         obj.text = bgColor
       }
