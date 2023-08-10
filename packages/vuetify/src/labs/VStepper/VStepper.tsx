@@ -13,6 +13,7 @@ import { makeVSheetProps, VSheet } from '@/components/VSheet/VSheet'
 // Composables
 import { provideDefaults } from '@/composables/defaults'
 import { makeGroupProps, useGroup } from '@/composables/group'
+import { makeColorsProps } from '@/composables/variant'
 
 // Utilities
 import { computed, toRefs } from 'vue'
@@ -48,7 +49,6 @@ export type VStepperSlots = {
 
 export const makeVStepperProps = propsFactory({
   altLabels: Boolean,
-  bgColor: String,
   editable: Boolean,
   hideActions: Boolean,
   items: {
@@ -72,6 +72,7 @@ export const makeVStepperProps = propsFactory({
     selectedClass: 'v-stepper-item--selected',
   }),
   ...makeVSheetProps(),
+  ...makeColorsProps(),
   ...only(makeVStepperActionsProps(), ['prevText', 'nextText']),
 }, 'VStepper')
 
@@ -87,7 +88,7 @@ export const VStepper = genericComponent<VStepperSlots>()({
   setup (props, { slots }) {
     // TODO: fix typing
     const { items: _items, next, prev, selected } = useGroup(props as any, VStepperSymbol)
-    const { color, editable, prevText, nextText } = toRefs(props)
+    const { bgColor, color, fgColor, editable, prevText, nextText } = toRefs(props)
 
     const items = computed(() => props.items.map((item, index) => {
       const title = getPropertyFromItem(item, props.itemTitle, item)
@@ -117,7 +118,9 @@ export const VStepper = genericComponent<VStepperSlots>()({
         nextText,
       },
       VStepperActions: {
+        bgColor,
         color,
+        fgColor,
         disabled,
         prevText,
         nextText,
@@ -134,7 +137,9 @@ export const VStepper = genericComponent<VStepperSlots>()({
       return (
         <VSheet
           { ...sheetProps }
-          color={ props.bgColor }
+          bgColor={ props.bgColor }
+          color={ props.color }
+          fgColor={ props.fgColor }
           class={[
             'v-stepper',
             {
