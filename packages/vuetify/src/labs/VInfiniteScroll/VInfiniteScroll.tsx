@@ -13,7 +13,7 @@ import { makeTagProps } from '@/composables/tag'
 import { makeColorsProps } from '@/composables/variant'
 
 // Utilities
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, shallowRef, watch } from 'vue'
 import { convertToUnit, defineComponent, genericComponent, propsFactory, useRender } from '@/util'
 
 // Types
@@ -85,7 +85,6 @@ export const VInfiniteScrollIntersect = defineComponent({
   setup (props, { emit }) {
     const { intersectionRef, isIntersecting } = useIntersectionObserver(entries => {
     }, props.rootMargin ? {
-      root: props.rootRef,
       rootMargin: props.rootMargin,
     } : undefined)
 
@@ -112,10 +111,10 @@ export const VInfiniteScroll = genericComponent<VInfiniteScrollSlots>()({
 
   setup (props, { slots, emit }) {
     const rootEl = ref<HTMLDivElement>()
-    const startStatus = ref<InfiniteScrollStatus>('ok')
-    const endStatus = ref<InfiniteScrollStatus>('ok')
+    const startStatus = shallowRef<InfiniteScrollStatus>('ok')
+    const endStatus = shallowRef<InfiniteScrollStatus>('ok')
     const margin = computed(() => convertToUnit(props.margin))
-    const isIntersecting = ref(false)
+    const isIntersecting = shallowRef(false)
 
     function setScrollAmount (amount: number) {
       if (!rootEl.value) return

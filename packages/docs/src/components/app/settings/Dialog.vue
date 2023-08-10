@@ -2,14 +2,18 @@
   <v-dialog
     v-model="app.settings"
     :fullscreen="mobile"
-    max-width="800"
   >
+    <template #activator="{ props }">
+      <slot name="activator" v-bind="{ props }" />
+    </template>
+
     <v-card
       :min-height="mobile ? '100%' : 650"
       :rounded="mobile ? 0 : 'lg'"
       class="mx-auto"
       elevation="24"
       flat
+      max-width="800"
       width="100%"
     >
       <v-toolbar color="primary" class="ps-3 pe-4">
