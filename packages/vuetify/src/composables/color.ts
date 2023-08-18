@@ -24,7 +24,9 @@ export function useColor (colors: Ref<{ background?: ColorValue, text?: ColorVal
     const styles: CSSProperties = {}
 
     if (colors.value.background) {
-      if (isCssColor(colors.value.background)) {
+      if (colors.value.background.startsWith('linear')) {
+        styles.background = colors.value.background
+      } else if (isCssColor(colors.value.background)) {
         styles.backgroundColor = colors.value.background
       } else {
         classes.push(`bg-${colors.value.background}`)
