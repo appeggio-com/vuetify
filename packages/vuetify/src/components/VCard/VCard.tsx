@@ -59,6 +59,15 @@ export const makeVCardProps = propsFactory({
   subtitle: String,
   text: String,
   title: String,
+  bgImage: String,
+  bgPosition: {
+    type: String,
+    default: 'center center',
+  },
+  bgRepeat: {
+    type: String,
+    default: 'no-repeat',
+  },
 
   ...makeBorderProps(),
   ...makeComponentProps(),
@@ -112,6 +121,18 @@ export const VCard = genericComponent<VCardSlots>()({
       (props.link || link.isClickable.value)
     )
 
+    const styles = computed(() => {
+      const res: Record<string, string> = {}
+
+      if (props.bgImage) {
+        res.backgroundImage = `url(${props.bgImage})`
+        res.backgroundPosition = props.bgPosition
+        res.backgroundRepeat = props.bgRepeat
+      }
+
+      return res
+    })
+
     useRender(() => {
       const Tag = isLink.value ? 'a' : props.tag
       const hasTitle = !!(slots.title || props.title)
@@ -148,6 +169,7 @@ export const VCard = genericComponent<VCardSlots>()({
             colorStyles.value,
             dimensionStyles.value,
             locationStyles.value,
+            styles.value,
             props.style,
           ]}
           href={ link.href.value }

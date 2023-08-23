@@ -14,9 +14,19 @@ import { makeThemeProps, provideTheme } from '@/composables/theme'
 import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
+import { computed } from 'vue'
 import { genericComponent, propsFactory, useRender } from '@/util'
 
 export const makeVSheetProps = propsFactory({
+  bgImage: String,
+  bgPosition: {
+    type: String,
+    default: 'center center',
+  },
+  bgRepeat: {
+    type: String,
+    default: 'no-repeat',
+  },
 
   ...makeColorsProps(),
   ...makeBorderProps(),
@@ -46,6 +56,18 @@ export const VSheet = genericComponent()({
     const { positionClasses } = usePosition(props)
     const { roundedClasses } = useRounded(props)
 
+    const styles = computed(() => {
+      const res: Record<string, string> = {}
+
+      if (props.bgImage) {
+        res.backgroundImage = `url(${props.bgImage})`
+        res.backgroundPosition = props.bgPosition
+        res.backgroundRepeat = props.bgRepeat
+      }
+
+      return res
+    })
+
     useRender(() => (
       <props.tag
         class={[
@@ -62,6 +84,7 @@ export const VSheet = genericComponent()({
           colorStyles.value,
           dimensionStyles.value,
           locationStyles.value,
+          styles.value,
           props.style,
         ]}
         v-slots={ slots }
