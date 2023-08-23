@@ -27,6 +27,10 @@ export const makeVSheetProps = propsFactory({
     type: String,
     default: 'no-repeat',
   },
+  bgSize: {
+    type: String,
+    default: 'contain',
+  },
 
   ...makeColorsProps(),
   ...makeBorderProps(),
@@ -63,6 +67,7 @@ export const VSheet = genericComponent()({
         res.backgroundImage = `url(${props.bgImage})`
         res.backgroundPosition = props.bgPosition
         res.backgroundRepeat = props.bgRepeat
+        res.backgroundSize = props.bgSize
       }
 
       return res

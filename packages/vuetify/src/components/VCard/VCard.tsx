@@ -68,6 +68,10 @@ export const makeVCardProps = propsFactory({
     type: String,
     default: 'no-repeat',
   },
+  bgSize: {
+    type: String,
+    default: 'contain',
+  },
 
   ...makeBorderProps(),
   ...makeComponentProps(),
@@ -128,6 +132,7 @@ export const VCard = genericComponent<VCardSlots>()({
         res.backgroundImage = `url(${props.bgImage})`
         res.backgroundPosition = props.bgPosition
         res.backgroundRepeat = props.bgRepeat
+        res.backgroundSize = props.bgSize
       }
 
       return res
