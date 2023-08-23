@@ -7,7 +7,6 @@ import { VExpandXTransition } from '@/components/transitions'
 import { useInputIcon } from '@/components/VInput/InputIcon'
 
 // Composables
-import { useBackgroundColor, useTextColor } from '@/composables/color'
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeFocusProps, useFocus } from '@/composables/focus'
 import { IconValue } from '@/composables/icons'
@@ -15,10 +14,10 @@ import { LoaderSlot, makeLoaderProps, useLoader } from '@/composables/loader'
 import { useRtl } from '@/composables/locale'
 import { makeRoundedProps, useRounded } from '@/composables/rounded'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
-import { makeColorsProps } from '@/composables/variant'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
-import { computed, ref, toRef, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import {
   animate,
   convertToUnit,
@@ -129,6 +128,7 @@ export const VField = genericComponent<new <T>(
 
   setup (props, { attrs, emit, slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     const { themeClasses } = provideTheme(props)
     const { loaderClasses } = useLoader(props)
     const { focusClasses, isFocused, focus, blur } = useFocus(props)
@@ -147,13 +147,6 @@ export const VField = genericComponent<new <T>(
     const floatingLabelRef = ref<VFieldLabel>()
     const controlRef = ref<HTMLElement>()
     const isPlainOrUnderlined = computed(() => ['plain', 'underlined'].includes(props.variant))
-
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'bgColor'))
-    const { textColorClasses, textColorStyles } = useTextColor(computed(() => {
-      return props.error || props.disabled ? undefined
-        : isActive.value && isFocused.value ? props.fgColor
-        : props.fgColor || props.baseColor
-    }))
 
     watch(isActive, val => {
       if (hasLabel.value) {
@@ -245,7 +238,7 @@ export const VField = genericComponent<new <T>(
               [`v-field--variant-${props.variant}`]: true,
             },
             themeClasses.value,
-            backgroundColorClasses.value,
+            colorClasses.value,
             focusClasses.value,
             loaderClasses.value,
             roundedClasses.value,
@@ -253,8 +246,7 @@ export const VField = genericComponent<new <T>(
             props.class,
           ]}
           style={[
-            backgroundColorStyles.value,
-            textColorStyles.value,
+            colorStyles.value,
             props.style,
           ]}
           onClick={ onClick }
@@ -284,7 +276,7 @@ export const VField = genericComponent<new <T>(
               <VFieldLabel
                 key="floating-label"
                 ref={ floatingLabelRef }
-                class={[textColorClasses.value]}
+                class={[colorClasses.value]}
                 floating
                 for={ id.value }
               >
@@ -339,7 +331,7 @@ export const VField = genericComponent<new <T>(
           <div
             class={[
               'v-field__outline',
-              textColorClasses.value,
+              colorClasses.value,
             ]}
           >
             { isOutlined && (

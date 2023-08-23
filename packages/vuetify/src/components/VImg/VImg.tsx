@@ -7,6 +7,7 @@ import { makeVResponsiveProps, VResponsive } from '@/components/VResponsive/VRes
 // Composables
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeTransitionProps, MaybeTransition } from '@/composables/transition'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Directives
 import intersect from '@/directives/intersect'
@@ -73,6 +74,7 @@ export const makeVImgProps = propsFactory({
 
   ...makeVResponsiveProps(),
   ...makeComponentProps(),
+  ...makeColorsProps(),
   ...makeTransitionProps(),
 }, 'VImg')
 
@@ -91,6 +93,7 @@ export const VImg = genericComponent<VImgSlots>()({
 
   setup (props, { emit, slots }) {
     useComponentBase(props)
+    const { colorClasses, colorStyles } = useColors(props)
     const currentSrc = shallowRef('') // Set from srcset
     const image = ref<HTMLImageElement>()
     const state = shallowRef<'idle' | 'loading' | 'loaded' | 'error'>(props.eager ? 'loading' : 'idle')
@@ -302,10 +305,12 @@ export const VImg = genericComponent<VImgSlots>()({
           class={[
             'v-img',
             { 'v-img--booting': !isBooted.value },
+            colorClasses.value,
             props.class,
           ]}
           style={[
             { width: convertToUnit(props.width === 'auto' ? naturalWidth.value : props.width) },
+            colorStyles.value,
             props.style,
           ]}
           { ...responsiveProps }

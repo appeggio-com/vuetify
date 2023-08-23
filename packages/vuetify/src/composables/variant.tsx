@@ -26,6 +26,7 @@ export interface VariantProps {
   color?: string
   fgColor?: string
   variant: Variant
+  zIndex?: number | string
 }
 
 export function genOverlays (isClickable: boolean, name: string) {
@@ -47,18 +48,21 @@ export const makeVariantProps = propsFactory({
     default: 'elevated',
     validator: (v: any) => allowedVariants.includes(v),
   },
+  zIndex: [Number, String],
 }, 'variant')
 
 export interface ColorsProps {
   bgColor?: string
   color?: string
   fgColor?: string
+  zIndex?: number | string
 }
 
 export const makeColorsProps = propsFactory({
   bgColor: String,
   color: String,
   fgColor: String,
+  zIndex: [Number, String],
 }, 'colors')
 
 export function useVariant (
@@ -93,7 +97,17 @@ export function useVariant (
     return obj
   }))
 
-  return { colorClasses, colorStyles, variantClasses }
+  const injectedStyles = computed(() => {
+    const { zIndex } = unref(props)
+    const styles = unref(colorStyles)
+    if (zIndex || zIndex === 0) {
+      styles.zIndex = zIndex
+      return styles
+    }
+    return styles
+  })
+
+  return { colorClasses, colorStyles: injectedStyles, variantClasses }
 }
 
 export function useColors (
@@ -112,5 +126,15 @@ export function useColors (
     return obj
   }))
 
-  return { colorClasses, colorStyles }
+  const injectedStyles = computed(() => {
+    const { zIndex } = unref(props)
+    const styles = unref(colorStyles)
+    if (zIndex || zIndex === 0) {
+      styles.zIndex = zIndex
+      return styles
+    }
+    return styles
+  })
+
+  return { colorClasses, colorStyles: injectedStyles }
 }
