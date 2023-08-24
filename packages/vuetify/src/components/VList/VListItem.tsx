@@ -131,8 +131,13 @@ export const VListItem = genericComponent<VListItemSlots>()({
     const roundedProps = computed(() => props.rounded || props.nav)
     const color = computed(() => props.color ?? props.activeColor)
     const variantProps = computed(() => ({
+      bgColor: props.bgColor,
       color: isActive.value ? color.value ?? props.baseColor : props.baseColor,
+      fgColor: props.fgColor,
       variant: props.variant,
+      borderWidth: props.borderWidth,
+      borderStyle: props.borderStyle,
+      borderColor: props.borderColor,
     }))
 
     watch(() => link.isActive?.value, val => {

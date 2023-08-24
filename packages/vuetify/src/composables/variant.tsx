@@ -3,12 +3,48 @@ import { useColor } from '@/composables/color'
 
 // Utilities
 import { computed, unref } from 'vue'
+import { isCssColor } from '@/util'
 import { getCurrentInstanceName } from '@/util/getCurrentInstance'
 import { propsFactory } from '@/util/propsFactory'
 
 // Types
-import type { PropType } from 'vue'
+import type { CSSProperties, PropType, Ref } from 'vue'
 import type { MaybeRef } from '@/util'
+
+export function genOverlays (isClickable: boolean, name: string) {
+  return (
+    <>
+      { isClickable && <span key="overlay" class={ `${name}__overlay` } /> }
+
+      <span key="underlay" class={ `${name}__underlay` } />
+    </>
+  )
+}
+
+function makeSharedStyles (
+  props: MaybeRef<ColorsProps>,
+  colorStyles: Ref<CSSProperties>
+) {
+  const injectedStyles = computed(() => {
+    const { zIndex, borderColor, borderStyle, borderWidth } = unref(props)
+    const styles = unref(colorStyles)
+
+    if (zIndex || zIndex === 0) {
+      styles.zIndex = zIndex
+      return styles
+    }
+
+    if (borderColor && borderWidth) {
+      styles.borderWidth = !isNaN(Number(borderWidth)) ? `${borderWidth}px` : borderWidth
+      styles.borderStyle = borderStyle
+      styles.borderColor = isCssColor(borderColor) ? borderColor : `rgb(var(--v-theme-${borderColor}))`
+    }
+
+    return styles
+  })
+
+  return { injectedStyles }
+}
 
 export const allowedVariants = [
   'elevated',
@@ -27,16 +63,9 @@ export interface VariantProps {
   fgColor?: string
   variant: Variant
   zIndex?: number | string
-}
-
-export function genOverlays (isClickable: boolean, name: string) {
-  return (
-    <>
-      { isClickable && <span key="overlay" class={ `${name}__overlay` } /> }
-
-      <span key="underlay" class={ `${name}__underlay` } />
-    </>
-  )
+  borderWidth?: number | string
+  borderStyle: string
+  borderColor?: string
 }
 
 export const makeVariantProps = propsFactory({
@@ -49,6 +78,16 @@ export const makeVariantProps = propsFactory({
     validator: (v: any) => allowedVariants.includes(v),
   },
   zIndex: [Number, String],
+  borderWidth: {
+    type: [Number, String],
+  },
+  borderStyle: {
+    type: String,
+    default: 'solid',
+  },
+  borderColor: {
+    type: String,
+  },
 }, 'variant')
 
 export interface ColorsProps {
@@ -56,6 +95,9 @@ export interface ColorsProps {
   color?: string
   fgColor?: string
   zIndex?: number | string
+  borderWidth?: number | string
+  borderStyle: string
+  borderColor?: string
 }
 
 export const makeColorsProps = propsFactory({
@@ -63,6 +105,16 @@ export const makeColorsProps = propsFactory({
   color: String,
   fgColor: String,
   zIndex: [Number, String],
+  borderWidth: {
+    type: [Number, String],
+  },
+  borderStyle: {
+    type: String,
+    default: 'solid',
+  },
+  borderColor: {
+    type: String,
+  },
 }, 'colors')
 
 export function useVariant (
@@ -97,15 +149,7 @@ export function useVariant (
     return obj
   }))
 
-  const injectedStyles = computed(() => {
-    const { zIndex } = unref(props)
-    const styles = unref(colorStyles)
-    if (zIndex || zIndex === 0) {
-      styles.zIndex = zIndex
-      return styles
-    }
-    return styles
-  })
+  const { injectedStyles } = makeSharedStyles(props, colorStyles)
 
   return { colorClasses, colorStyles: injectedStyles, variantClasses }
 }
@@ -126,15 +170,7 @@ export function useColors (
     return obj
   }))
 
-  const injectedStyles = computed(() => {
-    const { zIndex } = unref(props)
-    const styles = unref(colorStyles)
-    if (zIndex || zIndex === 0) {
-      styles.zIndex = zIndex
-      return styles
-    }
-    return styles
-  })
+  const { injectedStyles } = makeSharedStyles(props, colorStyles)
 
   return { colorClasses, colorStyles: injectedStyles }
 }

@@ -46,7 +46,6 @@ export const makeVAlertProps = propsFactory({
       ].includes(val)
     },
   },
-  borderColor: String,
   closable: Boolean,
   closeIcon: {
     type: IconValue,
@@ -117,6 +116,9 @@ export const VAlert = genericComponent<VAlertSlots>()({
       color: props.color ?? props.type,
       fgColor: props.fgColor,
       variant: props.variant,
+      borderWidth: props.borderWidth,
+      borderStyle: props.borderStyle,
+      borderColor: props.borderColor,
     }))
 
     const { themeClasses } = provideTheme(props)
