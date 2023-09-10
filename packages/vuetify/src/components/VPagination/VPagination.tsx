@@ -127,7 +127,7 @@ export const makeVPaginationProps = propsFactory({
   ...makeSizeProps(),
   ...makeTagProps({ tag: 'nav' }),
   ...makeThemeProps(),
-  ...makeVariantProps({ variant: 'text' } as const),
+  ...makeVariantProps({ variant: 'flat' } as const),
 }, 'VPagination')
 
 export const VPagination = genericComponent<VPaginationSlots>()({

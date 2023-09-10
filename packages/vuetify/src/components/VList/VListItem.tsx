@@ -97,7 +97,7 @@ export const makeVListItemProps = propsFactory({
   ...makeRouterProps(),
   ...makeTagProps(),
   ...makeThemeProps(),
-  ...makeVariantProps({ variant: 'text' } as const),
+  ...makeVariantProps({ variant: 'flat' } as const),
 }, 'VListItem')
 
 export const VListItem = genericComponent<VListItemSlots>()({
