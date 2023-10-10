@@ -472,7 +472,6 @@ $utilities: () !default;
           font-size,
           font-weight,
           line-height,
-          letter-spacing,
           text-transform
         ),
         class: text,
@@ -487,6 +486,19 @@ $utilities: () !default;
         property: text-transform,
         class: text,
         values: none capitalize lowercase uppercase
+      ),
+      "letter-spacing": (
+        responsive: true,
+        property: letter-spacing,
+        class: track,
+        values: (
+          'tighter': -0.05em,
+          'tight':   -0.025em,
+          'normal':   0em,
+          'wide':     0.025em,
+          'wider':    0.05em,
+          'widest':   0.1em
+        )
       ),
       "font-weight": (
         property: font-weight,
