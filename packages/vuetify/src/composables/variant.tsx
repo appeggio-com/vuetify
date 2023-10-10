@@ -26,7 +26,7 @@ function makeSharedStyles (
   colorStyles: Ref<CSSProperties>
 ) {
   const injectedStyles = computed(() => {
-    const { zIndex, borderColor, borderStyle, borderWidth } = unref(props)
+    const { zIndex, borderColor, borderStyle, borderWidth, opacity } = unref(props)
     const styles = unref(colorStyles)
 
     if (zIndex || zIndex === 0) {
@@ -38,6 +38,10 @@ function makeSharedStyles (
       styles.borderWidth = !isNaN(Number(borderWidth)) ? `${borderWidth}px` : borderWidth
       styles.borderStyle = borderStyle
       styles.borderColor = isCssColor(borderColor) ? borderColor : `rgb(var(--v-theme-${borderColor}))`
+    }
+
+    if (opacity) {
+      styles.opacity = opacity
     }
 
     return styles
@@ -66,6 +70,7 @@ export interface VariantProps {
   borderWidth?: number | string
   borderStyle: string
   borderColor?: string
+  opacity?: number
 }
 
 export const makeVariantProps = propsFactory({
@@ -88,6 +93,9 @@ export const makeVariantProps = propsFactory({
   borderColor: {
     type: String,
   },
+  opacity: {
+    type: Number,
+  },
 }, 'variant')
 
 export interface ColorsProps {
@@ -98,6 +106,7 @@ export interface ColorsProps {
   borderWidth?: number | string
   borderStyle: string
   borderColor?: string
+  opacity?: number
 }
 
 export const makeColorsProps = propsFactory({
@@ -114,6 +123,9 @@ export const makeColorsProps = propsFactory({
   },
   borderColor: {
     type: String,
+  },
+  opacity: {
+    type: Number,
   },
 }, 'colors')
 
