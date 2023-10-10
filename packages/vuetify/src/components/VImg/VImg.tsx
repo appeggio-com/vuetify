@@ -71,6 +71,7 @@ export const makeVImgProps = propsFactory({
     default: '',
   },
   srcset: String,
+  imageOpacity: Number,
 
   ...makeVResponsiveProps(),
   ...makeComponentProps(),
@@ -222,6 +223,9 @@ export const VImg = genericComponent<VImgSlots>()({
           ref={ image }
           onLoad={ onLoad }
           onError={ onError }
+          style={{
+            opacity: props.imageOpacity,
+          }}
         />
       )
 
