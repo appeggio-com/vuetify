@@ -49,6 +49,14 @@ export const makeVBtnProps = propsFactory({
     type: Boolean,
     default: undefined,
   },
+  activeBgColor: {
+    type: String,
+    default: undefined,
+  },
+  activeFgColor: {
+    type: String,
+    default: undefined,
+  },
   symbol: {
     type: null,
     default: VBtnToggleSymbol,
@@ -100,7 +108,6 @@ export const VBtn = genericComponent<VBtnSlots>()({
     useComponentBase(props)
     const { themeClasses } = provideTheme(props)
     const { borderClasses } = useBorder(props)
-    const { colorClasses, colorStyles, variantClasses } = useVariant(props)
     const { densityClasses } = useDensity(props)
     const { dimensionStyles } = useDimension(props)
     const { elevationClasses } = useElevation(props)
@@ -135,6 +142,13 @@ export const VBtn = genericComponent<VBtnSlots>()({
 
       return group?.isSelected.value
     })
+
+    const variantProps = computed(() => ({
+      ...props,
+      bgColor: isActive.value ? (props.activeBgColor || props.bgColor) : props.bgColor,
+      fgColor: isActive.value ? (props.activeFgColor || props.fgColor) : props.fgColor,
+    }))
+    const { colorClasses, colorStyles, variantClasses } = useVariant(variantProps)
     const isDisabled = computed(() => group?.disabled.value || props.disabled)
     const isElevated = computed(() => {
       return props.variant === 'elevated' && !(props.disabled || props.flat || props.border)

@@ -3,6 +3,7 @@ import {
   computed,
   nextTick,
   onScopeDispose,
+  reactive,
   resolveDynamicComponent,
   toRef,
 } from 'vue'
@@ -65,7 +66,12 @@ export function useLink (props: LinkProps & LinkListeners, attrs: SetupContext['
     }
   }
 
-  const link = props.to ? RouterLink.useLink(props as UseLinkOptions) : undefined
+  const newProps = reactive({
+    to: computed(() => props.to || props.href),
+    replace: props.replace,
+  })
+
+  const link = (props.to || props.href) ? RouterLink.useLink(newProps as UseLinkOptions) : undefined
 
   return {
     isLink,
