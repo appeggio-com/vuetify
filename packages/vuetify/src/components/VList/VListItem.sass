@@ -10,7 +10,7 @@
   display: grid
   flex: none
   grid-template-areas: "prepend content append"
-  grid-template-columns: max-content auto max-content
+  grid-template-columns: max-content 1fr auto
   outline: none
   max-width: 100%
   padding: $list-item-padding
@@ -58,18 +58,25 @@
   &--link
     cursor: pointer
 
+  .v-navigation-drawer--rail:not(.v-navigation-drawer--expand-on-hover) &,
+  .v-navigation-drawer--rail.v-navigation-drawer--expand-on-hover:not(.v-navigation-drawer--is-hovering) &
+    .v-avatar
+      --v-avatar-height: 24px
+
 .v-list-item__prepend
   align-items: center
   align-self: center
   display: flex
   grid-area: prepend
 
-  > .v-avatar
-    margin-inline-end: $list-item-avatar-margin-end
-
   > .v-badge,
-  > .v-icon
-    margin-inline-end: $list-item-icon-margin-end
+  > .v-icon,
+  > .v-tooltip
+    ~ .v-list-item__spacer
+      width: $list-item-icon-margin-start
+
+  > .v-avatar ~ .v-list-item__spacer
+    width: $list-item-avatar-margin-start
 
   .v-list-item--three-line &
     align-self: start
@@ -80,12 +87,18 @@
   align-items: center
   grid-area: append
 
-  > .v-avatar
-    margin-inline-start: $list-item-avatar-margin-start
+  .v-list-item__spacer
+    order: -1
+    transition: 150ms width settings.$standard-easing
 
   > .v-badge,
-  > .v-icon
-    margin-inline-start: $list-item-icon-margin-start
+  > .v-icon,
+  > .v-tooltip
+    ~ .v-list-item__spacer
+      width: $list-item-icon-margin-end
+
+  > .v-avatar ~ .v-list-item__spacer
+    width: $list-item-avatar-margin-end
 
   .v-list-item--three-line &
     align-self: start

@@ -1,18 +1,30 @@
 <template>
-  <v-switch
-    v-model="user.quickbar"
-    class="ps-3 flex-0-0"
-    inset
-    color="success"
-    label="Enable Quickbar"
-    messages="The quickbar is a small toolbar that appears in the navigation drawer on the bottom left of the screen. It provides quick access to common actions and settings."
-    density="compact"
-  />
+  <v-defaults-provider
+    :defaults="{
+      VIcon: {
+        color: user.quickbar && auth.isSubscriber ? 'primary' : 'disabled'
+      }
+    }"
+  >
+    <settings-switch
+      v-model="user.quickbar"
+      :disabled="!auth.isSubscriber"
+      :label="t('dashboard.perks.disable-quickbar')"
+      :messages="t('dashboard.perks.disable-quickbar-message')"
+      :readonly="!auth.isSubscriber"
+    />
+  </v-defaults-provider>
 </template>
 
 <script setup>
+  // Composables
+  import { useI18n } from 'vue-i18n'
+
   // Stores
+  import { useAuthStore } from '@/store/auth'
   import { useUserStore } from '@/store/user'
 
+  const { t } = useI18n()
+  const auth = useAuthStore()
   const user = useUserStore()
 </script>

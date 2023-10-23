@@ -21,6 +21,7 @@
       "installation",
       "frequently-asked-questions",
       "wireframes",
+      "unit-testing",
       "browser-support",
       "upgrade-guide",
       "release-notes",
@@ -32,6 +33,7 @@
     "inactiveIcon": "mdi-image-edit-outline",
     "activeIcon": "mdi-image-edit",
     "items": [
+      "accessibility",
       "aliasing",
       "application-layout",
       "blueprints",
@@ -74,7 +76,12 @@
     "activeIcon": "mdi-view-dashboard",
     "items": [
       "all",
-      "explorer",
+      {
+        "title": "explorer",
+        "routeMatch": "explorer/:name(.*)",
+        "routePath": "explorer",
+        "subtitle": "browse-components"
+      },
       { "divider": true },
       { "subheader": "containment" },
       "buttons",
@@ -244,10 +251,12 @@
     "inactiveIcon": "mdi-human-male-board",
     "activeIcon": "mdi-human-male-board",
     "items": [
+      "brand-kit",
       "jobs-for-vue",
-      "ui-kits",
+      "made-with-vuetify",
+      "search-engine",
       "themes",
-      "search-engine"
+      "ui-kits"
     ]
   },
   {

@@ -19,9 +19,14 @@ import { filterInputAttrs, genericComponent, getUid, omit, propsFactory, useRend
 
 // Types
 import type { VInputSlots } from '@/components/VInput/VInput'
-import type { VSelectionControlSlots } from '@/components/VSelectionControl/VSelectionControl'
 
-export type VRadioGroupSlots = VInputSlots & VSelectionControlSlots
+export type VRadioGroupSlots = Omit<VInputSlots, 'default'> & {
+  default: never
+  label: {
+    label: string | undefined
+    props: Record<string, any>
+  }
+}
 
 export const makeVRadioGroupProps = propsFactory({
   height: {
@@ -67,7 +72,7 @@ export const VRadioGroup = genericComponent<VRadioGroupSlots>()({
     const { colorClasses, colorStyles } = useColors(props)
 
     useRender(() => {
-      const [inputAttrs, controlAttrs] = filterInputAttrs(attrs)
+      const [rootAttrs, controlAttrs] = filterInputAttrs(attrs)
       const [inputProps, _1] = VInput.filterProps(props)
       const [controlProps, _2] = VSelectionControl.filterProps(props)
       const label = slots.label
@@ -88,7 +93,7 @@ export const VRadioGroup = genericComponent<VRadioGroupSlots>()({
             colorStyles.value,
             props.style,
           ]}
-          { ...inputAttrs }
+          { ...rootAttrs }
           { ...inputProps }
           v-model={ model.value }
           id={ id.value }

@@ -40,6 +40,7 @@ export const rootTypes = {
   'list-item-avatar-two-line': 'avatar, sentences',
   'list-item-three-line': 'paragraph',
   'list-item-avatar-three-line': 'avatar, paragraph',
+  ossein: 'ossein',
   paragraph: 'text@3',
   sentences: 'text@2',
   subtitle: 'text',
@@ -113,8 +114,11 @@ export const makeVSkeletonLoaderProps = propsFactory({
     default: '$vuetify.loading',
   },
   type: {
-    type: [String, Array] as PropType<string | readonly string[]>,
-    default: 'image',
+    type: [String, Array] as PropType<
+      | VSkeletonLoaderType | (string & {})
+      | ReadonlyArray<VSkeletonLoaderType | (string & {})>
+    >,
+    default: 'ossein',
   },
 
   ...makeColorsProps(),

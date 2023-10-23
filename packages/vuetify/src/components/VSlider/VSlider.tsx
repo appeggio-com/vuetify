@@ -19,12 +19,12 @@ import { computed, ref } from 'vue'
 import { genericComponent, propsFactory, useRender } from '@/util'
 
 // Types
+import type { VSliderThumbSlots } from './VSliderThumb'
+import type { VSliderTrackSlots } from './VSliderTrack'
 import type { VInputSlot, VInputSlots } from '@/components/VInput/VInput'
 
-export type VSliderSlots = VInputSlots & {
+export type VSliderSlots = VInputSlots & VSliderThumbSlots & VSliderTrackSlots & {
   label: VInputSlot
-  'tick-label': never
-  'thumb-label': never
 }
 
 export const makeVSliderProps = propsFactory({
@@ -121,15 +121,16 @@ export const VSlider = genericComponent<VSliderSlots>()({
             ...slots,
             prepend: hasPrepend ? slotProps => (
               <>
-                { slots.label?.(slotProps) ?? props.label
-                  ? (
-                    <VLabel
-                      id={ slotProps.id.value }
-                      class="v-slider__label"
-                      text={ props.label }
-                    />
-                  ) : undefined
-                }
+                { slots.label?.(slotProps) ?? (
+                  props.label
+                    ? (
+                      <VLabel
+                        id={ slotProps.id.value }
+                        class="v-slider__label"
+                        text={ props.label }
+                      />
+                    ) : undefined
+                )}
 
                 { slots.prepend?.(slotProps) }
               </>

@@ -8,16 +8,28 @@ related:
   - /components/lists/
   - /components/data-tables/basics/
   - /components/data-iterators/
+features:
+  github: /labs/VInfiniteScroll/
+  label: 'C: VInfiniteScroll'
+  report: true
 ---
 
 # Infinite scroller
 
 The `v-infinite-scroll` component displays a potentially infinite list, by loading more items of the list when scrolling. It supports either vertical or horizontal scrolling.
 
-----
+<page-features />
+
+::: success
+
+This component is feature complete and is pending release in [v3.4.0 (Blackguard)](/introduction/roadmap/#v3-4-blackguard)
+
+:::
 
 ::: warning
+
 This feature requires [v3.2.0 (Orion)](/getting-started/release-notes/?version=v3.2.0)
+
 :::
 
 ## Usage
@@ -39,6 +51,20 @@ A **load** event will be emitted when the component needs to load more content. 
 |`'loading'`|Content is currently loading. This will display a message that content is loading. This status is only set internally by the component and should not be used with the **done** function|
 
 <entry />
+
+## Installation
+
+Labs components require a manual import and installation of the component.
+
+```js { resource="src/plugins/vuetify.js" }
+import { VInfiniteScroll } from 'vuetify/labs/VInfiniteScroll'
+
+export default createVuetify({
+  components: {
+    VInfiniteScroll,
+  },
+})
+```
 
 ## API
 

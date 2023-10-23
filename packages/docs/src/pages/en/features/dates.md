@@ -8,18 +8,24 @@ related:
 - /features/blueprints/
 - /features/global-configuration/
 - /features/treeshaking/
+features:
+  github: /labs/date/
+  label: 'E: date'
+  report: true
 ---
 
 # Dates
 
 Easily hook up date libraries that are used for components that require date functionality.
 
+<page-features />
+
 <entry />
 
-----
-
 ::: warning
+
 This feature requires [v3.2.0 (Orion)](/getting-started/release-notes/?version=v3.2.0)
+
 :::
 
 ## Usage
@@ -42,16 +48,12 @@ export default createVuetify({
 Within your application, import the **useDate** function and use it to access the date composable.
 
 ```html { resource="src/views/Date.vue" }
-<script>
+<script setup>
   import { useDate } from 'vuetify/labs/date'
 
-  export default {
-    setup () {
-      const date = useDate()
+  const date = useDate()
 
-      console.log(date.getMonth(new Date('March 1, 2021'))) // 3
-    },
-  }
+  console.log(date.getMonth(new Date('March 1, 2021'))) // 3
 </script>
 ```
 
@@ -68,22 +70,20 @@ The date composable supports the following date formatting options:
 * keyboardDate
 * monthAndDate
 * monthAndYear
+* dayOfMonth
+* shortDate
 
 The following example shows how to use the date composable to format a date string:
 
 ```html { resource="src/views/Date.vue" }
-<script>
+<script setup>
   import { useDate } from 'vuetify/labs/date'
 
-  export default {
-    setup () {
-      const date = useDate()
+  const date = useDate()
 
-      const formatted = date.format('2010-04-13 00:00:00', 'fullDateWithWeekday')
+  const formatted = date.format('2010-04-13 00:00:00', 'fullDateWithWeekday')
 
-      console.log(formatted) // Tuesday, April 13, 2010
-    },
-  }
+  console.log(formatted) // Tuesday, April 13, 2010
 </script>
 ```
 
@@ -122,7 +122,11 @@ import type { DateAdapter } from 'vuetify/labs'
 export interface DateAdapter<Date> {
   date (value?: any): Date | null
   format (date: Date, formatString: string): string
+  parseISO (value: string): Date | null
+  toISO (date: Date): string
 
+  startOfDay (date: Date): Date
+  endOfDay (date: Date): Date
   startOfMonth (date: Date): Date
   endOfMonth (date: Date): Date
   startOfYear (date: Date): Date

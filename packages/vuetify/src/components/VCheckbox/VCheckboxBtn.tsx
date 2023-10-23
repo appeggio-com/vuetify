@@ -9,7 +9,7 @@ import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
 import { computed } from 'vue'
-import { genericComponent, propsFactory, useRender } from '@/util'
+import { genericComponent, omit, propsFactory, useRender } from '@/util'
 
 // Types
 import type { VSelectionControlSlots } from '@/components/VSelectionControl/VSelectionControl'
@@ -63,27 +63,30 @@ export const VCheckboxBtn = genericComponent<VSelectionControlSlots>()({
         : props.trueIcon
     })
 
-    useRender(() => (
-      <VSelectionControl
-        { ...props }
-        v-model={ model.value }
-        class={[
-          'v-checkbox-btn',
-          colorClasses.value,
-          props.class,
-        ]}
-        style={[
-          colorStyles.value,
-          props.style,
-        ]}
-        type="checkbox"
-        onUpdate:modelValue={ onChange }
-        falseIcon={ falseIcon.value }
-        trueIcon={ trueIcon.value }
-        aria-checked={ indeterminate.value ? 'mixed' : undefined }
-        v-slots={ slots }
-      />
-    ))
+    useRender(() => {
+      const controlProps = omit(VSelectionControl.filterProps(props)[0], ['modelValue'])
+      return (
+        <VSelectionControl
+          { ...controlProps }
+          v-model={ model.value }
+          class={[
+            'v-checkbox-btn',
+            colorClasses.value,
+            props.class,
+          ]}
+          style={[
+            colorStyles.value,
+            props.style,
+          ]}
+          type="checkbox"
+          onUpdate:modelValue={ onChange }
+          falseIcon={ falseIcon.value }
+          trueIcon={ trueIcon.value }
+          aria-checked={ indeterminate.value ? 'mixed' : undefined }
+          v-slots={ slots }
+        />
+      )
+    })
 
     return {}
   },

@@ -42,6 +42,8 @@ export type VStepperSlots = {
   title: StepperItemSlot
   subtitle: StepperItemSlot
   item: StepperItem
+  prev: never
+  next: never
 } & {
   [key: `header-item.${string}`]: StepperItemSlot
   [key: `item.${string}`]: StepperItem
@@ -86,8 +88,7 @@ export const VStepper = genericComponent<VStepperSlots>()({
   },
 
   setup (props, { slots }) {
-    // TODO: fix typing
-    const { items: _items, next, prev, selected } = useGroup(props as any, VStepperSymbol)
+    const { items: _items, next, prev, selected } = useGroup(props, VStepperSymbol)
     const { bgColor, color, fgColor, editable, prevText, nextText } = toRefs(props)
 
     const items = computed(() => props.items.map((item, index) => {
@@ -193,6 +194,7 @@ export const VStepper = genericComponent<VStepperSlots>()({
                 key="stepper-actions"
                 onClick:prev={ prev }
                 onClick:next={ next }
+                v-slots={ slots }
               />
             )
           )}
@@ -206,3 +208,5 @@ export const VStepper = genericComponent<VStepperSlots>()({
     }
   },
 })
+
+export type VStepper = InstanceType<typeof VStepper>

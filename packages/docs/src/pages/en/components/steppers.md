@@ -9,18 +9,32 @@ related:
   - /components/tabs/
   - /components/item-groups/
   - /components/windows/
+features:
+  figma: true
+  github: /components/VStepper/
+  label: 'C: VStepper'
+  report: true
+  spec: https://m1.material.io/components/steppers.html
 ---
 
 # Steppers
 
 The `v-stepper` component displays progress through numbered steps.
 
-<!-- ![Pending graphic](https://cdn.vuetifyjs.com/docs/images/components/v-stepper/v-stepper-entry.png){ height=300 } -->
+![Stepper Entry](https://cdn.vuetifyjs.com/docs/images/components/v-stepper/v-stepper-entry.png)
 
----
+<page-features />
+
+::: success
+
+This component is feature complete and is pending release in [v3.4.0 (Blackguard)](/introduction/roadmap/#v3-4-blackguard)
+
+:::
 
 ::: warning
+
 This feature requires [v3.3.11](/getting-started/release-notes/?version=v3.3.11)
+
 :::
 
 ## Usage
@@ -31,8 +45,24 @@ A stepper can be used for a multitude of scenarios, including shopping carts, re
 
 <entry />
 
+## Installation
+
+Labs components require a manual import and installation of the component.
+
+```js { resource="src/plugins/vuetify.js" }
+import { VStepper } from 'vuetify/labs/VStepper'
+
+export default createVuetify({
+  components: {
+    VStepper,
+  },
+})
+```
+
 ::: info
+
 Due to the massive differences in display and functionality between horizontal and vertical steppers, the **vertical** property is moving to a new component `v-stepper-vertical`.
+
 :::
 
 ## API
@@ -109,7 +139,9 @@ The stepper component accepts an array of items similar to other components such
 <example file="v-stepper/misc-horizontal" />
 
 ::: warning
+
 If no value is provided, the stepper will assign a value based off of its index + 1
+
 :::
 
 #### Mobile

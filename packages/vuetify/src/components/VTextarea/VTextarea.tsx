@@ -252,7 +252,6 @@ export const VTextarea = genericComponent<VTextareaSlots>()({
                 onClick:clear={ onClear }
                 onClick:prependInner={ props['onClick:prependInner'] }
                 onClick:appendInner={ props['onClick:appendInner'] }
-                role="textbox"
                 { ...fieldProps }
                 active={ isActive.value || isDirty.value }
                 centerAffix={ rows.value === 1 && !isPlainOrUnderlined.value }
@@ -299,6 +298,7 @@ export const VTextarea = genericComponent<VTextareaSlots>()({
                             fieldClass,
                             'v-textarea__sizer',
                           ]}
+                          id={ `${slotProps.id}-sizer` }
                           v-model={ model.value }
                           ref={ sizerRef }
                           readonly

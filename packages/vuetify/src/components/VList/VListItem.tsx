@@ -273,6 +273,8 @@ export const VListItem = genericComponent<VListItemSlots>()({
                   { slots.prepend?.(slotProps.value) }
                 </VDefaultsProvider>
               )}
+
+              <div class="v-list-item__spacer" />
             </div>
           )}
 
@@ -333,6 +335,8 @@ export const VListItem = genericComponent<VListItemSlots>()({
                   { slots.append?.(slotProps.value) }
                 </VDefaultsProvider>
               )}
+
+              <div class="v-list-item__spacer" />
             </div>
           )}
         </Tag>

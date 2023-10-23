@@ -1,53 +1,35 @@
 <template>
-  <banner-option />
+  <div>
+    <settings-header
+      title="theme"
+      text="theme-message"
+    />
 
-  <br>
+    <theme-option />
 
-  <notifications-option />
+    <v-divider class="mt-4 mb-3" />
 
-  <br>
+    <settings-header
+      title="general"
+      text="general-message"
+    />
 
-  <quickbar-option />
+    <code-option />
 
-  <br>
+    <api-option />
 
-  <developer-mode />
+    <slash-search-option />
 
-  <br>
-
-  <v-footer
-    app
-    absolute
-    class="text-caption justify-end text-medium-emphasis"
-    height="47"
-  >
-    <v-btn
-      variant="flat"
-      size="small"
-      color="error"
-      @click="onResetAll"
-    >
-      Reset All
-    </v-btn>
-  </v-footer>
+    <sync-option />
+  </div>
 </template>
 
 <script setup>
   // Components
-  import BannerOption from './options/BannerOption.vue'
-  import DeveloperMode from './DeveloperMode.vue'
-  import NotificationsOption from './options/NotificationsOption.vue'
-  import QuickbarOption from './options/QuickbarOption.vue'
-
-  // Stores
-  import { useUserStore } from '@/store/user'
-
-  const user = useUserStore()
-
-  function onResetAll () {
-    user.notifications.read = []
-    user.notifications.show = true
-    user.notifications.last.banner = []
-    user.quickbar = true
-  }
+  import ApiOption from '@/components/app/settings/options/ApiOption.vue'
+  import CodeOption from '@/components/app/settings/options/CodeOption.vue'
+  import SettingsHeader from '@/components/app/settings/SettingsHeader.vue'
+  import SlashSearchOption from '@/components/app/settings/options/SlashSearchOption.vue'
+  import SyncOption from '@/components/app/settings/options/SyncOption.vue'
+  import ThemeOption from '@/components/app/settings/options/ThemeOption.vue'
 </script>

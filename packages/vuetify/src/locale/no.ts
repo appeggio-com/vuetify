@@ -1,5 +1,6 @@
 export default {
   badge: 'Skilt',
+  open: 'Open',
   close: 'Lukk',
   dataIterator: {
     noResultsText: 'Fant ingen matchende elementer.',
@@ -27,7 +28,7 @@ export default {
     pageText: '{0}-{1} av {2}',
   },
   dateRangeInput: {
-    divider: 'to',
+    divider: 'til',
   },
   datePicker: {
     ok: 'OK',

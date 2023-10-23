@@ -24,7 +24,7 @@ export const VApp = genericComponent()({
   setup (props, { slots }) {
     useComponentBase(props)
     const theme = provideTheme(props)
-    const { layoutClasses, layoutStyles, getLayoutItem, items, layoutRef } = createLayout(props)
+    const { layoutClasses, getLayoutItem, items, layoutRef } = createLayout(props)
     const { rtlClasses } = useRtl()
 
     useRender(() => (
@@ -38,7 +38,6 @@ export const VApp = genericComponent()({
           props.class,
         ]}
         style={[
-          layoutStyles.value,
           props.style,
         ]}
       >
