@@ -75,7 +75,7 @@ $rounded: map-deep-merge(
 );
 
 $spacer: 4px !default;
-$spacers-steps: 16 !default;
+$spacers-steps: 30 !default;
 
 $spacers: () !default;
 @if (meta.type-of($spacers) == list) {
