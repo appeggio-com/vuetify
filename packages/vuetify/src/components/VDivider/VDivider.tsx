@@ -2,19 +2,18 @@
 import './VDivider.sass'
 
 // Composables
-import { useTextColor } from '@/composables/color'
 import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
+import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
-import { computed, toRef } from 'vue'
+import { computed } from 'vue'
 import { convertToUnit, genericComponent, propsFactory, useRender } from '@/util'
 
 type DividerKey = 'borderRightWidth' | 'borderTopWidth' | 'maxHeight' | 'maxWidth'
 type DividerStyles = Partial<Record<DividerKey, string>>
 
 export const makeVDividerProps = propsFactory({
-  color: String,
   inset: Boolean,
   length: [Number, String],
   thickness: [Number, String],
@@ -22,6 +21,7 @@ export const makeVDividerProps = propsFactory({
 
   ...makeComponentProps(),
   ...makeThemeProps(),
+  ...makeColorsProps(),
 }, 'VDivider')
 
 export const VDivider = genericComponent()({
@@ -32,7 +32,7 @@ export const VDivider = genericComponent()({
   setup (props, { attrs }) {
     useComponentBase(props)
     const { themeClasses } = provideTheme(props)
-    const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'color'))
+    const { colorClasses, colorStyles } = useColors(props)
     const dividerStyles = computed(() => {
       const styles: DividerStyles = {}
 
@@ -56,12 +56,12 @@ export const VDivider = genericComponent()({
             'v-divider--vertical': props.vertical,
           },
           themeClasses.value,
-          textColorClasses.value,
+          colorClasses.value,
           props.class,
         ]}
         style={[
           dividerStyles.value,
-          textColorStyles.value,
+          colorStyles.value,
           props.style,
         ]}
         aria-orientation={
