@@ -1,5 +1,6 @@
 // Composables
 import { VItemGroupSymbol } from './VItemGroup'
+import { useComponentBase } from '@/composables/component'
 import { makeGroupItemProps, useGroupItem } from '@/composables/group'
 
 // Utilities
@@ -26,6 +27,7 @@ export const VItem = genericComponent<VItemSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { isSelected, select, toggle, selectedClass, value, disabled } = useGroupItem(props, VItemGroupSymbol)
     return () => slots.default?.({
       isSelected: isSelected.value,

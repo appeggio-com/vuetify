@@ -1,5 +1,6 @@
 // Composables
 import { useProxiedModel } from './proxiedModel'
+import { makeComponentProps } from '@/composables/component'
 
 // Utilities
 import { computed, inject, onBeforeUnmount, onMounted, provide, reactive, toRef, watch } from 'vue'
@@ -69,6 +70,7 @@ export const makeGroupItemProps = propsFactory({
   value: null,
   disabled: Boolean,
   selectedClass: String,
+  ...makeComponentProps(),
 }, 'group-item')
 
 export interface GroupItemProps extends ExtractPropTypes<ReturnType<typeof makeGroupItemProps>> {

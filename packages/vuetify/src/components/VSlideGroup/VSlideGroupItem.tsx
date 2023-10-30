@@ -1,4 +1,5 @@
 // Composables
+import { useComponentBase } from '@/composables/component'
 import { makeGroupItemProps, useGroupItem } from '@/composables/group'
 
 // Utilities
@@ -28,6 +29,7 @@ export const VSlideGroupItem = genericComponent<VSlideGroupItemSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const slideGroupItem = useGroupItem(props, VSlideGroupSymbol)
 
     return () => slots.default?.({

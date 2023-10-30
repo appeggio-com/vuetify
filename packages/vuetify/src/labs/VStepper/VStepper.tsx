@@ -11,6 +11,7 @@ import { VDivider } from '@/components/VDivider'
 import { makeVSheetProps, VSheet } from '@/components/VSheet/VSheet'
 
 // Composables
+import { makeComponentProps, useComponentBase } from '@/composables/component'
 import { provideDefaults } from '@/composables/defaults'
 import { makeGroupProps, useGroup } from '@/composables/group'
 import { makeColorsProps } from '@/composables/variant'
@@ -69,6 +70,7 @@ export const makeVStepperProps = propsFactory({
   nonLinear: Boolean,
   flat: Boolean,
 
+  ...makeComponentProps(),
   ...makeGroupProps({
     mandatory: 'force' as const,
     selectedClass: 'v-stepper-item--selected',
@@ -88,6 +90,7 @@ export const VStepper = genericComponent<VStepperSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const { items: _items, next, prev, selected } = useGroup(props, VStepperSymbol)
     const { bgColor, color, fgColor, editable, prevText, nextText } = toRefs(props)
 

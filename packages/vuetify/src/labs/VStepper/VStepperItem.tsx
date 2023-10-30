@@ -6,6 +6,7 @@ import { VAvatar } from '@/components/VAvatar/VAvatar'
 import { VIcon } from '@/components/VIcon/VIcon'
 
 // Composables
+import { useComponentBase } from '@/composables/component'
 import { makeGroupItemProps, useGroupItem } from '@/composables/group'
 
 // Directives
@@ -82,6 +83,7 @@ export const VStepperItem = genericComponent<VStepperItemSlots>()({
   },
 
   setup (props, { slots }) {
+    useComponentBase(props)
     const group = useGroupItem(props, VStepperSymbol, true)
     const step = computed(() => group?.value.value ?? props.value)
     const isValid = computed(() => props.rules.every(handler => handler() === true))
