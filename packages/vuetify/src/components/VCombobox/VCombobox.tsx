@@ -470,6 +470,8 @@ export const VCombobox = genericComponent<new <
                       onScrollPassive={ onListScroll }
                       tabindex="-1"
                       color={ props.itemColor ?? props.color }
+                      bgColor={ props.menuBgColor }
+                      fgColor={ props.menuFgColor }
                     >
                       { slots['prepend-item']?.() }
 

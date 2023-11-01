@@ -82,6 +82,8 @@ export const makeSelectProps = propsFactory({
   },
   openOnClear: Boolean,
   itemColor: String,
+  menuBgColor: String,
+  menuFgColor: String,
 
   ...makeComponentProps(),
   ...makeItemsProps({ itemChildren: false }),
@@ -359,6 +361,8 @@ export const VSelect = genericComponent<new <
                       onScrollPassive={ onListScroll }
                       tabindex="-1"
                       color={ props.itemColor ?? props.color }
+                      bgColor={ props.menuBgColor }
+                      fgColor={ props.menuFgColor }
                     >
                       { slots['prepend-item']?.() }
 
