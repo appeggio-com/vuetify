@@ -478,7 +478,8 @@ $utilities: () !default;
         unimportant: (
           font-size,
           font-weight,
-          line-height
+          line-height,
+          text-transform
         ),
         values: variables.$flat-typography
       ),
