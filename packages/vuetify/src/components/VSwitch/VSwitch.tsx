@@ -37,6 +37,7 @@ export const makeVSwitchProps = propsFactory({
     type: [Boolean, String],
     default: false,
   },
+  trackColor: String,
 
   ...makeColorsProps(),
   ...makeComponentProps(),
@@ -64,6 +65,12 @@ export const VSwitch = genericComponent<VSwitchSlots>()({
     const { loaderClasses } = useLoader(props)
     const { isFocused, focus, blur } = useFocus(props)
     const { colorClasses, colorStyles } = useColors(props)
+    const { colorClasses: thumbColorClasses, colorStyles: thumbColorStyles } = useColors(
+      computed(() => ({ fgColor: props.bgColor, bgColor: props.fgColor }))
+    )
+    const { colorClasses: trackColorClasses, colorStyles: trackColorStyles } = useColors(
+      computed(() => ({ bgColor: props.trackColor }))
+    )
     const control = ref<VSelectionControl>()
 
     const loaderColor = computed(() => {
@@ -136,26 +143,30 @@ export const VSwitch = genericComponent<VSwitchSlots>()({
               >
                 {{
                   ...slots,
-                  default: ({ backgroundColorClasses, backgroundColorStyles }) => (
+                  default: () => (
                     <div
                       class={[
                         'v-switch__track',
-                        ...backgroundColorClasses.value,
+                        trackColorClasses.value,
                       ]}
-                      style={ backgroundColorStyles.value }
+                      style={[
+                        trackColorStyles.value,
+                      ]}
                       onClick={ onTrackClick }
                     ></div>
                   ),
-                  input: ({ inputNode, icon, backgroundColorClasses, backgroundColorStyles }) => (
+                  input: ({ inputNode, icon }) => (
                     <>
                       { inputNode }
                       <div
                         class={[
                           'v-switch__thumb',
                           { 'v-switch__thumb--filled': icon || props.loading },
-                          props.inset ? undefined : backgroundColorClasses.value,
+                          thumbColorClasses.value,
                         ]}
-                        style={ props.inset ? undefined : backgroundColorStyles.value }
+                        style={[
+                          thumbColorStyles.value,
+                        ]}
                       >
                         <VScaleTransition>
                           { !props.loading ? (

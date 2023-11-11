@@ -6,6 +6,7 @@ import { makeVResponsiveProps, VResponsive } from '@/components/VResponsive/VRes
 
 // Composables
 import { makeComponentProps, useComponentBase } from '@/composables/component'
+import { makeDimensionProps, useDimension } from '@/composables/dimensions'
 import { makeTransitionProps, MaybeTransition } from '@/composables/transition'
 import { makeColorsProps, useColors } from '@/composables/variant'
 
@@ -73,6 +74,7 @@ export const makeVImgProps = propsFactory({
   srcset: String,
   imageOpacity: Number,
 
+  ...makeDimensionProps(),
   ...makeVResponsiveProps(),
   ...makeComponentProps(),
   ...makeColorsProps(),
@@ -100,6 +102,7 @@ export const VImg = genericComponent<VImgSlots>()({
     const state = shallowRef<'idle' | 'loading' | 'loaded' | 'error'>(props.eager ? 'loading' : 'idle')
     const naturalWidth = shallowRef<number>()
     const naturalHeight = shallowRef<number>()
+    const { dimensionStyles } = useDimension(props)
 
     const normalisedSrc = computed<srcObject>(() => {
       return props.src && typeof props.src === 'object'
@@ -313,7 +316,8 @@ export const VImg = genericComponent<VImgSlots>()({
             props.class,
           ]}
           style={[
-            { width: convertToUnit(props.width === 'auto' ? naturalWidth.value : props.width) },
+            dimensionStyles.value,
+            { width: convertToUnit(dimensionStyles.value.width === 'auto' ? naturalWidth.value : dimensionStyles.value.width) },
             colorStyles.value,
             props.style,
           ]}
