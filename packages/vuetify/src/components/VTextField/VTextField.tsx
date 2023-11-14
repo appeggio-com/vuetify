@@ -42,6 +42,7 @@ export const makeVTextFieldProps = propsFactory({
     default: 'text',
   },
   modelModifiers: Object as PropType<Record<string, boolean>>,
+  elevation: [Number, String],
 
   ...makeComponentProps(),
   ...makeVInputProps(),
@@ -206,6 +207,9 @@ export const VTextField = genericComponent<VTextFieldSlots>()({
                 disabled={ isDisabled.value }
                 focused={ isFocused.value }
                 error={ isValid.value === false }
+                class={[
+                  props.elevation !== undefined && `elevation-${props.elevation}`,
+                ]}
               >
                 {{
                   ...slots,

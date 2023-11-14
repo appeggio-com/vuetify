@@ -23,6 +23,7 @@ export const makeVAvatarProps = propsFactory({
   end: Boolean,
   icon: IconValue,
   image: String,
+  elevation: [Number, String],
 
   ...makeComponentProps(),
   ...makeDensityProps(),
@@ -54,6 +55,7 @@ export const VAvatar = genericComponent()({
             'v-avatar--start': props.start,
             'v-avatar--end': props.end,
           },
+          props.elevation !== undefined && `elevation-${props.elevation}`,
           themeClasses.value,
           colorClasses.value,
           densityClasses.value,

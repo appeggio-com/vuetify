@@ -48,6 +48,7 @@ export const makeVTextareaProps = propsFactory({
   },
   suffix: String,
   modelModifiers: Object as PropType<Record<string, boolean>>,
+  elevation: [Number, String],
 
   ...makeComponentProps(),
   ...makeVInputProps(),
@@ -259,6 +260,9 @@ export const VTextarea = genericComponent<VTextareaSlots>()({
                 disabled={ isDisabled.value }
                 focused={ isFocused.value }
                 error={ isValid.value === false }
+                class={[
+                  props.elevation !== undefined && `elevation-${props.elevation}`,
+                ]}
               >
                 {{
                   ...slots,

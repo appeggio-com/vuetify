@@ -73,6 +73,7 @@ export const makeVImgProps = propsFactory({
   },
   srcset: String,
   imageOpacity: Number,
+  elevation: [Number, String],
 
   ...makeDimensionProps(),
   ...makeVResponsiveProps(),
@@ -313,6 +314,7 @@ export const VImg = genericComponent<VImgSlots>()({
             'v-img',
             { 'v-img--booting': !isBooted.value },
             colorClasses.value,
+            props.elevation !== undefined && `elevation-${props.elevation}`,
             props.class,
           ]}
           style={[
