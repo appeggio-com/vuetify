@@ -51,6 +51,7 @@ export const makeVTabsProps = propsFactory({
   },
   hideSlider: Boolean,
   sliderColor: String,
+  elevation: [Number, String],
 
   ...makeComponentProps(),
   ...makeColorsProps(),
@@ -106,6 +107,7 @@ export const VTabs = genericComponent()({
             },
             densityClasses.value,
             colorClasses.value,
+            props.elevation !== undefined && `elevation-${props.elevation}`,
             props.class,
           ]}
           style={[

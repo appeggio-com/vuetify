@@ -41,6 +41,7 @@ export const makeVBadgeProps = propsFactory({
   },
   offsetX: [Number, String],
   offsetY: [Number, String],
+  elevation: [Number, String],
 
   ...makeColorsProps(),
   ...makeComponentProps(),
@@ -117,6 +118,7 @@ export const VBadge = genericComponent<VBadgeSlots>()({
                   themeClasses.value,
                   colorClasses.value,
                   roundedClasses.value,
+                  props.elevation !== undefined && `elevation-${props.elevation}`,
                 ]}
                 style={[
                   colorStyles.value,

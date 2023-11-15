@@ -17,6 +17,7 @@ export const makeVIconProps = propsFactory({
   start: Boolean,
   end: Boolean,
   icon: IconValue,
+  elevation: [Number, String],
 
   ...makeColorsProps(),
   ...makeComponentProps(),
@@ -62,6 +63,7 @@ export const VIcon = genericComponent()({
               'v-icon--start': props.start,
               'v-icon--end': props.end,
             },
+            props.elevation !== undefined && `elevation-${props.elevation}`,
             props.class,
           ]}
           style={[
