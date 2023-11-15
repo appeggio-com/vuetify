@@ -15,7 +15,7 @@ import { useProxiedModel } from '@/composables/proxiedModel'
 import { makeColorsProps, useColors } from '@/composables/variant'
 
 // Utilities
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { convertToUnit, genericComponent, propsFactory, useRender } from '@/util'
 
 // Types
@@ -79,10 +79,12 @@ export const VCarousel = genericComponent<VCarouselSlots>()({
     const { colorClasses, colorStyles } = useColors(props)
     const windowRef = ref<typeof VWindow>()
 
+    const isCycling = computed(() => !props.hook && props.cycle)
+
     let slideTimeout = -1
     watch(model, restartTimeout)
     watch(() => props.interval, restartTimeout)
-    watch(() => props.cycle, val => {
+    watch(isCycling, val => {
       if (val) restartTimeout()
       else window.clearTimeout(slideTimeout)
     })
@@ -90,7 +92,7 @@ export const VCarousel = genericComponent<VCarouselSlots>()({
     onMounted(startTimeout)
 
     function startTimeout () {
-      if (!props.cycle || !windowRef.value) return
+      if (!isCycling.value || !windowRef.value) return
 
       slideTimeout = window.setTimeout(windowRef.value.group.next, +props.interval > 0 ? +props.interval : 6000)
     }
