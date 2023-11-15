@@ -288,7 +288,7 @@ export const VImg = genericComponent<VImgSlots>()({
     const __gradient = () => {
       if (!props.gradient) return null
 
-      return <div class="v-img__gradient" style={{ backgroundImage: `linear-gradient(${props.gradient})` }} />
+      return <div class="v-img__gradient" style={{ backgroundImage: props.gradient }} />
     }
 
     const isBooted = shallowRef(false)
