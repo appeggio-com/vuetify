@@ -109,6 +109,7 @@ export const VCarousel = genericComponent<VCarouselSlots>()({
         <VWindow
           ref={ windowRef }
           { ...windowProps }
+          hook={ undefined }
           v-model={ model.value }
           class={[
             'v-carousel',

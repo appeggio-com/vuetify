@@ -41,10 +41,12 @@ export const VCarouselItem = genericComponent<VImgSlots>()({
           ]}
           style={ colorStyles.value }
           { ...windowItemProps }
+          hook={ undefined }
         >
           <VImg
             { ...attrs }
             { ...imgProps }
+            hook={ undefined }
             v-slots={ slots }
           />
         </VWindowItem>
