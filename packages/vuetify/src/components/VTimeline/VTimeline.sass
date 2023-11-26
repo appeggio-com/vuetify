@@ -44,7 +44,7 @@
 
   @include vertical(true)
     grid-row-gap: $timeline-item-padding
-    height: 100%
+    height: auto
 
     @include timeline-first-item()
       padding-block-start: $timeline-item-padding
@@ -55,6 +55,7 @@
     .v-timeline-item:nth-child(2n)
       .v-timeline-item__body
         grid-column: 1
+        text-align: right
         padding-inline-end: $timeline-item-padding
 
       .v-timeline-item__opposite
