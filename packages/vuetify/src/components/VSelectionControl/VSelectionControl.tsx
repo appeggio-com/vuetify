@@ -61,6 +61,7 @@ export const makeVSelectionControlProps = propsFactory({
   trueValue: null,
   falseValue: null,
   value: null,
+  ai: String,
 
   ...makeComponentProps(),
   ...makeSelectionControlGroupProps(),
@@ -246,6 +247,7 @@ export const VSelectionControl = genericComponent<new <T>(
             densityClasses.value,
             props.class,
           ]}
+          { ... { ai: props.ai } }
           { ...rootAttrs }
           style={ props.style }
         >

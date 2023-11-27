@@ -43,6 +43,7 @@ export const makeVTextFieldProps = propsFactory({
   },
   modelModifiers: Object as PropType<Record<string, boolean>>,
   elevation: [Number, String],
+  ai: String,
 
   ...makeComponentProps(),
   ...makeVInputProps(),
@@ -182,6 +183,7 @@ export const VTextField = genericComponent<VTextFieldSlots>()({
           { ...inputProps }
           centerAffix={ !isPlainOrUnderlined.value }
           focused={ isFocused.value }
+          ai={ props.ai }
         >
           {{
             ...slots,

@@ -64,6 +64,7 @@ export const makeVFileInputProps = propsFactory({
     },
   },
   elevation: [Number, String],
+  ai: String,
 
   ...makeComponentProps(),
   ...makeVInputProps({ prependIcon: '$file' }),
@@ -185,6 +186,7 @@ export const VFileInput = genericComponent<VFileInputSlots>()({
           { ...inputProps }
           centerAffix={ !isPlainOrUnderlined.value }
           focused={ isFocused.value }
+          ai={ props.ai }
         >
           {{
             ...slots,
