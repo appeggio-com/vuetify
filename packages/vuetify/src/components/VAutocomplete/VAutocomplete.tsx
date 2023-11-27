@@ -424,6 +424,7 @@ export const VAutocomplete = genericComponent<new <
           onClick:clear={ onClear }
           onMousedown:control={ onMousedownControl }
           onKeydown={ onKeydown }
+          hook={ undefined }
         >
           {{
             ...slots,

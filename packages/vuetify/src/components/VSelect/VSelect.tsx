@@ -331,6 +331,7 @@ export const VSelect = genericComponent<new <
           onKeydown={ onKeydown }
           aria-label={ t(label.value) }
           title={ t(label.value) }
+          hook={ undefined }
         >
           {{
             ...slots,
