@@ -31,9 +31,6 @@ export const makeVSheetProps = propsFactory({
     type: String,
     default: 'contain',
   },
-  bgOpacity: {
-    type: [String, Number],
-  },
 
   ...makeColorsProps(),
   ...makeBorderProps(),
@@ -71,7 +68,6 @@ export const VSheet = genericComponent()({
         res.backgroundPosition = props.bgPosition
         res.backgroundRepeat = props.bgRepeat
         res.backgroundSize = props.bgSize
-        res.opacity = String(props.bgOpacity)
       }
 
       return res
@@ -81,43 +77,23 @@ export const VSheet = genericComponent()({
       <props.tag
         class={[
           'v-sheet',
-          'd-flex',
           themeClasses.value,
           colorClasses.value,
           borderClasses.value,
           elevationClasses.value,
           positionClasses.value,
           roundedClasses.value,
+          props.class,
         ]}
         style={[
           colorStyles.value,
           dimensionStyles.value,
           locationStyles.value,
-          {
-            position: 'relative',
-          },
+          styles.value,
+          props.style,
         ]}
-      >
-        { !props.bgImage ? null : (
-          <div
-            key="sheet-bg"
-            style={[
-              styles.value,
-              {
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                height: '100%',
-                width: '100%',
-                zIndex: 0,
-              },
-            ]}
-          />
-        )}
-        <div class={ props.class } style={[{ zIndex: 1 }, props.style]}>
-          { slots.default?.() }
-        </div>
-      </props.tag>
+        v-slots={ slots }
+      />
     ))
 
     return {}
