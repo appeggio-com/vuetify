@@ -38,6 +38,7 @@ export const VCarouselItem = genericComponent<VImgSlots>()({
           class={[
             'v-carousel-item',
             colorClasses.value,
+            props.class,
           ]}
           style={ colorStyles.value }
           { ...windowItemProps }

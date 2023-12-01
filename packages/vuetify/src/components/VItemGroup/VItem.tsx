@@ -29,14 +29,20 @@ export const VItem = genericComponent<VItemSlots>()({
   setup (props, { slots }) {
     useComponentBase(props)
     const { isSelected, select, toggle, selectedClass, value, disabled } = useGroupItem(props, VItemGroupSymbol)
-    return () => slots.default?.({
-      isSelected: isSelected.value,
-      selectedClass: selectedClass.value,
-      select,
-      toggle,
-      value: value.value,
-      disabled: disabled.value,
-    })
+    return () => (
+      <div class={['v-item', props.class]}>
+        {
+          slots.default?.({
+            isSelected: isSelected.value,
+            selectedClass: selectedClass.value,
+            select,
+            toggle,
+            value: value.value,
+            disabled: disabled.value,
+          })
+        }
+      </div>
+    )
   },
 })
 

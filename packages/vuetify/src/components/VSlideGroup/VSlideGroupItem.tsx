@@ -32,12 +32,18 @@ export const VSlideGroupItem = genericComponent<VSlideGroupItemSlots>()({
     useComponentBase(props)
     const slideGroupItem = useGroupItem(props, VSlideGroupSymbol)
 
-    return () => slots.default?.({
-      isSelected: slideGroupItem.isSelected.value,
-      select: slideGroupItem.select,
-      toggle: slideGroupItem.toggle,
-      selectedClass: slideGroupItem.selectedClass.value,
-    })
+    return () => (
+      <div class={['slide-group-item', props.class]}>
+        {
+          slots.default?.({
+            isSelected: slideGroupItem.isSelected.value,
+            select: slideGroupItem.select,
+            toggle: slideGroupItem.toggle,
+            selectedClass: slideGroupItem.selectedClass.value,
+          })
+        }
+      </div>
+    )
   },
 })
 
