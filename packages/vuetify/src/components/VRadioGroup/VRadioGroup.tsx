@@ -33,6 +33,7 @@ export const makeVRadioGroupProps = propsFactory({
     type: [Number, String],
     default: 'auto',
   },
+  ai: String,
 
   ...makeComponentProps(),
   ...makeColorsProps(),
@@ -97,6 +98,7 @@ export const VRadioGroup = genericComponent<VRadioGroupSlots>()({
           { ...inputProps }
           v-model={ model.value }
           id={ id.value }
+          ai={ props.ai }
         >
           {{
             ...slots,

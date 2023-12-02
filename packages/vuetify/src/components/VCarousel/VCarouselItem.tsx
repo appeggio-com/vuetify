@@ -13,6 +13,8 @@ import { genericComponent, propsFactory, useRender } from '@/util'
 import type { VImgSlots } from '@/components/VImg/VImg'
 
 export const makeVCarouselItemProps = propsFactory({
+  ai: String,
+
   ...makeComponentProps(),
   ...makeColorsProps(),
   ...makeVImgProps(),
@@ -42,6 +44,7 @@ export const VCarouselItem = genericComponent<VImgSlots>()({
           ]}
           style={ colorStyles.value }
           { ...windowItemProps }
+          ai={ props.ai }
           hook={ undefined }
         >
           <VImg
