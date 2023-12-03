@@ -66,6 +66,7 @@ export const VCheckbox = genericComponent<VCheckboxSlots>()({
           v-model={ model.value }
           id={ id.value }
           focused={ isFocused.value }
+          ai={ props.ai }
           style={[
             props.style,
             colorStyles.value,
