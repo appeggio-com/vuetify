@@ -18,6 +18,10 @@ export const makeVHoverProps = propsFactory({
     type: Boolean,
     default: undefined,
   },
+  tag: {
+    type: String,
+    default: 'div',
+  },
 
   ...makeDelayProps(),
 }, 'VHover')
@@ -35,13 +39,19 @@ export const VHover = genericComponent<VHoverSlots>()({
     const isHovering = useProxiedModel(props, 'modelValue')
     const { runOpenDelay, runCloseDelay } = useDelay(props, value => !props.disabled && (isHovering.value = value))
 
-    return () => slots.default?.({
-      isHovering: isHovering.value,
-      props: {
-        onMouseenter: runOpenDelay,
-        onMouseleave: runCloseDelay,
-      },
-    })
+    return () => (
+      <props.tag>
+        {
+          slots.default?.({
+            isHovering: isHovering.value,
+            props: {
+              onMouseenter: runOpenDelay,
+              onMouseleave: runCloseDelay,
+            },
+          })
+        }
+      </props.tag>
+    )
   },
 })
 
