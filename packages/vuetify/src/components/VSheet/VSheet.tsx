@@ -31,6 +31,9 @@ export const makeVSheetProps = propsFactory({
     type: String,
     default: 'contain',
   },
+  bgOpacity: {
+    type: [Number, String],
+  },
 
   ...makeColorsProps(),
   ...makeBorderProps(),
@@ -73,28 +76,77 @@ export const VSheet = genericComponent()({
       return res
     })
 
-    useRender(() => (
-      <props.tag
-        class={[
-          'v-sheet',
-          themeClasses.value,
-          colorClasses.value,
-          borderClasses.value,
-          elevationClasses.value,
-          positionClasses.value,
-          roundedClasses.value,
-          props.class,
-        ]}
-        style={[
-          colorStyles.value,
-          dimensionStyles.value,
-          locationStyles.value,
-          styles.value,
-          props.style,
-        ]}
-        v-slots={ slots }
-      />
-    ))
+    useRender(() => {
+      if (props.bgOpacity === undefined || props.bgOpacity === '') {
+        return (
+          <props.tag
+            class={[
+              'v-sheet',
+              themeClasses.value,
+              colorClasses.value,
+              borderClasses.value,
+              elevationClasses.value,
+              positionClasses.value,
+              roundedClasses.value,
+              props.class,
+            ]}
+            style={[
+              colorStyles.value,
+              dimensionStyles.value,
+              locationStyles.value,
+              styles.value,
+              props.style,
+            ]}
+            v-slots={ slots }
+          />
+        )
+      }
+      return (
+        <props.tag
+          class={[
+            'v-sheet',
+            'd-flex',
+            themeClasses.value,
+            colorClasses.value,
+            borderClasses.value,
+            elevationClasses.value,
+            positionClasses.value,
+            roundedClasses.value,
+            props.class,
+          ]}
+          style={[
+            colorStyles.value,
+            dimensionStyles.value,
+            locationStyles.value,
+            props.style,
+            {
+              position: 'relative',
+            },
+          ]}
+        >
+          { !props.bgImage ? null : (
+            <img
+              key="bgimage"
+              src={ props.bgImage }
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                width: '100%',
+                height: '100%',
+                opacity: props.bgOpacity,
+                objectPosition: props.bgPosition || 'center',
+                objectFit: (props.bgSize as any) || 'cover',
+                zIndex: 0,
+              }}
+            />
+          )}
+          <div style={{ zIndex: 1, flexGrow: 1 }}>
+            { slots.default?.() }
+          </div>
+        </props.tag>
+      )
+    })
 
     return {}
   },
